@@ -52,29 +52,18 @@ public class FileHandling {
         try
         {
             File f = new File(filename);
-            if(!f.exists())
+
+            FileWriter fw = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            for (int i =0;i<array.size();i++)
             {
-                f.createNewFile();
-                FileWriter fw = new FileWriter(filename);
-                BufferedWriter bw = new BufferedWriter(fw);
-                PrintWriter pw = new PrintWriter(bw);
-                for (int i =0;i<array.size();i++)
-                {
-                    pw.write((String) array.get(i));
-                    pw.println(array.get(i));
-                }
-                
-            }else
-            {
-                FileWriter fw = new FileWriter(filename);
-                BufferedWriter bw = new BufferedWriter(fw);
-                PrintWriter pw = new PrintWriter(bw);
-                for (int i =0;i<array.size();i++)
-                {
-                    pw.write((String) array.get(i));
-                    pw.println(array.get(i));
-                }
-            } 
+
+                pw.println(array.get(i));
+            }
+            pw.flush();
+            pw.close();
+ 
         }
         catch(IOException e)
         {
