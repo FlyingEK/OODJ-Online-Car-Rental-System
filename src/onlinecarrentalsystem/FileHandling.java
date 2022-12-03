@@ -91,32 +91,91 @@ public class FileHandling {
     }
     
     
-    public ArrayList searchRecord(String filename,int id)
+    public String[] searchRecord(String filename,String id)
     {
+        boolean found = false;
+        String[] result = {};
         try{
             File f = new File(filename);
             FileReader fr = new FileReader(f);
             BufferedReader br =  new BufferedReader(fr);
             
+            
             String line = br.readLine();
             while (line!=null)
             {
-                System.out.println(line);
                 String[] inFile = line.split(";");
                 
-                if (Integer.parseInt(inFile[0]) == id)
+                if (inFile[0].equals(id))
                 {
-                    boofound = true;
+                    found = true;
+                    result = inFile;
+                    break;
                 }
+                line = br.readLine();
             }
+            
+            
         }catch(IOException e){
             System.out.println(e);
         }
+        
+        if(!found){
+            JOptionPane.showMessageDialog(null, "Record not found","Error Message",JOptionPane.ERROR_MESSAGE);
+        }
+        return result;
     }
     
-    public void modifyRecord(String filename,ArrayList array)
+    public void modifyRecord(String filename,ArrayList<String> array)
     {
+        ArrayList<String> fileData = new ArrayList<String>();
+        boolean modified = false;
+        try{
+        FileReader fr = new FileReader(filename);
+        BufferedReader br = new BufferedReader(fr);
         
+        String line = br.readLine();
+        while (line != null)
+        {
+            String[] data = line.split(";");
+            if(data[0].equals(array.get(0)))
+            {
+                String combineArray = String.join(";", array);
+                fileData.add(combineArray);
+                modified = true;
+            }
+            else
+            {
+                fileData.add(line);
+            }
+            
+            line = br.readLine();
+        }
+        
+        
+        File f = new File(filename);
+
+        FileWriter fw = new FileWriter(filename);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter pw = new PrintWriter(bw);
+        for (int i =0;i<fileData.size();i++)
+        {
+            pw.println(fileData.get(i));
+        }
+        pw.flush();
+        pw.close();
+        
+        }catch(IOException e){
+            System.out.println(e);
+        }
+        
+        if(modified)
+        {
+            JOptionPane.showMessageDialog(null, "Record Edited");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Failed to edit record!","Error Message",JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void delete(String filename, String removeID){
