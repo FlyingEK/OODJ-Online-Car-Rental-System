@@ -5,6 +5,7 @@
 package onlinecarrentalsystem;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -546,7 +547,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
             price.setText(car.getPrice());
             
         } else {
-            searchTxt.setVisible(true);
+            noResult.setVisible(true);
             price.setText("");
         }  
     }//GEN-LAST:event_SearchBtnActionPerformed
@@ -564,7 +565,21 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     }//GEN-LAST:event_yearActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-
+        // TODO add your handling code here:   
+        ArrayList<String> carArray = new ArrayList<String>();
+        carArray.add(carID.getText());
+        carArray.add(model.getText());
+        carArray.add(plateNo.getText());
+        carArray.add(seat.getText());
+        carArray.add(color.getText());
+        carArray.add(year.getText());
+        carArray.add(price.getText());
+        try{
+            car.modifyCar(carArray);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
@@ -573,7 +588,8 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-
+        car.setCarID(carID.getText());
+        car.deleteCar();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed

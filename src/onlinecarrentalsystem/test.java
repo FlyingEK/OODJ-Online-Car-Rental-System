@@ -32,7 +32,9 @@ public class test {
         //fh.writeFile("customer.txt",cus);
         //fh.readFile("customer.txt");
         //fh.searchRecord("customer.txt","1");
-        fh.modifyRecord("customer.txt", cus);
+        //fh.modifyRecord("customer.txt", cus);
+        //fh.modifyRecord("car.txt", cus);
+        //fh.delete("car.txt", "3");
 //        ArrayList<String> fileData = new ArrayList<String>();
 //        boolean modified = false;
 //        try{

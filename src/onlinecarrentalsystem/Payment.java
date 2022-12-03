@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package onlinecarrentalsystem;
+package onlinepaymentrentalsystem;
 
 import java.util.ArrayList;
 
@@ -22,6 +22,11 @@ public class Payment {
     public Payment(String paymentID){
         this.paymentID = paymentID;
         fh = new FileHandling();
+    }
+    
+    public String newPaymentID(){
+        String newPaymentID = fh.incrementID("payment.txt");
+        return "P"+newPaymentID;
     }
     
     public ArrayList readPayment(){

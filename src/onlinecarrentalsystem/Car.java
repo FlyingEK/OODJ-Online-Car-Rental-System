@@ -59,11 +59,15 @@ public class Car {
     
     public String newCarID(){
         String newCarID = fh.incrementID("car.txt");
-        return newCarID;
+        return "C"+newCarID;
     }
     
     public void addCar(ArrayList carArray){
         fh.writeFile("car.txt", carArray);
+    }
+    
+    public void modifyCar(ArrayList<String> carArray){
+        fh.modifyRecord("car.txt",carArray);
     }
     
     public Boolean searchCar(){
