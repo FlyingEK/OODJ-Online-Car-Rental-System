@@ -18,7 +18,8 @@ public class OnlineCarRentalSystem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       
+       Admin_ManageCar c = new Admin_ManageCar();
+       c.setVisible(true);
     }
     
 }

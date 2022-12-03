@@ -4,18 +4,24 @@
  */
 package onlinecarrentalsystem;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author User
  */
 public class Admin_ManageCar extends javax.swing.JFrame {
-
+    private Car car;
     /**
      * Creates new form Admin_ManageCar
      */
     public Admin_ManageCar() {
         initComponents();
         getContentPane().setBackground(new java.awt.Color(204,204,255));
+        Car car = new Car();
+        System.out.print(car.readCar());
+        carID1.setText(car.newCarID());
+        
     }
 
     /**
@@ -52,19 +58,21 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         deleteBtn = new javax.swing.JButton();
         Email1 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        BookID1 = new javax.swing.JTextField();
+        carID1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        CustName1 = new javax.swing.JTextField();
+        model1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        ICno1 = new javax.swing.JTextField();
+        seat1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jlab1 = new javax.swing.JLabel();
-        Email2 = new javax.swing.JTextField();
+        year1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        ContactNo1 = new javax.swing.JTextField();
-        deleteBtn1 = new javax.swing.JButton();
-        Email3 = new javax.swing.JTextField();
+        color1 = new javax.swing.JTextField();
+        addBtn = new javax.swing.JButton();
+        price1 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        plateNo1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -318,30 +326,35 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
 
-        BookID1.setEditable(false);
-        BookID1.setBackground(new java.awt.Color(204, 204, 255));
-        BookID1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        BookID1.setBorder(null);
-        BookID1.addActionListener(new java.awt.event.ActionListener() {
+        carID1.setEditable(false);
+        carID1.setBackground(new java.awt.Color(204, 204, 255));
+        carID1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        carID1.setBorder(null);
+        carID1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BookID1ActionPerformed(evt);
+                carID1ActionPerformed(evt);
             }
         });
 
         jLabel6.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel6.setText("Model:");
 
-        CustName1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        CustName1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        model1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        model1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        model1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                model1ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel7.setText("Number of Seat:");
 
-        ICno1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        ICno1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
-        ICno1.addActionListener(new java.awt.event.ActionListener() {
+        seat1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        seat1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        seat1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ICno1ActionPerformed(evt);
+                seat1ActionPerformed(evt);
             }
         });
 
@@ -351,11 +364,11 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         jlab1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jlab1.setText("Year: ");
 
-        Email2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        Email2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
-        Email2.addActionListener(new java.awt.event.ActionListener() {
+        year1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        year1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        year1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Email2ActionPerformed(evt);
+                year1ActionPerformed(evt);
             }
         });
 
@@ -365,32 +378,38 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel12.setText("Car ID:");
 
-        ContactNo1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        ContactNo1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
-        ContactNo1.addActionListener(new java.awt.event.ActionListener() {
+        color1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        color1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        color1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ContactNo1ActionPerformed(evt);
+                color1ActionPerformed(evt);
             }
         });
 
-        deleteBtn1.setBackground(new java.awt.Color(102, 0, 255));
-        deleteBtn1.setFont(new java.awt.Font("Candara", 1, 15)); // NOI18N
-        deleteBtn1.setForeground(new java.awt.Color(255, 255, 255));
-        deleteBtn1.setText("Add");
-        deleteBtn1.setBorder(null);
-        deleteBtn1.addActionListener(new java.awt.event.ActionListener() {
+        addBtn.setBackground(new java.awt.Color(102, 0, 255));
+        addBtn.setFont(new java.awt.Font("Candara", 1, 15)); // NOI18N
+        addBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addBtn.setText("Add");
+        addBtn.setBorder(null);
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBtn1ActionPerformed(evt);
+                addBtnActionPerformed(evt);
             }
         });
 
-        Email3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        Email3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
-        Email3.addActionListener(new java.awt.event.ActionListener() {
+        price1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        price1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        price1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Email3ActionPerformed(evt);
+                price1ActionPerformed(evt);
             }
         });
+
+        jLabel13.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel13.setText("Plate Number:");
+
+        plateNo1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        plateNo1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -406,52 +425,58 @@ public class Admin_ManageCar extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlab1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ContactNo1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(color1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(BookID1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(CustName1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(ICno1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Email2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Email3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(carID1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(seat1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(year1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(price1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(model1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(plateNo1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(319, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(425, 425, 425)
-                .addComponent(deleteBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(428, 428, 428))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(carID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(CustName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(model1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(plateNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(ICno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(seat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(ContactNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(color1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlab1)
-                    .addComponent(Email2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(year1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(Email3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(deleteBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                    .addComponent(price1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Add New", jPanel3);
@@ -524,29 +549,37 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Email1ActionPerformed
 
-    private void BookID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookID1ActionPerformed
+    private void carID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carID1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BookID1ActionPerformed
+    }//GEN-LAST:event_carID1ActionPerformed
 
-    private void ICno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ICno1ActionPerformed
+    private void seat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seat1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ICno1ActionPerformed
+    }//GEN-LAST:event_seat1ActionPerformed
 
-    private void Email2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Email2ActionPerformed
+    private void year1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Email2ActionPerformed
+    }//GEN-LAST:event_year1ActionPerformed
 
-    private void ContactNo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactNo1ActionPerformed
+    private void color1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_color1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ContactNo1ActionPerformed
+    }//GEN-LAST:event_color1ActionPerformed
 
-    private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteBtn1ActionPerformed
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        // TODO add your handling code here:   
+        ArrayList<String> carArray = new ArrayList<String>();
+        carArray.add(carID1.getText()+";"+model1.getText()+";"+plateNo1.getText()+";"+seat1.getText()+";"+color1.getText()
+        +";"+year1.getText()+";"+price1.getText());
+        car.addCar(carArray);
+    }//GEN-LAST:event_addBtnActionPerformed
 
-    private void Email3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Email3ActionPerformed
+    private void price1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_price1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Email3ActionPerformed
+    }//GEN-LAST:event_price1ActionPerformed
+
+    private void model1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_model1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_model1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -585,26 +618,23 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BookID;
-    private javax.swing.JTextField BookID1;
     private javax.swing.JTextField ContactNo;
-    private javax.swing.JTextField ContactNo1;
     private javax.swing.JTextField CustName;
-    private javax.swing.JTextField CustName1;
     private javax.swing.JButton EditBtn;
     private javax.swing.JTextField Email;
     private javax.swing.JTextField Email1;
-    private javax.swing.JTextField Email2;
-    private javax.swing.JTextField Email3;
     private javax.swing.JTextField ICno;
-    private javax.swing.JTextField ICno1;
     private javax.swing.JButton SearchBtn;
     private javax.swing.JTextField SearchTxt;
+    private javax.swing.JButton addBtn;
+    private javax.swing.JTextField carID1;
+    private javax.swing.JTextField color1;
     private javax.swing.JButton deleteBtn;
-    private javax.swing.JButton deleteBtn1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -621,6 +651,11 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlab;
     private javax.swing.JLabel jlab1;
+    private javax.swing.JTextField model1;
     private javax.swing.JLabel noResult;
+    private javax.swing.JTextField plateNo1;
+    private javax.swing.JTextField price1;
+    private javax.swing.JTextField seat1;
+    private javax.swing.JTextField year1;
     // End of variables declaration//GEN-END:variables
 }

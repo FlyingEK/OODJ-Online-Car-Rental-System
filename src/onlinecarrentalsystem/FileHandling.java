@@ -38,13 +38,32 @@ public class FileHandling {
                 line = br.readLine();
             }
             br.close();
-            System.out.println(file);
         }
         catch(IOException e)
         {
             System.out.println(e);
         }
         return file;
+    }
+    
+    public String incrementID(String filename)
+    {   
+        int ID = 0;
+        try(BufferedReader b = new BufferedReader (new FileReader(filename))){
+            String line = b.readLine();
+            while (line != null){
+                if (line.split(";")[0] != ""){
+                    ID = Integer.parseInt(line.split(";")[0].trim());
+                }
+                line = b.readLine();
+            }
+            b.close();
+            ID = ID +1;
+        }
+        catch (IOException ex){
+            JOptionPane.showMessageDialog(null, "Error occurs while reading the file.");
+        }
+        return ID+"";
     }
     
     public void writeFile(String filename,ArrayList array)
