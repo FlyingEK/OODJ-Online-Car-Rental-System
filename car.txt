@@ -1,0 +1,2 @@
+1;Perodua Myvi;JPJ7671;5;Grey;4;160
+2;Mercedes EQA SUV;WEE888;5;Silver;1;1800

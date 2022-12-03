@@ -4,9 +4,6 @@
  */
 package onlinecarrentalsystem;
 
-import java.io.*;
-import java.util.*;
-
 /**
  *
  * @author User

@@ -16,12 +16,12 @@ public class Booking {
     
     public Booking(){
         this.bookingID = null;
-        FileHandling fh = new FileHandling();
+        fh = new FileHandling();
     }
     
     public Booking(String bookingID){
         this.bookingID = bookingID;
-        FileHandling fh = new FileHandling();
+        fh = new FileHandling();
     }
     
     public ArrayList readBooking(){
@@ -33,8 +33,8 @@ public class Booking {
         fh.writeFile("booking.txt", bookingArray);
     }
     
-    public ArrayList searchBooking(){
-        ArrayList<String> bookingArray = fh.searchRecord("booking.txt", bookingID);
+    public String[] searchBooking(){
+        String[] bookingArray = fh.searchRecord("booking.txt", bookingID);
         return bookingArray;
     }
 

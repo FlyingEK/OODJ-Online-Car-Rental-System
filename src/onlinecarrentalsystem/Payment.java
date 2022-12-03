@@ -16,12 +16,12 @@ public class Payment {
     
     public Payment(){
         this.paymentID = null;
-        FileHandling fh = new FileHandling();
+        fh = new FileHandling();
     }
     
     public Payment(String paymentID){
         this.paymentID = paymentID;
-        FileHandling fh = new FileHandling();
+        fh = new FileHandling();
     }
     
     public ArrayList readPayment(){
@@ -33,8 +33,8 @@ public class Payment {
         fh.writeFile("payment.txt", paymentArray);
     }
     
-    public ArrayList searchPayment(){
-        ArrayList<String> paymentArray = fh.searchRecord("payment.txt", paymentID);
+    public String[] searchPayment(){
+        String[] paymentArray = fh.searchRecord("payment.txt", paymentID);
         return paymentArray;
     }
 
