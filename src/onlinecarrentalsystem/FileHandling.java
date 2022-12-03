@@ -85,7 +85,7 @@ public class FileHandling {
                 System.out.println(line);
                 String[] inFile = line.split(";");
                 
-                if (inFile[0].toInteger() == id)
+                if (Integer.parseInt(inFile[0]) == id)
                 {
                     found = true;
                 }
