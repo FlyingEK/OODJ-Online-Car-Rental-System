@@ -21,7 +21,7 @@ public class User {
            user = fh.readFile("admin.txt");
        } else if (userType.toLowerCase().equals("customer")) {
            FileHandling fh = new FileHandling(); 
-           user = fh.readFile("admin.txt");
+           user = fh.readFile("customer.txt");
        }
        //else/ if not exist display error?
         String[] splitUser = user.get(0).split(";");
