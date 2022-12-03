@@ -38,7 +38,6 @@ public class FileHandling {
                 line = br.readLine();
             }
             br.close();
-            System.out.println(file);
         }
         catch(IOException e)
         {
@@ -107,9 +106,9 @@ public class FileHandling {
         return result;
     }
     
-    public void modifyRecord(String filename,ArrayList array)
+    public void modifyRecord(String filename,ArrayList<String> array)
     {
-        ArrayList<String> fileData = new ArrayList();
+        ArrayList<String> fileData = new ArrayList<String>();
         boolean modified = false;
         try{
         FileReader fr = new FileReader(filename);
@@ -119,7 +118,7 @@ public class FileHandling {
         while (line != null)
         {
             String[] data = line.split(";");
-            if(data[0] == array.get(0))
+            if(data[0].equals(array.get(0)))
             {
                 String combineArray = String.join(";", array);
                 fileData.add(combineArray);
@@ -132,6 +131,7 @@ public class FileHandling {
             
             line = br.readLine();
         }
+        
         
         File f = new File(filename);
 
