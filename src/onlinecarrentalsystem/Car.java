@@ -13,7 +13,17 @@ import java.util.ArrayList;
 public class Car {
     private String carID, model, plateNo, seat,color,year,price;
     private FileHandling fh;
-
+    
+    public Car(){
+        this.carID = null;
+        fh = new FileHandling();
+    }
+    
+    public Car(String carID){
+        this.carID = carID;
+        fh = new FileHandling();
+    }
+    
     public String getCarID() {
         return carID;
     }
@@ -40,16 +50,6 @@ public class Car {
 
     public String getPrice() {
         return price;
-    }
-    
-    public Car(){
-        this.carID = null;
-        fh = new FileHandling();
-    }
-    
-    public Car(String carID){
-        this.carID = carID;
-        fh = new FileHandling();
     }
     
     public ArrayList readCar(){
