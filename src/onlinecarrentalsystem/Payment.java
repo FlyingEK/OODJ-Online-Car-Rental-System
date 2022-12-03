@@ -9,15 +9,5 @@ package onlinecarrentalsystem;
  * @author User
  */
 public class Payment {
-    protected int paymentID, paymentAmount;
-    protected date paymentDate;
-    protected String paymentMethod;
 
-    public int getPaymentID() {
-        return paymentID;
-    }
-          
-    void viewPayment(){
-    }
-    }
 }

@@ -72,10 +72,28 @@ public class FileHandling {
     }
     
     
-    //public ArrayList searchRecord(String filename,int id)
-    //{
-        
-    //}
+    public ArrayList searchRecord(String filename,int id)
+    {
+        try{
+            File f = new File(filename);
+            FileReader fr = new FileReader(f);
+            BufferedReader br =  new BufferedReader(fr);
+            
+            String line = br.readLine();
+            while (line!=null)
+            {
+                System.out.println(line);
+                String[] inFile = line.split(";");
+                
+                if (inFile[0].toInteger() == id)
+                {
+                    found = true;
+                }
+            }
+        }catch(IOException e){
+            System.out.println(e);
+        }
+    }
     
     public void modifyRecord(String filename,ArrayList array)
     {
