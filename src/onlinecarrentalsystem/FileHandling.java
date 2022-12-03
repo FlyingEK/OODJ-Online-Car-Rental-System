@@ -87,12 +87,24 @@ public class FileHandling {
                 
                 if (Integer.parseInt(inFile[0]) == id)
                 {
-                    boofound = true;
+                    boolean found = true;
+                    String[] result = inFile;
+                    break;
                 }
+                line = br.readLine();
             }
+            
+            
         }catch(IOException e){
             System.out.println(e);
         }
+        
+        if(found){
+            return result;
+        }else{
+            JOptionPane.showMessageDialog(null, "Record not found","Error Message",JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
     
     public void modifyRecord(String filename,ArrayList array)
