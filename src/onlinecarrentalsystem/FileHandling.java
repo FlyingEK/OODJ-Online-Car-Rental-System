@@ -87,7 +87,7 @@ public class FileHandling {
                 
                 if (Integer.parseInt(inFile[0]) == id)
                 {
-                    found = true;
+                    boofound = true;
                 }
             }
         }catch(IOException e){
