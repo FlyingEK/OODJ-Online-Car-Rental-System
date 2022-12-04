@@ -1,0 +1,1365 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package jp_resortroombookingsystem;
+import java.awt.Component;
+import javax.swing.*;
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import javax.swing.table.DefaultTableModel;
+/**
+ *
+ * @author User
+ */
+public class BookingRecords extends javax.swing.JFrame {
+
+    /**
+     * Creates new form BookingRecords
+     */
+    public BookingRecords() {
+        initComponents();
+        getContentPane().setBackground(new java.awt.Color(255,197,197));
+        
+        lpane.add( payPane, new Integer(0),0);
+        payPane.setVisible(false);
+        
+        //search no result not visible
+        noResult.setVisible(false);
+       
+        //set table
+        DefaultTableModel tableModel = (DefaultTableModel)BookingTable.getModel();
+        
+        //read rows into table
+        String line;
+        try(BufferedReader r = new BufferedReader(new FileReader("Booking.txt"))){
+            while ((line = r.readLine())!=null){
+                String booking[] = line.split(";");
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[5],booking[1],booking[6],booking[7]});
+            }
+            r.close();
+        }
+        
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null,"Error occurs.");
+        }
+        BookingTable.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        checkoutBtn.setEnabled(true);
+        deleteBtn.setEnabled(true);
+        int row = BookingTable.rowAtPoint(evt.getPoint());
+        Object id = BookingTable.getValueAt( row, 0 );
+            try (BufferedReader bookr=new BufferedReader(new FileReader("Booking.txt")))
+            {
+                String bline;
+                while((bline = bookr.readLine()) != null) {
+                    String bookrow[] = bline.split(";");
+                    if((bookrow[0]).equals(id+"")) {
+                        BookID.setText(bookrow[0]);
+                        CustName.setText(bookrow[1]);
+                        ICno.setText(bookrow[2]);
+                        ContactNo.setText(bookrow[3]);
+                        Email.setText(bookrow[4]);
+                        RoomID.setText(bookrow[5]);
+                        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            
+                        Date d1 = null;
+                        Date d2 = null; 
+                        try{
+                            d1 = f.parse(bookrow[6]);
+                            d2 = f.parse(bookrow[7]);
+                        }
+                        catch(ParseException p){
+                            p.printStackTrace();
+                        }
+                        checkin.setDate(d1);
+                        checkout.setDate(d2);
+                        StayDays.setText(bookrow[8]);
+                        
+                        try(BufferedReader pread =new BufferedReader(new FileReader("Payment.txt"))){
+                            String line;
+                            while ((line = pread.readLine()) != null){
+                                if (line.split(";")[1].equals(id)){
+                                    checkoutBtn.setEnabled(false);
+                                    deleteBtn.setEnabled(false);
+                                }
+                            }
+                        }
+                        catch(IOException ex1){
+                            JOptionPane.showMessageDialog(null,"Error occurs.");
+                        }
+                    }
+                }
+                bookr.close();
+                try (BufferedReader bookr2 = new BufferedReader(new FileReader("Room.txt"))){
+                    String bline2 = bookr2.readLine();
+                    while(bline2 != null){
+                        if (RoomID.getText().equals(bline2.split(";")[0])){
+                            String view = bline2.split(";")[1];
+                            roomview.setText(view);
+                            break;
+                        }
+                        bline2 = bookr2.readLine();
+                    }
+                    bookr2.close();
+                }
+                catch(IOException ex){
+                    JOptionPane.showMessageDialog(null, "Error occurs while reading file.","Error Message",JOptionPane.ERROR_MESSAGE);
+                }
+            }  
+            catch(IOException ex1){
+                JOptionPane.showMessageDialog(null,"Error occurs.");
+            }
+    }
+});
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lpane = new javax.swing.JLayeredPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        BookingTable = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        SearchTxt = new javax.swing.JTextField();
+        SearchBtn = new javax.swing.JButton();
+        noResult = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        BookID = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        CustName = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        ICno = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        ContactNo = new javax.swing.JTextField();
+        jlab = new javax.swing.JLabel();
+        Email = new javax.swing.JTextField();
+        EditBtn = new javax.swing.JButton();
+        checkoutBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jlab10 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        StayDays = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        roomview = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        RoomID = new javax.swing.JTextField();
+        checkin = new com.toedter.calendar.JDateChooser();
+        checkout = new com.toedter.calendar.JDateChooser();
+        jLabel19 = new javax.swing.JLabel();
+        payPane = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        PCustName1 = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        saveBtn = new javax.swing.JButton();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        paymentLab = new javax.swing.JLabel();
+        enterBtn = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        PBookID1 = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel33 = new javax.swing.JLabel();
+        Pdate = new javax.swing.JTextField();
+        ProomID1 = new javax.swing.JTextField();
+        Pdays1 = new javax.swing.JTextField();
+        serviceTax = new javax.swing.JTextField();
+        TourismTax = new javax.swing.JTextField();
+        subtotal = new javax.swing.JTextField();
+        totalPrice = new javax.swing.JTextField();
+        paid = new javax.swing.JTextField();
+        BackBtn = new javax.swing.JButton();
+        balance = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        PDates1 = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        menuBtn = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 197, 197));
+
+        BookingTable.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        BookingTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Booking ID", "Room ID", "Customer Name", "Checkin Date", "Checkout Date"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(BookingTable);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(252, 235, 235));
+
+        jLabel1.setText("Search by Booking ID or Customer IC:");
+
+        SearchTxt.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        SearchTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchTxtActionPerformed(evt);
+            }
+        });
+
+        SearchBtn.setBackground(new java.awt.Color(0, 0, 0));
+        SearchBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 11)); // NOI18N
+        SearchBtn.setForeground(new java.awt.Color(255, 204, 204));
+        SearchBtn.setText("Search");
+        SearchBtn.setBorder(null);
+        SearchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchBtnActionPerformed(evt);
+            }
+        });
+
+        noResult.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        noResult.setForeground(new java.awt.Color(255, 51, 51));
+        noResult.setText("No result found");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel2.setText("Booking ID: ");
+
+        BookID.setEditable(false);
+        BookID.setBackground(new java.awt.Color(252, 235, 235));
+        BookID.setBorder(null);
+        BookID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BookIDActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel4.setText("Customer Name:");
+
+        CustName.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel5.setText("IC no/ Passpost number:");
+
+        ICno.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        ICno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ICnoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel8.setText("Contact number: ");
+
+        ContactNo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        ContactNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ContactNoActionPerformed(evt);
+            }
+        });
+
+        jlab.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jlab.setText("Email: ");
+
+        Email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        Email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailActionPerformed(evt);
+            }
+        });
+
+        EditBtn.setBackground(new java.awt.Color(0, 0, 0));
+        EditBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        EditBtn.setForeground(new java.awt.Color(255, 204, 204));
+        EditBtn.setText("Edit");
+        EditBtn.setBorder(null);
+        EditBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditBtnActionPerformed(evt);
+            }
+        });
+
+        checkoutBtn.setBackground(new java.awt.Color(0, 0, 0));
+        checkoutBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        checkoutBtn.setForeground(new java.awt.Color(255, 204, 204));
+        checkoutBtn.setText("Pay");
+        checkoutBtn.setBorder(null);
+        checkoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkoutBtnActionPerformed(evt);
+            }
+        });
+
+        deleteBtn.setBackground(new java.awt.Color(0, 0, 0));
+        deleteBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        deleteBtn.setForeground(new java.awt.Color(255, 204, 204));
+        deleteBtn.setText("Delete");
+        deleteBtn.setBorder(null);
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel10.setText("Checkout date:");
+
+        jlab10.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jlab10.setText("Checkin date: ");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel6.setText("Days of stay:");
+
+        StayDays.setEditable(false);
+        StayDays.setBackground(new java.awt.Color(252, 235, 235));
+        StayDays.setBorder(null);
+        StayDays.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StayDaysActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel9.setText("Room View:");
+
+        roomview.setEditable(false);
+        roomview.setBackground(new java.awt.Color(252, 235, 235));
+        roomview.setBorder(null);
+        roomview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roomviewActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel3.setText("Room ID:");
+
+        RoomID.setEditable(false);
+        RoomID.setBackground(new java.awt.Color(252, 235, 235));
+        RoomID.setBorder(null);
+        RoomID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RoomIDActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(SearchTxt)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(249, 249, 249))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(noResult)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jlab))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(ContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(BookID, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(CustName, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ICno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(71, 71, 71)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(70, 70, 70)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlab10)
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(RoomID, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(roomview, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(StayDays, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(checkin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(checkout, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(28, 28, 28))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(checkoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(159, 159, 159))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SearchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(noResult)
+                .addGap(15, 15, 15)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(BookID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(CustName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(roomview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(ICno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(StayDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(RoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jlab10)
+                            .addComponent(ContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jlab)
+                            .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel19.setFont(new java.awt.Font("Pristina", 1, 30)); // NOI18N
+        jLabel19.setText("Booking Records");
+
+        payPane.setBackground(new java.awt.Color(252, 235, 235));
+        payPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        jLabel29.setText("Customer name:");
+
+        PCustName1.setEditable(false);
+        PCustName1.setBackground(new java.awt.Color(252, 235, 235));
+        PCustName1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        PCustName1.setBorder(null);
+        PCustName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PCustName1ActionPerformed(evt);
+            }
+        });
+
+        saveBtn.setBackground(new java.awt.Color(0, 0, 0));
+        saveBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 204, 204));
+        saveBtn.setText("Save");
+        saveBtn.setBorder(null);
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel30.setText("Paid value:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        jLabel7.setText("Balance: ");
+
+        paymentLab.setFont(new java.awt.Font("Pristina", 1, 30)); // NOI18N
+        paymentLab.setText("Payment");
+
+        enterBtn.setBackground(new java.awt.Color(0, 0, 0));
+        enterBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        enterBtn.setForeground(new java.awt.Color(255, 204, 204));
+        enterBtn.setText("Enter");
+        enterBtn.setBorder(null);
+        enterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
+        jLabel31.setText("Service Tax (10%):");
+
+        jLabel32.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
+        jLabel32.setText("Tourism Tax (RM10/night): ");
+
+        PBookID1.setEditable(false);
+        PBookID1.setBackground(new java.awt.Color(252, 235, 235));
+        PBookID1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        PBookID1.setBorder(null);
+        PBookID1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PBookID1ActionPerformed(evt);
+            }
+        });
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        jLabel33.setText("Subtotal: ");
+
+        Pdate.setEditable(false);
+        Pdate.setBackground(new java.awt.Color(252, 235, 235));
+        Pdate.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        Pdate.setBorder(null);
+
+        ProomID1.setEditable(false);
+        ProomID1.setBackground(new java.awt.Color(252, 235, 235));
+        ProomID1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        ProomID1.setBorder(null);
+        ProomID1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProomID1ActionPerformed(evt);
+            }
+        });
+
+        Pdays1.setEditable(false);
+        Pdays1.setBackground(new java.awt.Color(252, 235, 235));
+        Pdays1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        Pdays1.setBorder(null);
+        Pdays1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Pdays1ActionPerformed(evt);
+            }
+        });
+
+        serviceTax.setEditable(false);
+        serviceTax.setBackground(new java.awt.Color(252, 235, 235));
+        serviceTax.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        serviceTax.setBorder(null);
+
+        TourismTax.setEditable(false);
+        TourismTax.setBackground(new java.awt.Color(252, 235, 235));
+        TourismTax.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        TourismTax.setBorder(null);
+
+        subtotal.setEditable(false);
+        subtotal.setBackground(new java.awt.Color(252, 235, 235));
+        subtotal.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        subtotal.setBorder(null);
+
+        totalPrice.setEditable(false);
+        totalPrice.setBackground(new java.awt.Color(252, 235, 235));
+        totalPrice.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        totalPrice.setBorder(null);
+
+        BackBtn.setBackground(new java.awt.Color(255, 122, 171));
+        BackBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        BackBtn.setForeground(new java.awt.Color(255, 255, 255));
+        BackBtn.setText("Close");
+        BackBtn.setBorder(null);
+        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
+
+        balance.setEditable(false);
+        balance.setBackground(new java.awt.Color(252, 235, 235));
+        balance.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        balance.setBorder(null);
+
+        jLabel34.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        jLabel34.setText("Booking ID: ");
+
+        jLabel35.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        jLabel35.setText("Taxes:");
+
+        PDates1.setEditable(false);
+        PDates1.setBackground(new java.awt.Color(252, 235, 235));
+        PDates1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        PDates1.setBorder(null);
+        PDates1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PDates1ActionPerformed(evt);
+            }
+        });
+
+        jLabel36.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        jLabel36.setText("Total Price:");
+
+        javax.swing.GroupLayout payPaneLayout = new javax.swing.GroupLayout(payPane);
+        payPane.setLayout(payPaneLayout);
+        payPaneLayout.setHorizontalGroup(
+            payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(payPaneLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel32)
+                                    .addComponent(jLabel33)
+                                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(totalPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(payPaneLayout.createSequentialGroup()
+                                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(PBookID1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(payPaneLayout.createSequentialGroup()
+                                        .addComponent(ProomID1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(PDates1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(181, 181, 181)
+                                .addComponent(Pdays1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(224, 224, 224))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addGap(213, 213, 213)
+                                .addComponent(paymentLab, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Pdate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(177, 177, 177)
+                        .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 190, Short.MAX_VALUE))))
+            .addGroup(payPaneLayout.createSequentialGroup()
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addComponent(jLabel29)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(PCustName1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jSeparator1)
+                                .addComponent(jSeparator2)
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TourismTax, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(serviceTax, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        payPaneLayout.setVerticalGroup(
+            payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(payPaneLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(paymentLab))
+                    .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Pdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34)
+                            .addComponent(PBookID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ProomID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PDates1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel29)
+                            .addComponent(PCustName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(Pdays1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addComponent(subtotal)
+                        .addGap(83, 83, 83))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel33)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(serviceTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel32)
+                            .addComponent(TourismTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel36)
+                    .addComponent(totalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel30)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)))
+                .addGap(21, 21, 21)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
+        );
+
+        menuBtn.setBackground(new java.awt.Color(140, 151, 224));
+        menuBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        menuBtn.setForeground(new java.awt.Color(255, 255, 255));
+        menuBtn.setText("Menu");
+        menuBtn.setBorder(null);
+        menuBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        menuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtnActionPerformed(evt);
+            }
+        });
+
+        lpane.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lpane.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lpane.setLayer(jLabel19, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lpane.setLayer(payPane, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lpane.setLayer(menuBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout lpaneLayout = new javax.swing.GroupLayout(lpane);
+        lpane.setLayout(lpaneLayout);
+        lpaneLayout.setHorizontalGroup(
+            lpaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lpaneLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(lpaneLayout.createSequentialGroup()
+                .addGap(537, 537, 537)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(menuBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+            .addGroup(lpaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(lpaneLayout.createSequentialGroup()
+                    .addGap(335, 335, 335)
+                    .addComponent(payPane, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(336, Short.MAX_VALUE)))
+        );
+        lpaneLayout.setVerticalGroup(
+            lpaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lpaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(lpaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19)
+                    .addComponent(menuBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(71, 71, 71)
+                .addGroup(lpaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(82, Short.MAX_VALUE))
+            .addGroup(lpaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(lpaneLayout.createSequentialGroup()
+                    .addGap(52, 52, 52)
+                    .addComponent(payPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(52, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(lpane)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(lpane)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void SearchTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchTxtActionPerformed
+
+    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+        // TODO add your handling code here:
+        String searchkey = SearchTxt.getText().trim();
+        noResult.setVisible(false);
+        checkoutBtn.setEnabled(true);
+        deleteBtn.setEnabled(true);
+        try (BufferedReader b = new BufferedReader (new FileReader ("Booking.txt"))){
+            String line = b.readLine();
+            while(line != null){
+                if (searchkey.equals(line.split(";")[0]) || searchkey.contains(line.split(";")[2])){
+                    noResult.setVisible(false);
+                    String output[] = line.split(";");
+                    BookID.setText(output[0]);
+                    CustName.setText(output[1]);
+                    ICno.setText(output[2]);
+                    ContactNo.setText(output[3]);
+                    Email.setText(output[4]);
+                    RoomID.setText(output[5]);
+                    SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            
+                    Date d1 = null;
+                    Date d2 = null; 
+                    try{
+                        d1 = f.parse(output[6]);
+                        d2 = f.parse(output[7]);
+                    }
+                    catch(ParseException p){
+                        p.printStackTrace();
+                    }
+                    checkin.setDate(d1);
+                        checkout.setDate(d2);
+                    StayDays.setText(output[8]);
+                    
+                    try(BufferedReader pread =new BufferedReader(new FileReader("Payment.txt"))){
+                            String pline;
+                            while ((pline = pread.readLine()) != null){
+                                if (pline.split(";")[1].equals(BookID.getText())){
+                                    checkoutBtn.setEnabled(false);
+                                    deleteBtn.setEnabled(false);
+                                }
+                            }
+                        }
+                        catch(IOException ex1){
+                            JOptionPane.showMessageDialog(null,"Error occurs.");
+                        }
+
+                    try (BufferedReader br = new BufferedReader(new FileReader("Room.txt"))){
+                        String line2 = br.readLine();
+                        while(line2 != null){
+                            if (RoomID.getText().equals(line2.split(";")[0])){
+                                String view = line2.split(";")[1];
+                                roomview.setText(view);
+                                break;
+                            }
+                            line2 = br.readLine();
+                        }
+                        br.close();
+                    }
+                    catch(IOException ex){
+                        JOptionPane.showMessageDialog(null, "Error occurs while reading file.","Error Message",JOptionPane.ERROR_MESSAGE);
+                    }
+                    //end try
+                    break;
+                }
+                else{
+                    noResult.setVisible(true);
+                    Component[] components = getContentPane().getComponents();
+                    for (Component component : components) {
+                        if (component instanceof JTextField) {
+                            JTextField specificObject = (JTextField) component;
+                            specificObject.setText("");
+                        }
+                    }
+                }
+                line = b.readLine();
+            }
+            b.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "Error occurs while reading file.","Error Message",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_SearchBtnActionPerformed
+
+    private void BookIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BookIDActionPerformed
+
+    private void ICnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ICnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ICnoActionPerformed
+
+    private void ContactNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ContactNoActionPerformed
+
+    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailActionPerformed
+
+    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
+        // TODO add your handling code here:
+        int flag = 1;
+        String checkinS = null;
+        String checkoutS = null;
+        Date checkinD = null;
+        Date checkoutD = null; 
+        try{
+            //get inputs
+            String bookid = BookID.getText().trim();
+            String roomid = RoomID.getText().trim();
+            String name = CustName.getText().trim();
+            String IC = ICno.getText().trim();
+            String contactno = ContactNo.getText().trim();
+            String email = Email.getText().trim();
+                
+
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            
+            // read file and get record for the selected date
+            try(BufferedReader r = new BufferedReader(new FileReader("Booking.txt"))){
+                String line = r.readLine();
+                Date d1 = null;
+                Date d2 = null; 
+                while(line != null){
+                    try{
+                        d1 = f.parse(line.split(";")[6]);
+                        d2 = f.parse(line.split(";")[7]);
+                        checkinD = f.parse(f.format(checkin.getDate()));
+                        checkoutD = f.parse(f.format(checkout.getDate()));       
+                        checkinS = f.format(checkinD);
+                        checkoutS = f.format(checkoutD);
+                    }
+                    catch(ParseException p){
+                        p.printStackTrace();
+                    }
+                    //check if the date is not booked or checkout date not before checkin date
+                    if (checkoutD.before(checkinD)){
+                        flag = 0;
+                        break;
+                    }
+                    else if (roomid.equals(line.split(";")[5])&& !bookid.equals(line.split(";")[0])){
+                         if (((checkinD.equals(d1) || checkinD.equals(d2)) ||(checkinD.after(d1) && checkinD.before(d2)))||
+                            ((checkoutD.equals(d1) || checkoutD.equals(d2)) ||(checkoutD.after(d1) && checkoutD.before(d2)))
+                            )
+                         {   
+                            flag = 0;
+                            break;
+                        }
+                    }
+                    line = r.readLine();
+                }
+                r.close();
+            }
+            catch (IOException ex){
+                ex.printStackTrace();
+            }
+            
+            if (flag==1){
+                long DiffBetween = checkoutD.getTime()  - checkinD.getTime();
+                long NewDaysBetween = TimeUnit.DAYS.convert(DiffBetween, TimeUnit.MILLISECONDS);
+                StayDays.setText(""+NewDaysBetween);
+
+                String DaysBetween = StayDays.getText().trim();
+
+                File file = new File("Booking.txt");
+                File temp = new File("temp.txt");
+                try(BufferedReader reader = new BufferedReader(new FileReader(file))){
+                    try (PrintWriter writer = new PrintWriter(new BufferedWriter (new FileWriter (temp))))
+                    {
+                        String line2;
+                        while((line2 = reader.readLine()) != null) {
+                            String ID = line2.split(";")[0];
+                            if(ID.equals(bookid)) {
+                                writer.print(bookid+";");
+                                writer.print(name+";");
+                                writer.print(IC+";");
+                                writer.print(contactno+";");
+                                writer.print(email+";");
+                                writer.print(roomid+";");
+                                writer.print(checkinS+";");
+                                writer.print(checkoutS+";");
+                                writer.print(DaysBetween+"\n");
+                            }
+                            else{
+                                writer.println(line2);
+                            }
+                        }
+                        reader.close();
+                        writer.close();
+                        file.delete();
+                        boolean successful = temp.renameTo(file);
+                        if (successful){
+                            JOptionPane.showMessageDialog(null, "Record updated succesfully!");
+                            //read updated rows into table
+                            DefaultTableModel tableModel = (DefaultTableModel)BookingTable.getModel();
+                            tableModel.setRowCount(0);
+                            String row;
+                            try(BufferedReader read = new BufferedReader(new FileReader("Booking.txt"))){
+                                while ((row = read.readLine())!=null){
+                                    String booking[] = row.split(";");
+                                    tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[5],booking[1],booking[6],booking[7]});
+                                }
+                                read.close();
+                            }
+                            catch(IOException ex){
+                                JOptionPane.showMessageDialog(null,"Error occurs.");
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Failed to update record!");
+                        }
+                    }
+                    catch(IOException ioe)
+                    {
+                        ioe.printStackTrace();
+                    }
+                }
+                catch(IOException ioe)
+                {
+                    ioe.printStackTrace();
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Room is booked on the chosen date or checkout date is set before checkin date.", "Error Message", JOptionPane.ERROR_MESSAGE);
+            }           
+        }
+        catch (NullPointerException ne){
+            JOptionPane.showMessageDialog(null, "Please fill up all field", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }                  
+        catch(Exception e){
+            e.printStackTrace();
+        }   
+    }//GEN-LAST:event_EditBtnActionPerformed
+
+    private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat Format = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        Pdate.setText(Format.format(today));
+        //show payment details in payment Pane
+        try (BufferedReader bookr2 = new BufferedReader(new FileReader("Booking.txt"))){
+            String line2 = bookr2.readLine();
+            while(line2 != null){
+                if (BookID.getText().equals(line2.split(";")[0])){
+                    String book[] = line2.split(";");
+                    PBookID1.setText(BookID.getText());
+                    PCustName1.setText(book[1]);
+                    ProomID1.setText("Room "+book[5]);
+                    PDates1.setText(book[6]+" to "+book[7]);
+                    Pdays1.setText(book[8]+" day(s)");
+                    double sub = 350* Integer.parseInt(book[8]);
+                    subtotal.setText(""+sub);
+                    double t_tax = 10* Integer.parseInt(book[8]);
+                    TourismTax.setText(""+t_tax);
+                    double s_tax = sub * 0.1;
+                    serviceTax.setText(""+s_tax);
+                    double total = sub + t_tax + s_tax;
+                    totalPrice.setText("" + total);
+                    break;
+                }
+                line2 = bookr2.readLine();
+            }
+            bookr2.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "Error occurs while reading file.","Error Message",JOptionPane.ERROR_MESSAGE);
+        }
+        payPane.setVisible(true);    
+    }//GEN-LAST:event_checkoutBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        NormalMethod n = new NormalMethod();
+        n.delete("Booking.txt", BookID.getText().trim());
+        
+        //clear all fields
+        BookID.setText("");
+        RoomID.setText("");
+        roomview.setText("");
+        CustName.setText("");
+        ICno.setText("");
+        ContactNo.setText("");
+        Email.setText("");
+        checkin.setDate(null);
+        checkout.setDate(null);
+        StayDays.setText("");
+
+       //read updated rows into table
+        DefaultTableModel tableModel = (DefaultTableModel)BookingTable.getModel();
+        tableModel.setRowCount(0);
+        String row;
+        try(BufferedReader r = new BufferedReader(new FileReader("Booking.txt"))){
+            while ((row = r.readLine())!=null){
+                String booking[] = row.split(";");
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[5],booking[1],booking[6],booking[7]});
+            }
+            r.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null,"Error occurs.");
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void StayDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StayDaysActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StayDaysActionPerformed
+
+    private void roomviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomviewActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roomviewActionPerformed
+
+    private void RoomIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RoomIDActionPerformed
+
+    private void PCustName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PCustName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PCustName1ActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here:
+        //get payment ID
+        AutoIncrementID ai = new AutoIncrementID();
+        ai.setData("Payment.txt");
+        int pid = ai.getdata();
+        try{
+            //get inputs
+            String bookingid = PBookID1.getText();
+            String price = totalPrice.getText().trim();
+            String date = Pdate.getText().trim();
+
+            //write into file
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter (new FileWriter ("Payment.txt",true))))
+            {
+                writer.print(pid+";");
+                writer.print(bookingid+";");
+                writer.print(price+";");
+                writer.println(date);
+                writer.close();
+                
+                //close payment window
+                payPane.setVisible(false);
+                
+                JOptionPane.showMessageDialog(null, "Record added successfully!");
+            }
+            catch(IOException ioe){
+                ioe.printStackTrace();
+            }
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error occurs.", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
+        // TODO add your handling code here:
+        double balancetxt = Double.parseDouble(paid.getText()) - Double.parseDouble(totalPrice.getText());
+        balance.setText(balancetxt+"");
+    }//GEN-LAST:event_enterBtnActionPerformed
+
+    private void PBookID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PBookID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PBookID1ActionPerformed
+
+    private void ProomID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProomID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ProomID1ActionPerformed
+
+    private void Pdays1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pdays1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Pdays1ActionPerformed
+
+    private void PDates1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDates1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PDates1ActionPerformed
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        payPane.setVisible(false);
+    }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void menuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Menu m = new Menu();
+        m.setVisible(true);
+    }//GEN-LAST:event_menuBtnActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(BookingRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(BookingRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(BookingRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(BookingRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new BookingRecords().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackBtn;
+    private javax.swing.JTextField BookID;
+    private javax.swing.JTable BookingTable;
+    private javax.swing.JTextField ContactNo;
+    private javax.swing.JTextField CustName;
+    private javax.swing.JButton EditBtn;
+    private javax.swing.JTextField Email;
+    private javax.swing.JTextField ICno;
+    private javax.swing.JTextField PBookID1;
+    private javax.swing.JTextField PCustName1;
+    private javax.swing.JTextField PDates1;
+    private javax.swing.JTextField Pdate;
+    private javax.swing.JTextField Pdays1;
+    private javax.swing.JTextField ProomID1;
+    private javax.swing.JTextField RoomID;
+    private javax.swing.JButton SearchBtn;
+    private javax.swing.JTextField SearchTxt;
+    private javax.swing.JTextField StayDays;
+    private javax.swing.JTextField TourismTax;
+    private javax.swing.JTextField balance;
+    private com.toedter.calendar.JDateChooser checkin;
+    private com.toedter.calendar.JDateChooser checkout;
+    private javax.swing.JButton checkoutBtn;
+    private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton enterBtn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel jlab;
+    private javax.swing.JLabel jlab10;
+    private javax.swing.JLayeredPane lpane;
+    private javax.swing.JButton menuBtn;
+    private javax.swing.JLabel noResult;
+    private javax.swing.JTextField paid;
+    private javax.swing.JPanel payPane;
+    private javax.swing.JLabel paymentLab;
+    private javax.swing.JTextField roomview;
+    private javax.swing.JButton saveBtn;
+    private javax.swing.JTextField serviceTax;
+    private javax.swing.JTextField subtotal;
+    private javax.swing.JTextField totalPrice;
+    // End of variables declaration//GEN-END:variables
+}
