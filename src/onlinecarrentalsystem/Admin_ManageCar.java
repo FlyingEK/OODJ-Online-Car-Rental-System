@@ -609,20 +609,27 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     }//GEN-LAST:event_yearActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        // TODO add your handling code here:   
-        ArrayList<String> carArray = new ArrayList<String>();
-        carArray.add(carID.getText());
-        carArray.add(model.getText());
-        carArray.add(plateNo.getText());
-        carArray.add(seat.getText());
-        carArray.add(color.getText());
-        carArray.add(year.getText());
-        carArray.add(price.getText());
-        try{
-            car.modifyCar(carArray);
-        }catch(Exception e){
+        // TODO add your handling code here: 
+        try {
+            ArrayList<String> carArray = new ArrayList<String>();
+            carArray.add(carID.getText());
+            carArray.add(model.getText());
+            carArray.add(plateNo.getText());
+            carArray.add(seat.getText());
+            carArray.add(color.getText());
+            carArray.add(year.getText());
+            carArray.add(price.getText());
+            try{
+                car.modifyCar(carArray);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        } catch (NullPointerException n){
+            JOptionPane.showMessageDialog(null, "Please fill up all field");
+        } catch (Exception e){
             e.printStackTrace();
         }
+        
         //read latest table
         readTable();
         
@@ -638,6 +645,16 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         car.deleteCar();
         //read latest table
         readTable();
+        //get latest new ID
+        carID1.setText(car.newCarID());
+        //clear all text field
+        carID.setText("");
+        model.setText("");
+        plateNo.setText("");
+        seat.setText("");
+        color.setText("");
+        year.setText("");
+        price.setText("");
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
@@ -662,17 +679,24 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:   
-        ArrayList<String> carArray = new ArrayList<String>();
-        carArray.add(carID1.getText()+";"+model1.getText()+";"+plateNo1.getText()+";"+seat1.getText()+";"+color1.getText()
-        +";"+year1.getText()+";"+price1.getText());
-        car.addCar(carArray);
-        carID1.setText(car.newCarID());
-        model1.setText("");
-        plateNo1.setText("");
-        seat1.setText("");
-        color1.setText("");
-        year1.setText("");
-        price1.setText("");
+        try{
+            ArrayList<String> carArray = new ArrayList<String>();
+            carArray.add(carID1.getText()+";"+model1.getText()+";"+plateNo1.getText()+";"+seat1.getText()+";"+color1.getText()
+            +";"+year1.getText()+";"+price1.getText());
+            car.addCar(carArray);
+            carID1.setText(car.newCarID());
+            model1.setText("");
+            plateNo1.setText("");
+            seat1.setText("");
+            color1.setText("");
+            year1.setText("");
+            price1.setText("");
+        } catch (NullPointerException n){
+            JOptionPane.showMessageDialog(null, "Please fill up all field");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        
         //read latest table
         readTable();
     }//GEN-LAST:event_addBtnActionPerformed

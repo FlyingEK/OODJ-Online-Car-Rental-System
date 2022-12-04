@@ -34,6 +34,34 @@ public class Admin_manageBooking extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLayeredPane2 = new javax.swing.JLayeredPane();
+        payPane = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        PCustName1 = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        saveBtn = new javax.swing.JButton();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        paymentLab = new javax.swing.JLabel();
+        enterBtn = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        PBookID1 = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel33 = new javax.swing.JLabel();
+        Pdate = new javax.swing.JTextField();
+        ProomID1 = new javax.swing.JTextField();
+        Pdays1 = new javax.swing.JTextField();
+        serviceTax = new javax.swing.JTextField();
+        TourismTax = new javax.swing.JTextField();
+        subtotal = new javax.swing.JTextField();
+        totalPrice = new javax.swing.JTextField();
+        paid = new javax.swing.JTextField();
+        BackBtn = new javax.swing.JButton();
+        balance = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        PDates1 = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -92,34 +120,7 @@ public class Admin_manageBooking extends javax.swing.JFrame {
         checkoutBtn = new javax.swing.JButton();
         ContactNo = new javax.swing.JTextField();
         deleteBtn = new javax.swing.JButton();
-        payPane = new javax.swing.JPanel();
-        jLabel29 = new javax.swing.JLabel();
-        PCustName1 = new javax.swing.JTextField();
-        jSeparator2 = new javax.swing.JSeparator();
-        saveBtn = new javax.swing.JButton();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        paymentLab = new javax.swing.JLabel();
-        enterBtn = new javax.swing.JButton();
-        jLabel31 = new javax.swing.JLabel();
-        PBookID1 = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
-        jLabel33 = new javax.swing.JLabel();
-        Pdate = new javax.swing.JTextField();
-        ProomID1 = new javax.swing.JTextField();
-        Pdays1 = new javax.swing.JTextField();
-        serviceTax = new javax.swing.JTextField();
-        TourismTax = new javax.swing.JTextField();
-        subtotal = new javax.swing.JTextField();
-        totalPrice = new javax.swing.JTextField();
-        paid = new javax.swing.JTextField();
-        BackBtn = new javax.swing.JButton();
-        balance = new javax.swing.JTextField();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        PDates1 = new javax.swing.JTextField();
-        jLabel36 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        jLayeredPane3 = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
@@ -145,6 +146,300 @@ public class Admin_manageBooking extends javax.swing.JFrame {
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 679, Short.MAX_VALUE)
+        );
+
+        payPane.setBackground(new java.awt.Color(232, 232, 247));
+        payPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        jLabel29.setText("Customer Name:");
+
+        PCustName1.setEditable(false);
+        PCustName1.setBackground(new java.awt.Color(232, 232, 247));
+        PCustName1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        PCustName1.setBorder(null);
+        PCustName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PCustName1ActionPerformed(evt);
+            }
+        });
+
+        jSeparator2.setBackground(new java.awt.Color(232, 232, 247));
+
+        saveBtn.setBackground(new java.awt.Color(102, 0, 255));
+        saveBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveBtn.setText("Generate receipt");
+        saveBtn.setBorder(null);
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel30.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel30.setText("Paid Value:");
+
+        jLabel7.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel7.setText("Balance: ");
+
+        paymentLab.setFont(new java.awt.Font("Candara", 1, 30)); // NOI18N
+        paymentLab.setText("Payment");
+
+        enterBtn.setBackground(new java.awt.Color(102, 0, 255));
+        enterBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        enterBtn.setForeground(new java.awt.Color(255, 255, 255));
+        enterBtn.setText("Enter");
+        enterBtn.setBorder(null);
+        enterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel31.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel31.setText("Deposit (RM 250):");
+
+        PBookID1.setEditable(false);
+        PBookID1.setBackground(new java.awt.Color(232, 232, 247));
+        PBookID1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        PBookID1.setBorder(null);
+        PBookID1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PBookID1ActionPerformed(evt);
+            }
+        });
+
+        jSeparator3.setBackground(new java.awt.Color(232, 232, 247));
+
+        jLabel33.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel33.setText("Subtotal: ");
+
+        Pdate.setEditable(false);
+        Pdate.setBackground(new java.awt.Color(232, 232, 247));
+        Pdate.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        Pdate.setBorder(null);
+
+        ProomID1.setEditable(false);
+        ProomID1.setBackground(new java.awt.Color(232, 232, 247));
+        ProomID1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        ProomID1.setBorder(null);
+        ProomID1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProomID1ActionPerformed(evt);
+            }
+        });
+
+        Pdays1.setEditable(false);
+        Pdays1.setBackground(new java.awt.Color(232, 232, 247));
+        Pdays1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        Pdays1.setBorder(null);
+        Pdays1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Pdays1ActionPerformed(evt);
+            }
+        });
+
+        serviceTax.setEditable(false);
+        serviceTax.setBackground(new java.awt.Color(232, 232, 247));
+        serviceTax.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        serviceTax.setBorder(null);
+
+        TourismTax.setEditable(false);
+        TourismTax.setBackground(new java.awt.Color(232, 232, 247));
+        TourismTax.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        TourismTax.setBorder(null);
+
+        subtotal.setEditable(false);
+        subtotal.setBackground(new java.awt.Color(232, 232, 247));
+        subtotal.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        subtotal.setBorder(null);
+
+        totalPrice.setEditable(false);
+        totalPrice.setBackground(new java.awt.Color(232, 232, 247));
+        totalPrice.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        totalPrice.setBorder(null);
+
+        paid.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+
+        BackBtn.setBackground(new java.awt.Color(102, 0, 255));
+        BackBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        BackBtn.setForeground(new java.awt.Color(255, 255, 255));
+        BackBtn.setText("Close");
+        BackBtn.setBorder(null);
+        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
+
+        balance.setEditable(false);
+        balance.setBackground(new java.awt.Color(232, 232, 247));
+        balance.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        balance.setBorder(null);
+
+        jLabel34.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        jLabel34.setText("Booking ID: ");
+
+        jLabel35.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel35.setText("Tax (10%): ");
+
+        PDates1.setEditable(false);
+        PDates1.setBackground(new java.awt.Color(232, 232, 247));
+        PDates1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        PDates1.setBorder(null);
+        PDates1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PDates1ActionPerformed(evt);
+            }
+        });
+
+        jLabel36.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
+        jLabel36.setText("Total Price:");
+
+        jSeparator1.setBackground(new java.awt.Color(232, 232, 247));
+
+        javax.swing.GroupLayout payPaneLayout = new javax.swing.GroupLayout(payPane);
+        payPane.setLayout(payPaneLayout);
+        payPaneLayout.setHorizontalGroup(
+            payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(payPaneLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(payPaneLayout.createSequentialGroup()
+                                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel33)
+                                            .addComponent(jLabel35))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
+                                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(totalPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(payPaneLayout.createSequentialGroup()
+                                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(payPaneLayout.createSequentialGroup()
+                                                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(PBookID1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(220, 220, 220)
+                                                .addComponent(Pdays1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(payPaneLayout.createSequentialGroup()
+                                                .addComponent(ProomID1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(PDates1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 67, Short.MAX_VALUE)))
+                                .addGap(20, 20, 20))
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(payPaneLayout.createSequentialGroup()
+                                        .addGap(213, 213, 213)
+                                        .addComponent(paymentLab, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Pdate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(177, 177, 177)
+                                .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, payPaneLayout.createSequentialGroup()
+                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jSeparator1)
+                                .addGroup(payPaneLayout.createSequentialGroup()
+                                    .addComponent(jLabel29)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(PCustName1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(TourismTax, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(serviceTax, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(payPaneLayout.createSequentialGroup()
+                                .addGap(146, 146, 146)
+                                .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(82, 82, 82)
+                                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        payPaneLayout.setVerticalGroup(
+            payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(payPaneLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(paymentLab))
+                    .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Pdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34)
+                            .addComponent(PBookID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(114, 114, 114)
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ProomID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PDates1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel29)
+                            .addComponent(PCustName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(Pdays1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel33)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel31)
+                            .addComponent(serviceTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TourismTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addComponent(subtotal, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                        .addGap(83, 83, 83)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel36)
+                    .addComponent(totalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel30)
+                    .addGroup(payPaneLayout.createSequentialGroup()
+                        .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)))
+                .addGap(16, 16, 16)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50))
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 255));
@@ -770,342 +1065,48 @@ public class Admin_manageBooking extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Booking Records", jPanel4);
 
-        payPane.setBackground(new java.awt.Color(232, 232, 247));
-        payPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jLabel29.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        jLabel29.setText("Customer Name:");
-
-        PCustName1.setEditable(false);
-        PCustName1.setBackground(new java.awt.Color(232, 232, 247));
-        PCustName1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        PCustName1.setBorder(null);
-        PCustName1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PCustName1ActionPerformed(evt);
-            }
-        });
-
-        jSeparator2.setBackground(new java.awt.Color(232, 232, 247));
-
-        saveBtn.setBackground(new java.awt.Color(102, 0, 255));
-        saveBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
-        saveBtn.setText("Generate receipt");
-        saveBtn.setBorder(null);
-        saveBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel30.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel30.setText("Paid Value:");
-
-        jLabel7.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel7.setText("Balance: ");
-
-        paymentLab.setFont(new java.awt.Font("Candara", 1, 30)); // NOI18N
-        paymentLab.setText("Payment");
-
-        enterBtn.setBackground(new java.awt.Color(102, 0, 255));
-        enterBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        enterBtn.setForeground(new java.awt.Color(255, 255, 255));
-        enterBtn.setText("Enter");
-        enterBtn.setBorder(null);
-        enterBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                enterBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel31.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel31.setText("Deposit (RM 250):");
-
-        PBookID1.setEditable(false);
-        PBookID1.setBackground(new java.awt.Color(232, 232, 247));
-        PBookID1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        PBookID1.setBorder(null);
-        PBookID1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PBookID1ActionPerformed(evt);
-            }
-        });
-
-        jSeparator3.setBackground(new java.awt.Color(232, 232, 247));
-
-        jLabel33.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel33.setText("Subtotal: ");
-
-        Pdate.setEditable(false);
-        Pdate.setBackground(new java.awt.Color(232, 232, 247));
-        Pdate.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        Pdate.setBorder(null);
-
-        ProomID1.setEditable(false);
-        ProomID1.setBackground(new java.awt.Color(232, 232, 247));
-        ProomID1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        ProomID1.setBorder(null);
-        ProomID1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProomID1ActionPerformed(evt);
-            }
-        });
-
-        Pdays1.setEditable(false);
-        Pdays1.setBackground(new java.awt.Color(232, 232, 247));
-        Pdays1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        Pdays1.setBorder(null);
-        Pdays1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pdays1ActionPerformed(evt);
-            }
-        });
-
-        serviceTax.setEditable(false);
-        serviceTax.setBackground(new java.awt.Color(232, 232, 247));
-        serviceTax.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        serviceTax.setBorder(null);
-
-        TourismTax.setEditable(false);
-        TourismTax.setBackground(new java.awt.Color(232, 232, 247));
-        TourismTax.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        TourismTax.setBorder(null);
-
-        subtotal.setEditable(false);
-        subtotal.setBackground(new java.awt.Color(232, 232, 247));
-        subtotal.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        subtotal.setBorder(null);
-
-        totalPrice.setEditable(false);
-        totalPrice.setBackground(new java.awt.Color(232, 232, 247));
-        totalPrice.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        totalPrice.setBorder(null);
-
-        paid.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-
-        BackBtn.setBackground(new java.awt.Color(102, 0, 255));
-        BackBtn.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        BackBtn.setForeground(new java.awt.Color(255, 255, 255));
-        BackBtn.setText("Close");
-        BackBtn.setBorder(null);
-        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        BackBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackBtnActionPerformed(evt);
-            }
-        });
-
-        balance.setEditable(false);
-        balance.setBackground(new java.awt.Color(232, 232, 247));
-        balance.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        balance.setBorder(null);
-
-        jLabel34.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        jLabel34.setText("Booking ID: ");
-
-        jLabel35.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel35.setText("Tax (10%): ");
-
-        PDates1.setEditable(false);
-        PDates1.setBackground(new java.awt.Color(232, 232, 247));
-        PDates1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        PDates1.setBorder(null);
-        PDates1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PDates1ActionPerformed(evt);
-            }
-        });
-
-        jLabel36.setFont(new java.awt.Font("Segoe UI Emoji", 1, 12)); // NOI18N
-        jLabel36.setText("Total Price:");
-
-        jSeparator1.setBackground(new java.awt.Color(232, 232, 247));
-
-        javax.swing.GroupLayout payPaneLayout = new javax.swing.GroupLayout(payPane);
-        payPane.setLayout(payPaneLayout);
-        payPaneLayout.setHorizontalGroup(
-            payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(payPaneLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(payPaneLayout.createSequentialGroup()
-                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(payPaneLayout.createSequentialGroup()
-                                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel33)
-                                            .addComponent(jLabel35))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 416, Short.MAX_VALUE)
-                                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(totalPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(payPaneLayout.createSequentialGroup()
-                                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(payPaneLayout.createSequentialGroup()
-                                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(payPaneLayout.createSequentialGroup()
-                                                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(PBookID1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(payPaneLayout.createSequentialGroup()
-                                                        .addComponent(ProomID1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(PDates1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(181, 181, 181)
-                                                .addComponent(Pdays1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 21, Short.MAX_VALUE)))
-                                .addGap(20, 20, 20))
-                            .addGroup(payPaneLayout.createSequentialGroup()
-                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(payPaneLayout.createSequentialGroup()
-                                        .addGap(213, 213, 213)
-                                        .addComponent(paymentLab, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(Pdate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(177, 177, 177)
-                                .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(payPaneLayout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING)))
-                            .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(payPaneLayout.createSequentialGroup()
-                                    .addComponent(jLabel29)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(PCustName1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator2)
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(payPaneLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 493, Short.MAX_VALUE)
-                                        .addComponent(TourismTax, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addComponent(serviceTax, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(payPaneLayout.createSequentialGroup()
-                                .addGap(146, 146, 146)
-                                .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(82, 82, 82)
-                                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        payPaneLayout.setVerticalGroup(
-            payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(payPaneLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(paymentLab))
-                    .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Pdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel34)
-                            .addComponent(PBookID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ProomID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PDates1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel29)
-                            .addComponent(PCustName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(Pdays1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addComponent(subtotal, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                        .addGap(83, 83, 83)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addComponent(jLabel33)
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel35)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel31)
-                            .addComponent(serviceTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TourismTax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel36)
-                    .addComponent(totalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel30)
-                    .addGroup(payPaneLayout.createSequentialGroup()
-                        .addComponent(paid, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)))
-                .addGap(16, 16, 16)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50))
-        );
-
-        jLayeredPane2.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(payPane, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(453, 453, 453)
                 .addComponent(payPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(4351, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap(90, Short.MAX_VALUE)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(payPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85))))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(payPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
+
+        jLayeredPane3.setLayout(new javax.swing.OverlayLayout(jLayeredPane3));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(1204, 1204, 1204)
+                .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(651, 651, 651)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(5147, 5147, 5147)
+                        .addGap(3206, 3206, 3206)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1114,78 +1115,145 @@ public class Admin_manageBooking extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(184, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SearchTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTxtActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SearchTxtActionPerformed
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SearchBtnActionPerformed
 
-    private void BookIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BookIDActionPerformed
-
-    private void ICnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ICnoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ICnoActionPerformed
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void ContactNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ContactNoActionPerformed
 
-    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
+    private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EmailActionPerformed
+        payPane.setVisible(true);
+
+    }//GEN-LAST:event_checkoutBtnActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
 
     }//GEN-LAST:event_EditBtnActionPerformed
 
-    private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
+    private void RoomIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomIDActionPerformed
         // TODO add your handling code here:
-        payPane.setVisible(true);    
-     
-    }//GEN-LAST:event_checkoutBtnActionPerformed
-
-    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_deleteBtnActionPerformed
-
-    private void StayDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StayDaysActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_StayDaysActionPerformed
+    }//GEN-LAST:event_RoomIDActionPerformed
 
     private void roomviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomviewActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_roomviewActionPerformed
 
-    private void RoomIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomIDActionPerformed
+    private void StayDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StayDaysActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_RoomIDActionPerformed
+    }//GEN-LAST:event_StayDaysActionPerformed
 
-    private void PCustName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PCustName1ActionPerformed
+    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_PCustName1ActionPerformed
+    }//GEN-LAST:event_EmailActionPerformed
 
-    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+    private void ICnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ICnoActionPerformed
         // TODO add your handling code here:
-  
-    }//GEN-LAST:event_saveBtnActionPerformed
+    }//GEN-LAST:event_ICnoActionPerformed
+
+    private void BookIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BookIDActionPerformed
+
+    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchBtnActionPerformed
+
+    private void SearchTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchTxtActionPerformed
+
+    private void RoomID5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RoomID5ActionPerformed
+
+    private void RoomID4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RoomID4ActionPerformed
+
+    private void RoomID3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RoomID3ActionPerformed
+
+    private void RoomID2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RoomID2ActionPerformed
+
+    private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteBtn1ActionPerformed
+
+    private void checkoutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkoutBtn1ActionPerformed
+
+    private void RoomID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RoomID1ActionPerformed
+
+    private void roomview1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomview1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roomview1ActionPerformed
+
+    private void StayDays1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StayDays1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StayDays1ActionPerformed
+
+    private void BookID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BookID1ActionPerformed
+
+    private void SearchBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchBtn1ActionPerformed
+
+    private void SearchTxt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTxt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchTxt1ActionPerformed
+
+    private void PDates1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDates1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PDates1ActionPerformed
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        payPane.setVisible(false);
+    }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void Pdays1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pdays1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Pdays1ActionPerformed
+
+    private void ProomID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProomID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ProomID1ActionPerformed
+
+    private void PBookID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PBookID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PBookID1ActionPerformed
 
     private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
         // TODO add your handling code here:
@@ -1193,78 +1261,14 @@ public class Admin_manageBooking extends javax.swing.JFrame {
         balance.setText(balancetxt+"");
     }//GEN-LAST:event_enterBtnActionPerformed
 
-    private void PBookID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PBookID1ActionPerformed
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_PBookID1ActionPerformed
 
-    private void ProomID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProomID1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ProomID1ActionPerformed
+    }//GEN-LAST:event_saveBtnActionPerformed
 
-    private void Pdays1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pdays1ActionPerformed
+    private void PCustName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PCustName1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Pdays1ActionPerformed
-
-    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
-        // TODO add your handling code here:
-        payPane.setVisible(false);
-    }//GEN-LAST:event_BackBtnActionPerformed
-
-    private void PDates1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDates1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PDates1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void SearchTxt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTxt1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchTxt1ActionPerformed
-
-    private void SearchBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchBtn1ActionPerformed
-
-    private void BookID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookID1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BookID1ActionPerformed
-
-    private void StayDays1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StayDays1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_StayDays1ActionPerformed
-
-    private void roomview1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomview1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_roomview1ActionPerformed
-
-    private void RoomID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RoomID1ActionPerformed
-
-    private void checkoutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkoutBtn1ActionPerformed
-
-    private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteBtn1ActionPerformed
-
-    private void RoomID2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RoomID2ActionPerformed
-
-    private void RoomID3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RoomID3ActionPerformed
-
-    private void RoomID4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RoomID4ActionPerformed
-
-    private void RoomID5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomID5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RoomID5ActionPerformed
+    }//GEN-LAST:event_PCustName1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1365,6 +1369,7 @@ public class Admin_manageBooking extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
