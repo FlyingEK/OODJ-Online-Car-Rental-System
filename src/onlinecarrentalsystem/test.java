@@ -28,6 +28,9 @@ public class test {
         cus.add("Zli");
         cus.add("1231");
         
+        String[] customerDetail = new String[] {"NaNa","9987","John Alian","012-712-2213",
+        "gg@gmail.com","011223011123","6 Jalan Kluang, Sugai Besi, Kuala Lumpur"};
+        
         FileHandling fh = new FileHandling();
         //fh.writeFile("customer.txt",cus);
         //fh.readFile("customer.txt");
@@ -36,6 +39,7 @@ public class test {
         
         Customer cust = new Customer();
         cust.login("Violin", "7891");
+        cust.Register(customerDetail);
         
         
 

@@ -1,3 +1,4 @@
-1;Luna;password
-2;Violin;7891
-3;Zli;1231
+C1;Luna;password
+C2;Violin;7891
+C3;Uzi;1231
+C4;NaNa;9987;John Alian;012-712-2213;gg@gmail.com;011223011123;6 Jalan Kluang, Sugai Besi, Kuala Lumpur
