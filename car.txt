@@ -1,3 +1,3 @@
 C1;Perodua Myvi;JPJ7671;5;Red;4;160
 C2;Mercedes SUV A1;WEE888;3;Silver;1;1600
-C3;;;;;;
+C3;ac;ac;ac;ac;ac;ac

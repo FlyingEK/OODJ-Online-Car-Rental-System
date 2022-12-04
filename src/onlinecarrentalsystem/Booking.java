@@ -19,6 +19,14 @@ public class Booking {
         this.bookingID = null;
         fh = new FileHandling();
     }
+
+    public String getBookingID() {
+        return bookingID;
+    }
+
+    public void setBookingID(String bookingID) {
+        this.bookingID = bookingID;
+    }
     
     public Booking(String bookingID){
         this.bookingID = bookingID;
@@ -37,6 +45,10 @@ public class Booking {
     public String[] searchBooking(){
         String[] bookingArray = fh.searchRecord("booking.txt", bookingID);
         return bookingArray;
+    }
+    
+     public void modifyBooking(ArrayList<String> bookingArray){
+        fh.modifyRecord("booking.txt",bookingArray);
     }
 
     public void deleteBooking(){

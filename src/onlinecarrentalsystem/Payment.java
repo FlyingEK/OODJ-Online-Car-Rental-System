@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package onlinepaymentrentalsystem;
+package onlinecarrentalsystem;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,10 @@ public class Payment {
     public Payment(){
         this.paymentID = null;
         fh = new FileHandling();
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
     }
     
     public Payment(String paymentID){
@@ -38,9 +42,15 @@ public class Payment {
         fh.writeFile("payment.txt", paymentArray);
     }
     
-    public String[] searchPayment(){
-        String[] paymentArray = fh.searchRecord("payment.txt", paymentID);
-        return paymentArray;
+    public Boolean searchPayment(){
+        String[] carArray = fh.searchRecord("payment.txt", paymentID);
+        Boolean found = true;
+        if (carArray.length == 0){
+            found = false;
+        } else{
+            
+        }
+        return found;
     }
 
     public void deletePayment(){

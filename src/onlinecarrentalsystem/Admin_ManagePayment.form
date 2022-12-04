@@ -373,7 +373,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="paymentTable">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="4">
@@ -430,13 +430,6 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
-                      <Component id="deleteBtn" min="-2" pref="125" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-                      <Component id="deleteBtn2" min="-2" pref="81" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="99" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace pref="82" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -452,7 +445,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="SearchTxt" alignment="1" max="32767" attributes="0"/>
+                                              <Component id="searchTxt" alignment="1" max="32767" attributes="0"/>
                                               <Component id="jLabel5" alignment="1" pref="144" max="32767" attributes="0"/>
                                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -466,16 +459,16 @@
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                                      <Component id="ContactNo" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                                      <Component id="days" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
                                                       <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                                          <Component id="BookID" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="CustName" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="ICno" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                                          <Component id="paymentID" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="car" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="customer" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                                       </Group>
-                                                      <Component id="Email" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                                      <Component id="Email1" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                                      <Component id="BookID2" alignment="1" max="32767" attributes="0"/>
-                                                      <Component id="BookID4" alignment="1" max="32767" attributes="0"/>
+                                                      <Component id="price" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                                      <Component id="amount" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                                      <Component id="rentalDate" alignment="1" max="32767" attributes="0"/>
+                                                      <Component id="paymentDate" alignment="1" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Component id="SearchBtn" alignment="0" min="-2" pref="56" max="-2" attributes="0"/>
                                               </Group>
@@ -498,6 +491,11 @@
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="194" max="-2" attributes="0"/>
+                      <Component id="deleteBtn2" min="-2" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -507,7 +505,7 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="SearchTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="searchTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="SearchBtn" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -516,56 +514,52 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="BookID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="paymentID" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="CustName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="car" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="ICno" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="customer" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="ContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="days" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jlab" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Email" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="price" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Email1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="amount" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="BookID2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rentalDate" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="BookID4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="36" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="deleteBtn" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="deleteBtn2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <Component id="paymentDate" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="BookID3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <Component id="deleteBtn2" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -579,7 +573,7 @@
                 <Property name="text" type="java.lang.String" value="Search by Payment ID:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="SearchTxt">
+            <Component class="javax.swing.JTextField" name="searchTxt">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Candara" size="14" style="0"/>
@@ -594,7 +588,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchTxtActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchTxtActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="SearchBtn">
@@ -631,7 +625,7 @@
                 <Property name="text" type="java.lang.String" value="No result found"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="BookID">
+            <Component class="javax.swing.JTextField" name="paymentID">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -645,7 +639,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BookIDActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="paymentIDActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
@@ -656,7 +650,7 @@
                 <Property name="text" type="java.lang.String" value="Car:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="CustName">
+            <Component class="javax.swing.JTextField" name="car">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -678,7 +672,7 @@
                 <Property name="text" type="java.lang.String" value="Customer:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="ICno">
+            <Component class="javax.swing.JTextField" name="customer">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -692,7 +686,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ICnoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customerActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
@@ -711,7 +705,7 @@
                 <Property name="text" type="java.lang.String" value="Price Per Day:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="Email">
+            <Component class="javax.swing.JTextField" name="price">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -725,7 +719,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmailActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="priceActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
@@ -744,7 +738,7 @@
                 <Property name="text" type="java.lang.String" value="Payment ID:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="ContactNo">
+            <Component class="javax.swing.JTextField" name="days">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -758,30 +752,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ContactNoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daysActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="deleteBtn">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="0" red="66" type="rgb"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Candara" size="15" style="1"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Generate Receipt"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBtnActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JTextField" name="Email1">
+            <Component class="javax.swing.JTextField" name="amount">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -795,7 +769,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Email1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="amountActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="deleteBtn2">
@@ -834,7 +808,7 @@
                 <Property name="text" type="java.lang.String" value="Payment  Date:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="BookID2">
+            <Component class="javax.swing.JTextField" name="rentalDate">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -848,7 +822,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BookID2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rentalDateActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="BookID3">
@@ -868,7 +842,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BookID3ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="BookID4">
+            <Component class="javax.swing.JTextField" name="paymentDate">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -882,7 +856,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BookID4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="paymentDateActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
