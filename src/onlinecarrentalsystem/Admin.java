@@ -13,9 +13,13 @@ import java.util.ArrayList;
 public class Admin extends User {
 
     public Admin(){
-        User u = new User("admin");
+        
     }
     
+    public Boolean login(String username,String password){
+        
+        return 
+    }
 
     
     

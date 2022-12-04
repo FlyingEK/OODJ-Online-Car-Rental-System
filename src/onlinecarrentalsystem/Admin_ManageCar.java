@@ -7,7 +7,10 @@ package onlinecarrentalsystem;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,24 +30,31 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         carID1.setText(car.newCarID());
         noResult.setVisible(false);
         
-        //table
-        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
+        readTable();
         
-        //read rows into table
-        String line;
-        try(BufferedReader r = new BufferedReader(new FileReader("car.txt"))){
-            while ((line = r.readLine())!=null){
-                String car[] = line.split(";");
-                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car[0],car[1],car[2],car[3],car[4],car[5],car[6]});
-            }
-            r.close();
+        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int row = carTable.rowAtPoint(evt.getPoint());
+            Object id = carTable.getValueAt( row, 0 );
+            car.setCarID(id+"");
+            if(car.searchCar()){
+            carID.setText(car.getCarID());
+            model.setText(car.getModel());
+            plateNo.setText(car.getPlateNo());
+            seat.setText(car.getSeat());
+            color.setText(car.getColor());
+            year.setText(car.getYear());
+            price.setText(car.getPrice());
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record");
+        }  
+            
         }
-        
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null,"Error occurs.");
-        }
-        
+    });
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -544,6 +554,23 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void readTable(){
+        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
+        tableModel.setRowCount(0);        
+        //read rows into table
+        String line;
+        try(BufferedReader r = new BufferedReader(new FileReader("car.txt"))){
+            while ((line = r.readLine())!=null){
+                String car[] = line.split(";");
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car[0],car[1],car[2],car[3],car[4],car[5],car[6]});
+            }
+            r.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null,"Error occurs.");
+        }
+    }
+    
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -566,7 +593,6 @@ public class Admin_ManageCar extends javax.swing.JFrame {
             
         } else {
             noResult.setVisible(true);
-            price.setText("");
         }  
     }//GEN-LAST:event_SearchBtnActionPerformed
 
@@ -597,6 +623,8 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         }catch(Exception e){
             e.printStackTrace();
         }
+        //read latest table
+        readTable();
         
     }//GEN-LAST:event_EditBtnActionPerformed
 
@@ -608,6 +636,8 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         // TODO add your handling code here:
         car.setCarID(carID.getText());
         car.deleteCar();
+        //read latest table
+        readTable();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
@@ -643,7 +673,8 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         color1.setText("");
         year1.setText("");
         price1.setText("");
-        
+        //read latest table
+        readTable();
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void price1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_price1ActionPerformed

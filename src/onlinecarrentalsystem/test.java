@@ -35,7 +35,6 @@ public class test {
         //fh.modifyRecord("customer.txt", cus);
         
         Customer cust = new Customer();
-        
         cust.login("Violin", "7891");
         
         

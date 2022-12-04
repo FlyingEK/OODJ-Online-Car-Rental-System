@@ -53,7 +53,7 @@ public class FileHandling {
             String line = b.readLine();
             while (line != null){
                 if (line.split(";")[0] != ""){
-                    ID = Integer.parseInt(line.split(";")[0].trim());
+                    ID = Integer.parseInt(line.split(";")[0].trim().substring(1));
                 }
                 line = b.readLine();
             }

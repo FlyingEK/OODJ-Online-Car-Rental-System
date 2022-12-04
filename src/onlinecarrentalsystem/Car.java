@@ -15,15 +15,31 @@ public class Car {
     private FileHandling fh;
     
     public Car(){
-        this.carID = null;
+        carID = null;
+        model =null;
+        plateNo = null;
+        seat = null;
+        color = null;
+        year = null;
+        price = null;
         fh = new FileHandling();
     }
     
     public Car(String carID){
         this.carID = carID;
+        model =null;
+        plateNo = null;
+        seat = null;
+        color = null;
+        year = null;
+        price = null;
         fh = new FileHandling();
     }
     
+    public void setCarID(String carID) {
+        this.carID = carID;
+    }
+        
     public String getCarID() {
         return carID;
     }
@@ -91,9 +107,7 @@ public class Car {
         fh.delete("car.txt", carID);
     }
 
-    public void setCarID(String carID) {
-        this.carID = carID;
-    }
+
     
     
 }
