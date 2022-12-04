@@ -95,7 +95,7 @@ public class Customer extends User{
         boolean registered = false;
         
         String joinDetail = String.join(";", customerDetail);
-        String newCustomerID ="C" + fh.incrementID("customer.txt");
+        String newCustomerID ="M" + fh.incrementID("customer.txt");
         joinDetail = newCustomerID + ";" + joinDetail;
         
         ArrayList<String> newCustomer = new ArrayList<String>();

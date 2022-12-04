@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Booking {
     private String bookingID;
     private FileHandling fh;
+    private Customer cust;
     
     public Booking(){
         this.bookingID = null;
@@ -40,5 +41,14 @@ public class Booking {
 
     public void deleteBooking(){
         fh.delete("booking.txt", bookingID);
+    }
+    
+    public void checkBookingHistory(){
+        String custID = cust.getCurrentCustomer();
+        
+        ArrayList<String> booking = new ArrayList<String>();
+        booking = fh.readFile("booking.txt");
+        
+        for (line )
     }
 }
