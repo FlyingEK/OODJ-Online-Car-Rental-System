@@ -5,6 +5,7 @@
 package onlinecarrentalsystem;
 
 import java.util.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,7 +14,8 @@ import java.util.*;
 public class Customer extends User{
     protected String customerID;
     private String customerUsername,customerName,customerPassword,
-            customerAddress,customerEmail,customerContact,customerIC;
+            customerAddress,customerEmail,customerContact,customerIC,
+            currentCustomer;
     private FileHandling fh;
     
     
@@ -43,6 +45,8 @@ public class Customer extends User{
     public String getCustomerContact(){return customerContact;}
     
     public String getCustomerIC(){return customerIC;}
+    
+    public String getCurrentCustomer(){return currentCustomer;}
     
     //setter
     public void setCarID(String customerID) {this.customerID = customerID;}
@@ -74,10 +78,46 @@ public class Customer extends User{
             if (detail[1].equals(username) && detail[2].equals(password))
             {
                 found = true;
+                currentCustomer = detail[0];
+                break;
             }
+        }
+        if (found){
+            JOptionPane.showMessageDialog(null, "Login Success! Welcome to our car rental system!");
+        }else{
+            JOptionPane.showMessageDialog(null, "Login failed, please try again.","Error Message",JOptionPane.ERROR_MESSAGE);
         }
         return found;
     }
+    
+    public Boolean Register(String[] customerDetail){
+
+        boolean registered = false;
+        
+        String joinDetail = String.join(";", customerDetail);
+        String newCustomerID ="C" + fh.incrementID("customer.txt");
+        joinDetail = newCustomerID + ";" + joinDetail;
+        
+        ArrayList<String> newCustomer = new ArrayList<String>();
+        newCustomer.add(joinDetail);
+        
+        fh.writeFile("customer.txt", newCustomer);
+        
+        if(fh.searchRecord("customer.txt",newCustomerID)[0].equals(newCustomerID)){
+            registered = true;
+            JOptionPane.showMessageDialog(null, "Register Success! Please login to access the system.");
+        }else{
+            JOptionPane.showMessageDialog(null, "Register Failed, please try again.","Error Message",JOptionPane.ERROR_MESSAGE);
+        }
+    
+        return registered;
+    }
+    
+    public void logout(){
+        currentCustomer = null;
+        // jump to starting page
+    }
+            
 }
 
 
