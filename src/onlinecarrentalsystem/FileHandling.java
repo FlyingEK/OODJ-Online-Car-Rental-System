@@ -114,7 +114,7 @@ public class FileHandling {
                 }
                 line = br.readLine();
             }
-            
+            br.close();
             
         }catch(IOException e){
             System.out.println(e);
@@ -151,7 +151,7 @@ public class FileHandling {
             
             line = br.readLine();
         }
-        
+        br.close();
         
         File f = new File(filename);
 
@@ -190,13 +190,15 @@ public class FileHandling {
                     if(line.split(";")[0].equals(removeID)) {
                         continue;
                     }
-                    writer.println(line);  
+                    writer.println(line);
                 }
                 reader.close();
+                writer.flush();
                 writer.close();
                 
                 //delete old file
                 file.delete();
+                //System.out.print(file.getCanonicalFile());
                 boolean successful = temp.renameTo(file);
                 if (successful){
                     JOptionPane.showMessageDialog(null, "Record deleted succesfully!");

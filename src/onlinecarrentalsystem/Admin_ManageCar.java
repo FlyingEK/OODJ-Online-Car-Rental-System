@@ -4,7 +4,12 @@
  */
 package onlinecarrentalsystem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,6 +27,23 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         carID1.setText(car.newCarID());
         noResult.setVisible(false);
         
+        //table
+        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
+        
+        //read rows into table
+        String line;
+        try(BufferedReader r = new BufferedReader(new FileReader("car.txt"))){
+            while ((line = r.readLine())!=null){
+                String car[] = line.split(";");
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car[0],car[1],car[2],car[3],car[4],car[5],car[6]});
+            }
+            r.close();
+        }
+        
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null,"Error occurs.");
+        }
+        
     }
 
     /**
@@ -37,7 +59,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        carTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         searchTxt = new javax.swing.JTextField();
@@ -91,18 +113,15 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(223, 223, 253));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        carTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Car ID", "Model", "Seat", "Color", "Year", "Price /Day"
+                "Car ID", "Model", "Plate No", "Seat", "Color", "Year", "Price /Day"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(carTable);
 
         jPanel2.setBackground(new java.awt.Color(226, 226, 255));
 
@@ -546,7 +565,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
             price.setText(car.getPrice());
             
         } else {
-            searchTxt.setVisible(true);
+            noResult.setVisible(true);
             price.setText("");
         }  
     }//GEN-LAST:event_SearchBtnActionPerformed
@@ -564,7 +583,21 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     }//GEN-LAST:event_yearActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-
+        // TODO add your handling code here:   
+        ArrayList<String> carArray = new ArrayList<String>();
+        carArray.add(carID.getText());
+        carArray.add(model.getText());
+        carArray.add(plateNo.getText());
+        carArray.add(seat.getText());
+        carArray.add(color.getText());
+        carArray.add(year.getText());
+        carArray.add(price.getText());
+        try{
+            car.modifyCar(carArray);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
@@ -573,7 +606,8 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-
+        car.setCarID(carID.getText());
+        car.deleteCar();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
@@ -661,6 +695,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private javax.swing.JButton addBtn;
     private javax.swing.JTextField carID;
     private javax.swing.JTextField carID1;
+    private javax.swing.JTable carTable;
     private javax.swing.JTextField color;
     private javax.swing.JTextField color1;
     private javax.swing.JButton deleteBtn;
@@ -682,7 +717,6 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlab;
     private javax.swing.JLabel jlab1;

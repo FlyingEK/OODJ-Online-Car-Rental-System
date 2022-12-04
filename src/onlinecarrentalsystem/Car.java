@@ -13,7 +13,17 @@ import java.util.ArrayList;
 public class Car {
     private String carID, model, plateNo, seat,color,year,price;
     private FileHandling fh;
-
+    
+    public Car(){
+        this.carID = null;
+        fh = new FileHandling();
+    }
+    
+    public Car(String carID){
+        this.carID = carID;
+        fh = new FileHandling();
+    }
+    
     public String getCarID() {
         return carID;
     }
@@ -42,16 +52,6 @@ public class Car {
         return price;
     }
     
-    public Car(){
-        this.carID = null;
-        fh = new FileHandling();
-    }
-    
-    public Car(String carID){
-        this.carID = carID;
-        fh = new FileHandling();
-    }
-    
     public ArrayList readCar(){
         ArrayList<String> carArray = fh.readFile("car.txt");
         return carArray;
@@ -59,11 +59,15 @@ public class Car {
     
     public String newCarID(){
         String newCarID = fh.incrementID("car.txt");
-        return newCarID;
+        return "C"+newCarID;
     }
     
     public void addCar(ArrayList carArray){
         fh.writeFile("car.txt", carArray);
+    }
+    
+    public void modifyCar(ArrayList<String> carArray){
+        fh.modifyRecord("car.txt",carArray);
     }
     
     public Boolean searchCar(){
