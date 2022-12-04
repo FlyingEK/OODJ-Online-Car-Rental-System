@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class User {
+abstract public class User {
     protected String ID, username, password;
     
     public User(String userType){
@@ -30,7 +30,6 @@ public class User {
         password = splitUser[2];
     }
     
-    public static Boolean login(){
-    }
+    abstract public Boolean login(String username,String password);
     
 }
