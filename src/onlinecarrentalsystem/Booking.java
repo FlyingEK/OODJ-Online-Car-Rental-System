@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author User
  */
 public class Booking {
-    private String bookingID;
+    private String bookingID, carID, customerID, outDate, returnDate;
     private FileHandling fh;
     private Customer cust;
     
@@ -19,7 +19,13 @@ public class Booking {
         this.bookingID = null;
         fh = new FileHandling();
     }
-
+    
+    public Booking(String bookingID){
+        this.bookingID = bookingID;
+        fh = new FileHandling();
+        searchBooking();
+    }
+    
     public String getBookingID() {
         return bookingID;
     }
@@ -27,12 +33,6 @@ public class Booking {
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
     }
-    
-    public Booking(String bookingID){
-        this.bookingID = bookingID;
-        fh = new FileHandling();
-    }
-    
     public ArrayList readBooking(){
         ArrayList<String> bookingArray = fh.readFile("booking.txt");
         return bookingArray;
@@ -42,9 +42,39 @@ public class Booking {
         fh.writeFile("booking.txt", bookingArray);
     }
     
-    public String[] searchBooking(){
+    public Boolean searchBooking(){
         String[] bookingArray = fh.searchRecord("booking.txt", bookingID);
-        return bookingArray;
+        Boolean found = true;
+        if (bookingArray.length == 0){
+            found = false;
+        } else{
+            bookingID = bookingArray[0];
+            carID = bookingArray[1];
+            customerID = bookingArray[2];
+            outDate = bookingArray[3];
+            returnDate = bookingArray[4];
+        }
+        return found;
+    }
+
+    public String getCarID() {
+        return carID;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public String getOutDate() {
+        return outDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public Customer getCust() {
+        return cust;
     }
     
      public void modifyBooking(ArrayList<String> bookingArray){

@@ -11,21 +11,22 @@ import java.util.ArrayList;
  * @author User
  */
 public class Payment {
-    private String paymentID;
+    private String paymentID, bookingID, amount, date;
     private FileHandling fh;
     
     public Payment(){
         this.paymentID = null;
         fh = new FileHandling();
     }
-
-    public void setPaymentID(String paymentID) {
-        this.paymentID = paymentID;
-    }
     
     public Payment(String paymentID){
         this.paymentID = paymentID;
         fh = new FileHandling();
+        searchPayment();
+    }
+    
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
     }
     
     public String newPaymentID(){
@@ -41,16 +42,35 @@ public class Payment {
     public void addPayment(ArrayList paymentArray){
         fh.writeFile("payment.txt", paymentArray);
     }
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public String getBookingID() {
+        return bookingID;
+    }
     
     public Boolean searchPayment(){
-        String[] carArray = fh.searchRecord("payment.txt", paymentID);
+        String[] paymentArray = fh.searchRecord("payment.txt", paymentID);
         Boolean found = true;
-        if (carArray.length == 0){
+        if (paymentArray.length == 0){
             found = false;
         } else{
-            
+            paymentID = paymentArray[0];
+            bookingID = paymentArray[1];
+            amount = paymentArray[2];
+            date = paymentArray[3];
         }
         return found;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void deletePayment(){

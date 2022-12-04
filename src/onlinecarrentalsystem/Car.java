@@ -27,13 +27,8 @@ public class Car {
     
     public Car(String carID){
         this.carID = carID;
-        model =null;
-        plateNo = null;
-        seat = null;
-        color = null;
-        year = null;
-        price = null;
         fh = new FileHandling();
+        searchCar();
     }
     
     public void setCarID(String carID) {

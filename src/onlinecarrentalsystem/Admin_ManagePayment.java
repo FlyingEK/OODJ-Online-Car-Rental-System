@@ -30,16 +30,19 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         paymentTable.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent evt) {
-//            int row = paymentTable.rowAtPoint(evt.getPoint());
-//            Object id = paymentTable.getValueAt( row, 0 );
-//            payment.setPaymentID(id+"");
-//            if(payment.searchPayment()){
-//            
-//            
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record");
-//            }  
-            
+           int row = paymentTable.rowAtPoint(evt.getPoint());
+           Object id = paymentTable.getValueAt( row, 0 );
+           payment.setPaymentID(id+"");
+           if(payment.searchPayment()){
+                Booking b = new Booking(payment.getBookingID());
+                Car c = new Car(b.getCarID());
+                pID.setText(payment.getPaymentID());
+                car.setText(c.getModel()+" ("+b.getCarID()+")");
+                price.setText("RM "+ c.getPrice());
+                amount.setText(payment.getAmount());
+                rentalDate.setText(b.getOutDate() +" - "+b.getReturnDate());
+                paymentDate.setText(payment.getDate());      
+            }
         }
     });
     }
@@ -92,7 +95,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         rentalDate = new javax.swing.JTextField();
-        BookID3 = new javax.swing.JTextField();
+        pID = new javax.swing.JTextField();
         paymentDate = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
 
@@ -241,13 +244,13 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
 
         paymentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Payment ID", "Car ID", "Customer ID", "Amount", "Date"
+                "Payment ID", "Booking ID", "Amount", "Date"
             }
         ));
         jScrollPane1.setViewportView(paymentTable);
@@ -381,13 +384,13 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
             }
         });
 
-        BookID3.setEditable(false);
-        BookID3.setBackground(new java.awt.Color(204, 204, 255));
-        BookID3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        BookID3.setBorder(null);
-        BookID3.addActionListener(new java.awt.event.ActionListener() {
+        pID.setEditable(false);
+        pID.setBackground(new java.awt.Color(204, 204, 255));
+        pID.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        pID.setBorder(null);
+        pID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BookID3ActionPerformed(evt);
+                pIDActionPerformed(evt);
             }
         });
 
@@ -425,24 +428,22 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
                                         .addComponent(jlab, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
                                     .addComponent(jLabel14))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(paymentID, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(car, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(customer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(rentalDate)
-                                                .addComponent(paymentDate))
-                                            .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(BookID3))))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                                .addComponent(pID, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(paymentID))
+                                            .addComponent(car, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(customer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rentalDate)
+                                        .addComponent(paymentDate))
+                                    .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,43 +466,39 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
                     .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(noResult)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(paymentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(car, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(customer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlab)
-                            .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(rentalDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(paymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(BookID3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(pID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(car, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(customer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlab)
+                    .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(rentalDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(paymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(deleteBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -583,7 +580,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         try(BufferedReader r = new BufferedReader(new FileReader("payment.txt"))){
             while ((line = r.readLine())!=null){
                 String payment[] = line.split(";");
-                tableModel.insertRow(tableModel.getRowCount(), new Object[]{payment[0],payment[1],payment[2],payment[3],payment[4]});
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{payment[0],payment[1],payment[2],payment[3]});
             }
             r.close();
         }
@@ -598,10 +595,17 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here:
+        noResult.setVisible(false);
         payment.setPaymentID(searchTxt.getText());
         if(payment.searchPayment()){
-            //print result
-            
+            Booking b = new Booking(payment.getBookingID());
+            Car c = new Car(b.getCarID());
+            pID.setText(payment.getPaymentID());
+            car.setText(c.getModel()+" ("+b.getCarID()+")");
+            price.setText("RM "+ c.getPrice());
+            amount.setText(payment.getAmount());
+            rentalDate.setText(b.getOutDate() +" - "+b.getReturnDate());
+            paymentDate.setText(payment.getDate());  
         } else {
             noResult.setVisible(true);
         }  
@@ -653,7 +657,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
 
     private void deleteBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn2ActionPerformed
         // TODO add your handling code here:
-        payment.setPaymentID(paymentID.getText());
+        payment.setPaymentID(pID.getText());
         payment.deletePayment();
         //read latest table
         readTable();
@@ -672,9 +676,9 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rentalDateActionPerformed
 
-    private void BookID3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookID3ActionPerformed
+    private void pIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BookID3ActionPerformed
+    }//GEN-LAST:event_pIDActionPerformed
 
     private void paymentDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentDateActionPerformed
         // TODO add your handling code here:
@@ -736,7 +740,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BookID1;
-    private javax.swing.JTextField BookID3;
     private javax.swing.JTextField ContactNo1;
     private javax.swing.JTextField CustName1;
     private javax.swing.JTextField Email2;
@@ -771,6 +774,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
     private javax.swing.JLabel jlab;
     private javax.swing.JLabel jlab1;
     private javax.swing.JLabel noResult;
+    private javax.swing.JTextField pID;
     private javax.swing.JTextField paymentDate;
     private javax.swing.JTextField paymentID;
     private javax.swing.JTable paymentTable;

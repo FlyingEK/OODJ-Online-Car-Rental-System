@@ -581,6 +581,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here:
+        noResult.setVisible(false);
         car.setCarID(searchTxt.getText());
         if(car.searchCar()){
             carID.setText(car.getCarID());
