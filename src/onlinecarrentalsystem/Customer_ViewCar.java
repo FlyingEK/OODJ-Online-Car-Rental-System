@@ -3,19 +3,66 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package onlinecarrentalsystem;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author User
  */
 public class Customer_ViewCar extends javax.swing.JFrame {
-
+private Booking booking;
+private Car car;
     /**
      * Creates new form Customer_ViewCar
      */
     public Customer_ViewCar() {
         initComponents();
         getContentPane().setBackground(new java.awt.Color(204,204,255));
+        
+        booking = new Booking();
+        car = new Car();
+        
+        noResult.setVisible(false);
+        dateRequired.setVisible(false);
+        
+        pupolateTable();
+    }
+    
+    public void pupolateTable(){
+        String columns[] = {"Car ID","Model","Plate No","Seat","Color","Year","Price"};
+        
+        ArrayList<String> carData = new ArrayList<String>(car.readCar());
+        String[][] rows = new String[carData.size()][7];
+        
+        
+        for (int i = 0; i < carData.size();i++){
+            String line = carData.get(i);
+            String [] carDetail = line.split(";");
+            for(int j = 0;j<7;j++){
+                rows[i][j] = carDetail[j];
+            }
+        }
+        
+        DefaultTableModel model = new DefaultTableModel(rows,columns);
+        carTable.setModel(model);
+    }
+    
+    public void setTextField(String[] data){
+        carID.setText((String) data[0]);
+        model.setText((String) data[1]);
+        plateNo.setText((String) data[2]);
+        seat.setText((String) data[3]);
+        color.setText((String) data[4]);
+        year.setText((String) data[5]);
+        price.setText((String) data[6]);
+    }
+    
+    public boolean checkCarAvailability(String C4){
+        boolean available = false;
+        
+        return available;
     }
 
     /**
@@ -34,7 +81,7 @@ public class Customer_ViewCar extends javax.swing.JFrame {
         SearchBtn = new javax.swing.JButton();
         noResult = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        cusViewCar = new javax.swing.JTable();
+        carTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         carID = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -54,12 +101,15 @@ public class Customer_ViewCar extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        dateOut = new com.toedter.calendar.JDateChooser();
+        dateReturn = new com.toedter.calendar.JDateChooser();
+        dateRequired = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 255));
         jLabel2.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
-        jLabel2.setText("Select Car");
+        jLabel2.setText("Book Car");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -125,7 +175,7 @@ public class Customer_ViewCar extends javax.swing.JFrame {
                     .addContainerGap(18, Short.MAX_VALUE)))
         );
 
-        cusViewCar.setModel(new javax.swing.table.DefaultTableModel(
+        carTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -144,7 +194,12 @@ public class Customer_ViewCar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(cusViewCar);
+        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                carTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(carTable);
 
         jPanel2.setBackground(new java.awt.Color(226, 226, 255));
 
@@ -250,6 +305,12 @@ public class Customer_ViewCar extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel11.setText("Date Return:");
 
+        dateRequired.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        dateRequired.setForeground(new java.awt.Color(255, 51, 51));
+        dateRequired.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        dateRequired.setText("Please set Date Out and Date Return");
+        dateRequired.setToolTipText("");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -277,20 +338,27 @@ public class Customer_ViewCar extends javax.swing.JFrame {
                                     .addComponent(seat, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(model)))
                             .addComponent(jLabel14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jlab)
-                                        .addComponent(jLabel9))
-                                    .addGap(35, 35, 35)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jlab)
+                                                .addComponent(jLabel9))
+                                            .addGap(35, 35, 35))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel11)
+                                            .addGap(40, 40, 40)))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(year, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                        .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                        .addComponent(dateOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(dateReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(dateRequired))
+                            .addComponent(jLabel10))
                         .addGap(13, 13, 13))
                     .addComponent(jLabel3)))
         );
@@ -300,32 +368,40 @@ public class Customer_ViewCar extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel3)
                 .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(carID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jlab)
-                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(model, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(plateNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(seat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(carID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jlab)
+                                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(model, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(plateNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10)))
+                            .addComponent(dateOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(seat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)))
+                    .addComponent(dateReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(dateRequired)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -344,9 +420,9 @@ public class Customer_ViewCar extends javax.swing.JFrame {
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(409, 409, 409)
+                        .addGap(460, 460, 460)
                         .addComponent(jLabel2)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,6 +448,33 @@ public class Customer_ViewCar extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here:
+        boolean found = false;
+        String[] foundCar = {};
+        
+        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
+        tableModel.setRowCount(0);  
+        ArrayList<String> carData = new ArrayList<String>(car.readCar());
+        String car_id = SearchTxt.getText();
+        
+        for (String line:carData){
+            String[] carDetail = line.split(";");
+            
+            if (carDetail[0].equals(car_id)){
+                found = true;
+                foundCar = carDetail;
+            }
+        }
+        
+        if(found){
+            tableModel.insertRow(tableModel.getRowCount(), 
+                        new Object[]{foundCar[0],foundCar[1],foundCar[2],foundCar[3],foundCar[4],foundCar[5]});
+            setTextField(foundCar);
+            noResult.setVisible(false);
+        }else{
+            noResult.setVisible(true);
+            pupolateTable();
+        }
+        
     }//GEN-LAST:event_SearchBtnActionPerformed
 
     private void carIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carIDActionPerformed
@@ -387,7 +490,14 @@ public class Customer_ViewCar extends javax.swing.JFrame {
     }//GEN-LAST:event_yearActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-
+//        if (dateOut == null || dateReturn == null){
+//            dateRequired.setVisible(true);
+//        }else if(){
+//            dateRequired.setVisible(false);
+//        }else{
+//        
+//        }
+        
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
@@ -397,6 +507,20 @@ public class Customer_ViewCar extends javax.swing.JFrame {
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_priceActionPerformed
+
+    private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
+        // TODO add your handling code here:
+        //get data from selected row
+        DefaultTableModel tableModel = (DefaultTableModel) carTable.getModel();
+        Vector table = tableModel.getDataVector().elementAt(carTable.convertRowIndexToModel(carTable.getSelectedRow()));
+        Object[] dataTable = table.toArray();
+        String[] data = Arrays.copyOf(dataTable, dataTable.length, String[].class);
+        
+        //put them in data fields
+        setTextField(data);
+        
+        
+    }//GEN-LAST:event_carTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -438,8 +562,11 @@ public class Customer_ViewCar extends javax.swing.JFrame {
     private javax.swing.JButton SearchBtn;
     private javax.swing.JTextField SearchTxt;
     private javax.swing.JTextField carID;
+    private javax.swing.JTable carTable;
     private javax.swing.JTextField color;
-    private javax.swing.JTable cusViewCar;
+    private com.toedter.calendar.JDateChooser dateOut;
+    private javax.swing.JLabel dateRequired;
+    private com.toedter.calendar.JDateChooser dateReturn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

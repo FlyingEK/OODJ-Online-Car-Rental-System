@@ -47,7 +47,6 @@ public class Customer_BookCar extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         carID3 = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
-        plateNo3 = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         seat3 = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
@@ -55,6 +54,7 @@ public class Customer_BookCar extends javax.swing.JFrame {
         model3 = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         checkoutBtn1 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -226,10 +226,6 @@ public class Customer_BookCar extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel24.setText("Username:");
 
-        plateNo3.setBackground(new java.awt.Color(204, 204, 255));
-        plateNo3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        plateNo3.setBorder(null);
-
         jLabel25.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel25.setText("End Rent:");
 
@@ -284,10 +280,11 @@ public class Customer_BookCar extends javax.swing.JFrame {
                     .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(carID3)
-                    .addComponent(plateNo3)
+                    .addComponent(carID3, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                     .addComponent(seat3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(model3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(model3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -306,10 +303,10 @@ public class Customer_BookCar extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
                     .addComponent(model3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel29)
-                    .addComponent(plateNo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
@@ -327,7 +324,7 @@ public class Customer_BookCar extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
@@ -417,28 +414,12 @@ public class Customer_BookCar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField carID;
-    private javax.swing.JTextField carID1;
-    private javax.swing.JTextField carID2;
     private javax.swing.JTextField carID3;
     private javax.swing.JButton checkoutBtn1;
     private javax.swing.JTextField color;
-    private javax.swing.JTextField color1;
-    private javax.swing.JTextField color2;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel28;
@@ -448,33 +429,17 @@ public class Customer_BookCar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel jlab;
-    private javax.swing.JLabel jlab1;
-    private javax.swing.JLabel jlab2;
     private javax.swing.JTextField model;
-    private javax.swing.JTextField model1;
-    private javax.swing.JTextField model2;
     private javax.swing.JTextField model3;
     private javax.swing.JTextField plateNo;
-    private javax.swing.JTextField plateNo1;
-    private javax.swing.JTextField plateNo2;
-    private javax.swing.JTextField plateNo3;
     private javax.swing.JTextField price;
-    private javax.swing.JTextField price1;
-    private javax.swing.JTextField price2;
     private javax.swing.JTextField seat;
-    private javax.swing.JTextField seat1;
-    private javax.swing.JTextField seat2;
     private javax.swing.JTextField seat3;
     private javax.swing.JTextField year;
-    private javax.swing.JTextField year1;
-    private javax.swing.JTextField year2;
     // End of variables declaration//GEN-END:variables
 }
