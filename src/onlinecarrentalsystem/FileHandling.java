@@ -217,4 +217,40 @@ public class FileHandling {
              ioe.printStackTrace();
         }
      }
+    
+    
+    public void setCurrentCustomer(String custID){
+        try
+        {
+            File f = new File("section.txt");
+
+            FileWriter fw = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(custID);
+            bw.flush();
+            bw.close();
+        }
+        catch(IOException e)
+        {
+            System.out.println(e);
+        }
+    }
+    
+    public String getCurrentCustomer(){
+        String custID = null;
+        try
+        {
+            FileReader fr = new FileReader("section.txt");
+            BufferedReader br = new BufferedReader(fr);
+            custID = br.readLine();
+            br.close();
+            
+            //if no id in then jump to login
+        }
+        catch(IOException e)
+        {
+            System.out.println(e);
+        }
+        return custID;
+    }
 }

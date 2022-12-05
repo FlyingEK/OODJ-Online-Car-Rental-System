@@ -4,7 +4,12 @@
  */
 package onlinecarrentalsystem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -85,12 +90,60 @@ public class Booking {
         fh.delete("booking.txt", bookingID);
     }
     
-    public void checkBookingHistory(){
-        String custID = cust.getCurrentCustomer();
+    public ArrayList checkBookingHistory(){
+        String custID = fh.getCurrentCustomer();
         
         ArrayList<String> booking = new ArrayList<String>();
         booking = fh.readFile("booking.txt");
         
-        for (line )
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        
+        ArrayList<String> customerBooking = new ArrayList<String>();
+        for (String line : booking){
+            String[] detail = line.split(";");
+            
+            if (detail[2].equals(custID))
+            {
+                try {
+                    Date today = dateFormat.parse(dateFormat.format(new Date()));
+                    Date dateOut = dateFormat.parse(detail[4]);
+                    if (dateOut.compareTo(today) < 0){
+                        customerBooking.add(line);
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return customerBooking;
     }
+    
+    public ArrayList checkCurrentBooking(){
+        String custID = fh.getCurrentCustomer();
+        
+        ArrayList<String> booking = new ArrayList<String>();
+        booking = fh.readFile("booking.txt");
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        
+        ArrayList<String> customerBooking = new ArrayList<String>();
+        for (String line : booking){
+            String[] detail = line.split(";");
+            
+            if (detail[2].equals(custID))
+            {
+                try {
+                    Date today = dateFormat.parse(dateFormat.format(new Date()));
+                    Date dateOut = dateFormat.parse(detail[4]);
+                    if (dateOut.compareTo(today) > 0){
+                        customerBooking.add(line);
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return customerBooking;
+    }
+    
 }

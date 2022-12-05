@@ -38,10 +38,11 @@ public class test {
         //fh.modifyRecord("customer.txt", cus);
         
         Customer cust = new Customer();
-        cust.login("Violin", "7891");
-        cust.Register(customerDetail);
+        //cust.login("Violin", "7891");
+        //cust.Register(customerDetail);
         
-        
+        Booking book = new Booking();
+        System.out.println(book.checkCurrentBooking());
 
     } 
 }

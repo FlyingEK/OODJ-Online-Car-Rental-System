@@ -78,10 +78,10 @@ public class Customer extends User{
             if (detail[1].equals(username) && detail[2].equals(password))
             {
                 found = true;
-                currentCustomer = detail[0];
+                fh.setCurrentCustomer(detail[0]);
                 break;
             }
-        }
+        } 
         if (found){
             JOptionPane.showMessageDialog(null, "Login Success! Welcome to our car rental system!");
         }else{
@@ -114,7 +114,7 @@ public class Customer extends User{
     }
     
     public void logout(){
-        currentCustomer = null;
+        fh.setCurrentCustomer(null);
         // jump to starting page
     }
             
