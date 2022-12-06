@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author User
  */
 public class Booking {
-    private String bookingID, carID, customerID, outDate, returnDate;
+    private String bookingID, carID, customerID, outDate, returnDate, status;
     private FileHandling fh;
     private Customer cust;
     
@@ -58,6 +58,7 @@ public class Booking {
             customerID = bookingArray[2];
             outDate = bookingArray[3];
             returnDate = bookingArray[4];
+            status = bookingArray[5];
         }
         return found;
     }
@@ -80,6 +81,10 @@ public class Booking {
 
     public Customer getCust() {
         return cust;
+    }
+    
+    public String getStatus(){
+        return status;
     }
     
      public void modifyBooking(ArrayList<String> bookingArray){

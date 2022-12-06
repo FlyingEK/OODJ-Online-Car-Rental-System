@@ -97,6 +97,19 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void clearTextField(){
+        bookID.setText("");
+        carID.setText("");
+        model.setText("");
+        plateNo.setText("");
+        seat.setText("");
+        color.setText("");
+        year.setText("");
+        price.setText("");
+        dateOut.setDate(null);
+        dateReturn.setDate(null);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -925,42 +938,75 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean found = false;
         String id = SearchTxt.getText();
-        
-        if (id.substring(0, 1).toUpperCase().equals("B")){
-            booking.setBookingID(id);
-            if(booking.searchBooking()){
-                found = true;
-            }
-        }else if(id.substring(0,1).toUpperCase().equals("C")){
-            ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
-            }
-        }
-        
-        
-        
-        
-        
-        String[] foundBooking = {};
-
+        ArrayList<String> dataFound = new ArrayList<String>();
         DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
-        tableModel.setRowCount(0);
-        ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
-        String booking_id = SearchTxt.getText();
+        
+        if(id != ""){ // 这个有问题，field空空也能accept
+            System.out.println("enter");
+            if (id.substring(0, 1).toUpperCase().equals("B")){
+                booking.setBookingID(id);
+                if(booking.searchBooking()){
+                    found = true;
+                }
+            }else if(id.substring(0,1).toUpperCase().equals("C")){
+                ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
 
-        for (String line:bookData){
-            String[] bookDetail = line.split(";");
 
-            if (bookDetail[0].equals(booking_id)){
-                found = true;
-                foundBooking = bookDetail;
+                for (String line:bookData){
+                    String[] bookDetail = line.split(";");
+                    if (bookDetail[1].equals(id)){
+                        found = true;
+                        dataFound.add(line);
+                    }
+                }
+            }else{
+                found = false;
             }
         }
+        
+        if(found){
+            if(id.substring(0, 1).toUpperCase().equals("B")){
+                tableModel.setRowCount(0);
+                tableModel.insertRow(tableModel.getRowCount(),
+                new Object[]{booking.getBookingID(),booking.getCarID(),booking.getOutDate(),booking.getReturnDate(),booking.getStatus()});
+                setTextField(booking.getBookingID(),booking.getCarID());
+                noResult.setVisible(false);
+            }
+            
+            if(id.substring(0,1).toUpperCase().equals("C")){
+                tableModel.setRowCount(0);
+                for (String line : dataFound){
+                    String detail[] = line.split(";");
+                    tableModel.insertRow(tableModel.getRowCount(), new Object[]{detail[0],detail[1],detail[2],detail[3],detail[4]});
+                }
+                clearTextField();
+                noResult.setVisible(false);
+            }
+        }else{
+            noResult.setVisible(true);
+            pupolateTable();
+        }
+        
+        
+        
+//        String[] foundBooking = {};
+//
+//        DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
+//        tableModel.setRowCount(0);
+//        ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
+//        String booking_id = SearchTxt.getText();
+
+//        for (String line:bookData){
+//            String[] bookDetail = line.split(";");
+//
+//            if (bookDetail[0].equals(booking_id)){
+//                found = true;
+//                foundBooking = bookDetail;
+//            }
+//        }
 
         if(found){
-            tableModel.insertRow(tableModel.getRowCount(),
-                new Object[]{foundBooking[0],foundBooking[1],foundBooking[3],foundBooking[4],foundBooking[5]});
-            setTextField(foundBooking[0],foundBooking[1]);
-            noResult.setVisible(false);
+            
         }else{
             noResult.setVisible(true);
             pupolateTable();
