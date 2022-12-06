@@ -146,21 +146,33 @@ public class Booking {
         return customerBooking;
     }
     
-        public Boolean validateDateInput(){
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            ArrayList<String> bookArray = readBooking();
-            for (String book:bookArray){
-                try{
-                    Date dateOut = df.parse(book.split(";")[6]);
-                    Date dateReturn = df.parse(book.split(";")[7]);
-                }
-                catch(ParseException p){
-                     p.printStackTrace();
-                }
-            }
+    public boolean checkCarAvailability(String carID,Date dateOut, Date dateReturn){
+        boolean available = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date bDateOut;
+        Date bDateReturn;
+        
+        ArrayList<String> booking = new ArrayList<String>(readBooking());
+        for (String line:booking){
+            String[] bookingDetail = line.split(";");
             
-            return ;
+            if (carID.equals(bookingDetail[1])){
+                try {
+                    bDateOut = dateFormat.parse(bookingDetail[3]);
+                    bDateReturn = dateFormat.parse(bookingDetail[4]);
+                    if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
+                        available = true;
+                    }else{
+                        available = false;
+                        break;
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                available = true;
+            }
         }
-    
-    
+        return available;
+    }
 }

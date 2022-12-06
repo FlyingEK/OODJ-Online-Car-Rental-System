@@ -3,9 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package onlinecarrentalsystem;
+import com.toedter.calendar.JDateChooser;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -14,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class Customer_ViewCar extends javax.swing.JFrame {
 private Booking booking;
 private Car car;
+private FileHandling fh;
     /**
      * Creates new form Customer_ViewCar
      */
@@ -23,6 +29,7 @@ private Car car;
         
         booking = new Booking();
         car = new Car();
+        fh = new FileHandling();
         
         noResult.setVisible(false);
         dateRequired.setVisible(false);
@@ -30,7 +37,7 @@ private Car car;
         pupolateTable();
     }
     
-    public void pupolateTable(){
+    private void pupolateTable(){
         String columns[] = {"Car ID","Model","Plate No","Seat","Color","Year","Price"};
         
         ArrayList<String> carData = new ArrayList<String>(car.readCar());
@@ -49,7 +56,7 @@ private Car car;
         carTable.setModel(model);
     }
     
-    public void setTextField(String[] data){
+    private void setTextField(String[] data){
         carID.setText((String) data[0]);
         model.setText((String) data[1]);
         plateNo.setText((String) data[2]);
@@ -59,10 +66,16 @@ private Car car;
         price.setText((String) data[6]);
     }
     
-    public boolean checkCarAvailability(String C4){
-        boolean available = false;
-        
-        return available;
+    private void clearField(){
+        carID.setText("");
+        model.setText("");
+        plateNo.setText("");
+        seat.setText("");
+        color.setText("");
+        year.setText("");
+        price.setText("");
+        dateOut.setDate(null);
+        dateReturn.setDate(null);
     }
 
     /**
@@ -93,7 +106,7 @@ private Car car;
         year = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        EditBtn = new javax.swing.JButton();
+        book = new javax.swing.JButton();
         color = new javax.swing.JTextField();
         price = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -256,14 +269,14 @@ private Car car;
         jLabel6.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel6.setText("Car ID:");
 
-        EditBtn.setBackground(new java.awt.Color(102, 0, 255));
-        EditBtn.setFont(new java.awt.Font("Candara", 1, 15)); // NOI18N
-        EditBtn.setForeground(new java.awt.Color(255, 255, 255));
-        EditBtn.setText("Book");
-        EditBtn.setBorder(null);
-        EditBtn.addActionListener(new java.awt.event.ActionListener() {
+        book.setBackground(new java.awt.Color(102, 0, 255));
+        book.setFont(new java.awt.Font("Candara", 1, 15)); // NOI18N
+        book.setForeground(new java.awt.Color(255, 255, 255));
+        book.setText("Book");
+        book.setBorder(null);
+        book.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditBtnActionPerformed(evt);
+                bookActionPerformed(evt);
             }
         });
 
@@ -308,7 +321,7 @@ private Car car;
         dateRequired.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         dateRequired.setForeground(new java.awt.Color(255, 51, 51));
         dateRequired.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        dateRequired.setText("Please set Date Out and Date Return");
+        dateRequired.setText("Please  select car, set Date Out and Date Return");
         dateRequired.setToolTipText("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -339,9 +352,11 @@ private Car car;
                                     .addComponent(model)))
                             .addComponent(jLabel14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateRequired)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -356,9 +371,7 @@ private Car car;
                                         .addComponent(year, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                                         .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                                         .addComponent(dateOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dateReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addComponent(dateRequired))
-                            .addComponent(jLabel10))
+                                        .addComponent(dateReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(13, 13, 13))
                     .addComponent(jLabel3)))
         );
@@ -402,7 +415,7 @@ private Car car;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(dateRequired)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
@@ -422,7 +435,7 @@ private Car car;
                     .addGroup(layout.createSequentialGroup()
                         .addGap(460, 460, 460)
                         .addComponent(jLabel2)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,16 +502,71 @@ private Car car;
         // TODO add your handling code here:
     }//GEN-LAST:event_yearActionPerformed
 
-    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-//        if (dateOut == null || dateReturn == null){
-//            dateRequired.setVisible(true);
-//        }else if(){
+    private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
+
+//        if(!(dateOut == null || dateReturn == null) || !(carID == null)){
 //            dateRequired.setVisible(false);
-//        }else{
+//            
+//            String car_id = carID.getText();
+//            String custID = fh.getCurrentCustomer();
+//            Date date_out = dateOut.getDate();
+//            Date date_return = dateReturn.getDate();
 //        
+//            if(!date_out.equals(date_return)){
+//                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+//                String strDateOut = dateFormat.format(date_out);  
+//                String strDateReturn = dateFormat.format(date_return);  
+//
+//                if(booking.checkCarAvailability(car_id,date_out,date_return)){
+//                    System.out.println("Enter");
+//                    ArrayList<String> newBooking = new ArrayList<String>();
+//                    newBooking.add("B"+fh.incrementID("booking.txt")+";"+car_id+";"+custID+";"+strDateOut+";"+strDateReturn+";"+"processing");
+//
+//                    booking.addBooking(newBooking);
+//                    JOptionPane.showMessageDialog(null, "Booking Success");
+//                }else{
+//                    JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day.","Error Message",JOptionPane.ERROR_MESSAGE);
+//                }
+//            }else{
+//                JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day.","Error Message",JOptionPane.ERROR_MESSAGE);
+//            }
+//        }else{
+//            dateRequired.setVisible(true);
 //        }
+        Date date_out = dateOut.getDate();
+        Date date_return = dateReturn.getDate();
+        String car_id = carID.getText();
+
+        if (date_out == null || date_return == null || car_id == ""){
+            dateRequired.setVisible(true);
+        }else{
+            dateRequired.setVisible(false);
+            
+            String custID = fh.getCurrentCustomer();
+            
+            if(date_out.before(date_return) && !date_out.equals(date_return)){
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+                String strDateOut = dateFormat.format(date_out);  
+                String strDateReturn = dateFormat.format(date_return);  
+
+                if(booking.checkCarAvailability(car_id,date_out,date_return)){
+                    System.out.println("Enter");
+                    ArrayList<String> newBooking = new ArrayList<String>();
+                    newBooking.add("B"+fh.incrementID("booking.txt")+";"+car_id+";"+custID+";"+strDateOut+";"+strDateReturn+";"+"processing");
+
+                    booking.addBooking(newBooking);
+                    clearField();
+                    JOptionPane.showMessageDialog(null, "Booking Success");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Car Not Available.","Error Message",JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day. \n Cannot set Date Return before Date Out ",
+                        "Error Message",JOptionPane.ERROR_MESSAGE);
+            }
+        }
         
-    }//GEN-LAST:event_EditBtnActionPerformed
+    }//GEN-LAST:event_bookActionPerformed
 
     private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
         // TODO add your handling code here:
@@ -558,9 +626,9 @@ private Car car;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton EditBtn;
     private javax.swing.JButton SearchBtn;
     private javax.swing.JTextField SearchTxt;
+    private javax.swing.JButton book;
     private javax.swing.JTextField carID;
     private javax.swing.JTable carTable;
     private javax.swing.JTextField color;

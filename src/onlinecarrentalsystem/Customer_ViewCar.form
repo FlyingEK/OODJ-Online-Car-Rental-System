@@ -39,7 +39,7 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -298,10 +298,12 @@
                               <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="EditBtn" min="-2" pref="81" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="book" min="-2" pref="81" max="-2" attributes="0"/>
+                              <Component id="dateRequired" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
@@ -322,9 +324,7 @@
                                           <Component id="dateReturn" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="dateRequired" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       </Group>
@@ -382,7 +382,7 @@
                   <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Component id="dateRequired" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="EditBtn" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="book" min="-2" pref="37" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -502,7 +502,7 @@
             <Property name="text" type="java.lang.String" value="Car ID:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="EditBtn">
+        <Component class="javax.swing.JButton" name="book">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="0" red="66" type="rgb"/>
@@ -519,7 +519,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EditBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="color">
@@ -618,7 +618,7 @@
               <Color blue="33" green="33" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="Please set Date Out and Date Return"/>
+            <Property name="text" type="java.lang.String" value="Please  select car, set Date Out and Date Return"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
