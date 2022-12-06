@@ -13,31 +13,39 @@ import javax.swing.JOptionPane;
  */
 public class Admin extends User {
     private FileHandling fh;
+    private ActivityLog a;
     
     public Admin(){
         fh = new FileHandling();
+        a = new ActivityLog();
     }
     
     //login funstion
     public Boolean login(String username,String password){
         
         boolean found = false;
+        String activity = "failed login";
+        String adminID = "0";
         ArrayList<String> file = new ArrayList<String>();
         file = fh.readFile("admin.txt");
-        
-        for(String line : file){
+      
+            for(String line : file){
             String[] detail = line.split(";");
             
             if (detail[1].equals(username) && detail[2].equals(password))
             {
+                adminID = detail[0];
                 found = true;
+                activity = "successful login";
                 break;
             }
         }
+        
         if (found){
-            JOptionPane.showMessageDialog(null, "Login Success! Welcome to our car rental system!");
+            JOptionPane.showMessageDialog(null, "Login Success! Welcome back, "+username+"!");
+            a.addActivityLog( "Admin",adminID, username, activity);
         }else{
-            JOptionPane.showMessageDialog(null, "Login failed, please try again.","Error Message",JOptionPane.ERROR_MESSAGE);
+            a.addActivityLog( "Admin",adminID, username, activity);
         }
         return found;
     }

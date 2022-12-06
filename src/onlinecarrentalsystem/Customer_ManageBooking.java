@@ -4,7 +4,16 @@
  */
 package onlinecarrentalsystem;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,7 +43,6 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         String columns[] = {"Booking ID","Car ID","Date Out","Date Return","Approval"};
         
         ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
-        System.out.println(bookData.size());
         String[][] rows = new String[bookData.size()][5];
         
         
@@ -55,17 +63,36 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         cBookTable.setModel(model);
     }
     
-    private void setTextField(String[] data){
-        bookID.setText((String) data[0]);
-        carID.setText((String) data[0]);
-        model.setText((String) data[1]);
-        plateNo.setText((String) data[2]);
-        seat.setText((String) data[3]);
-        color.setText((String) data[4]);
-        year.setText((String) data[5]);
-        price.setText((String) data[6]);
-        dateOut.setText((Date) data[6]);
-        dateReturn.setText((Date) data[6]);
+    private void setTextField(String bookId,String CarId){
+        String [] data;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        
+        car.setCarID(CarId);
+        booking.setBookingID(bookId);
+        
+        if(booking.searchBooking()){
+            if(car.searchCar()){
+                String date_Out = booking.getOutDate();
+                String date_Return = booking.getReturnDate();
+                Date date_out;
+                try {
+                    date_out = dateFormat.parse(date_Out);
+                    Date date_return = dateFormat.parse(date_Return);
+                    bookID.setText(booking.getBookingID());
+                    carID.setText(car.getCarID());
+                    model.setText(car.getModel());
+                    plateNo.setText(car.getPlateNo());
+                    seat.setText(car.getSeat());
+                    color.setText(car.getColor());
+                    year.setText(car.getYear());
+                    price.setText(car.getPrice());
+                    dateOut.setDate(date_out);
+                    dateReturn.setDate(date_return);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Customer_ManageBooking.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 
     /**
@@ -171,6 +198,11 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        cBookTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cBookTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(cBookTable);
@@ -911,7 +943,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         if(found){
             tableModel.insertRow(tableModel.getRowCount(),
                 new Object[]{foundBooking[0],foundBooking[1],foundBooking[3],foundBooking[4],foundBooking[5]});
-            setTextField(foundBooking);
+            setTextField(foundBooking[0],foundBooking[1]);
             noResult.setVisible(false);
         }else{
             noResult.setVisible(true);
@@ -985,7 +1017,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                     newBooking.add("B"+fh.incrementID("booking.txt")+";"+car_id+";"+custID+";"+strDateOut+";"+strDateReturn+";"+"processing");
 
                     booking.addBooking(newBooking);
-                    clearField();
+                    //clearField();
                     JOptionPane.showMessageDialog(null, "Booking Success");
                 }else{
                     JOptionPane.showMessageDialog(null, "Car Not Available.","Error Message",JOptionPane.ERROR_MESSAGE);
@@ -1049,6 +1081,21 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
     private void price3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_price3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_price3ActionPerformed
+
+    private void cBookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cBookTableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tableModel = (DefaultTableModel) cBookTable.getModel();
+        Vector table = tableModel.getDataVector().elementAt(cBookTable.convertRowIndexToModel(cBookTable.getSelectedRow()));
+        Object[] dataTable = table.toArray();
+        String[] data = Arrays.copyOf(dataTable, dataTable.length, String[].class);
+        
+        //put them in data fields
+        setTextField(data[0],data[1]);
+        
+        
+        
+        
+    }//GEN-LAST:event_cBookTableMouseClicked
 
     /**
      * @param args the command line arguments

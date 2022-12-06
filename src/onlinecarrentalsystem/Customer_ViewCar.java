@@ -504,35 +504,6 @@ private FileHandling fh;
 
     private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
 
-//        if(!(dateOut == null || dateReturn == null) || !(carID == null)){
-//            dateRequired.setVisible(false);
-//            
-//            String car_id = carID.getText();
-//            String custID = fh.getCurrentCustomer();
-//            Date date_out = dateOut.getDate();
-//            Date date_return = dateReturn.getDate();
-//        
-//            if(!date_out.equals(date_return)){
-//                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
-//                String strDateOut = dateFormat.format(date_out);  
-//                String strDateReturn = dateFormat.format(date_return);  
-//
-//                if(booking.checkCarAvailability(car_id,date_out,date_return)){
-//                    System.out.println("Enter");
-//                    ArrayList<String> newBooking = new ArrayList<String>();
-//                    newBooking.add("B"+fh.incrementID("booking.txt")+";"+car_id+";"+custID+";"+strDateOut+";"+strDateReturn+";"+"processing");
-//
-//                    booking.addBooking(newBooking);
-//                    JOptionPane.showMessageDialog(null, "Booking Success");
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day.","Error Message",JOptionPane.ERROR_MESSAGE);
-//                }
-//            }else{
-//                JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day.","Error Message",JOptionPane.ERROR_MESSAGE);
-//            }
-//        }else{
-//            dateRequired.setVisible(true);
-//        }
         Date date_out = dateOut.getDate();
         Date date_return = dateReturn.getDate();
         String car_id = carID.getText();

@@ -13,11 +13,11 @@ import java.util.ArrayList;
  */
 public class ActivityLog {
     
-    public static void addActivityLog(String ID, String username, String activity){
+    public void addActivityLog(String role, String ID, String username, String activity){
         LocalDateTime dtNow = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         ArrayList<String> log = new ArrayList<String>();
-        log.add(dtNow.format(dtf)+";"+ID+";"+username+";"+activity);
+        log.add(dtNow.format(dtf)+";"+role+";"+ID+";"+username+";"+activity);
         //write into file
         FileHandling fh = new FileHandling(); 
         fh.writeFile("activityLog.txt",log);

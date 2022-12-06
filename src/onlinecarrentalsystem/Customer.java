@@ -17,16 +17,19 @@ public class Customer extends User{
             customerAddress,customerEmail,customerContact,customerIC,
             currentCustomer;
     private FileHandling fh;
+    private ActivityLog a;
     
     
     public Customer(){
         this.customerID = null;
         fh = new FileHandling();
+        a = new ActivityLog();
     }
     
     public Customer(String customerID){
         this.customerID = customerID;
         fh = new FileHandling();
+        a = new ActivityLog();
     }
     
     //getter
@@ -49,7 +52,7 @@ public class Customer extends User{
     public String getCurrentCustomer(){return currentCustomer;}
     
     //setter
-    public void setCarID(String customerID) {this.customerID = customerID;}
+    public void setCustomerID(String customerID) {this.customerID = customerID;}
     
     public void setCustomerUsername(String customerUsername) {this.customerUsername = customerUsername;}
     
@@ -68,7 +71,10 @@ public class Customer extends User{
     //login funstion
     public Boolean login(String username,String password){
         
+        String customerID = "";
         boolean found = false;
+        String activity = "failed login";
+        
         ArrayList<String> file = new ArrayList<String>();
         file = fh.readFile("customer.txt");
         
@@ -78,14 +84,18 @@ public class Customer extends User{
             if (detail[1].equals(username) && detail[2].equals(password))
             {
                 found = true;
+                customerID = detail[0];
                 fh.setCurrentCustomer(detail[0]);
+                activity = "successful login";
                 break;
             }
         } 
         if (found){
             JOptionPane.showMessageDialog(null, "Login Success! Welcome to our car rental system!");
+            a.addActivityLog( "Customer", customerID, username, activity);
         }else{
             JOptionPane.showMessageDialog(null, "Login failed, please try again.","Error Message",JOptionPane.ERROR_MESSAGE);
+            a.addActivityLog( "Customer", customerID, username, activity);
         }
         return found;
     }

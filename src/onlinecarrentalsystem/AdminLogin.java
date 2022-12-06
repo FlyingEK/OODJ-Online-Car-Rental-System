@@ -4,18 +4,21 @@
  */
 package onlinecarrentalsystem;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
  */
 public class AdminLogin extends javax.swing.JFrame {
-
+    private Admin admin;
     /**
      * Creates new form AdminLogin
      */
     public AdminLogin() {
         initComponents();
         getContentPane().setBackground(new java.awt.Color(204,204,255));
+        admin = new Admin();
     }
 
     /**
@@ -52,6 +55,11 @@ public class AdminLogin extends javax.swing.JFrame {
         adminLoginBtn.setForeground(new java.awt.Color(255, 255, 255));
         adminLoginBtn.setText("Login");
         adminLoginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        adminLoginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminLoginBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,6 +121,25 @@ public class AdminLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    int i = 3;
+    private void adminLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginBtnActionPerformed
+        // TODO add your handling code here:
+        if (i != 0){
+            if(admin.login(username.getText(), password.getText())){
+                Admin_HomePage home = new Admin_HomePage();
+                home.setVisible(true);
+                dispose();
+            } 
+            else {
+                i--;
+                JOptionPane.showMessageDialog(null, "Login failed. "+i+" attempt(s) left.","Error Message",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Login blocked! Please contact admin to unblock it.","Error Message",JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_adminLoginBtnActionPerformed
 
     /**
      * @param args the command line arguments
