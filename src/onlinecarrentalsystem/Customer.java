@@ -27,6 +27,7 @@ public class Customer extends User{
     public Customer(String customerID){
         this.customerID = customerID;
         fh = new FileHandling();
+        searchCustomer();
     }
     
     //getter
@@ -83,7 +84,7 @@ public class Customer extends User{
             }
         } 
         if (found){
-            JOptionPane.showMessageDialog(null, "Login Success! Welcome to our car rental system!");
+            JOptionPane.showMessageDialog(null, "Login Success! Welcome to our cust rental system!");
         }else{
             JOptionPane.showMessageDialog(null, "Login failed, please try again.","Error Message",JOptionPane.ERROR_MESSAGE);
         }
@@ -116,6 +117,24 @@ public class Customer extends User{
     public void logout(){
         fh.setCurrentCustomer(null);
         // jump to starting page
+    }
+        
+    public Boolean searchCustomer(){
+        String[] custArray = fh.searchRecord("customer.txt", customerID);
+        Boolean found = true;
+        if (custArray.length == 0){
+            found = false;
+        } else{
+            customerID = custArray[0];
+            customerUsername = custArray[1];
+            customerPassword = custArray[2];
+            customerName = custArray[3];
+            customerContact = custArray[4];
+            customerEmail = custArray[5];
+            customerIC = custArray[6];
+            customerAddress = custArray[7];
+        }
+        return found;
     }
             
 }
