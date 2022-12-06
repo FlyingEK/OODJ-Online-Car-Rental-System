@@ -146,4 +146,21 @@ public class Booking {
         return customerBooking;
     }
     
+        public Boolean validateDateInput(){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            ArrayList<String> bookArray = readBooking();
+            for (String book:bookArray){
+                try{
+                    Date dateOut = df.parse(book.split(";")[6]);
+                    Date dateReturn = df.parse(book.split(";")[7]);
+                }
+                catch(ParseException p){
+                     p.printStackTrace();
+                }
+            }
+            
+            return ;
+        }
+    
+    
 }

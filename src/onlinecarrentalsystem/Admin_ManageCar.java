@@ -558,16 +558,10 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
         tableModel.setRowCount(0);        
         //read rows into table
-        String line;
-        try(BufferedReader r = new BufferedReader(new FileReader("car.txt"))){
-            while ((line = r.readLine())!=null){
-                String car[] = line.split(";");
-                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car[0],car[1],car[2],car[3],car[4],car[5],car[6]});
-            }
-            r.close();
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null,"Error occurs.");
+        ArrayList<String> carArray = car.readCar();
+        for(String carRecord:carArray){
+            String car[] = carRecord.split(";");
+            tableModel.insertRow(tableModel.getRowCount(), new Object[]{car[0],car[1],car[2],car[3],car[4],car[5],car[6]});
         }
     }
     

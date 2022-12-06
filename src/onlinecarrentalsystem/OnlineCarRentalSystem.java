@@ -15,7 +15,7 @@ public class OnlineCarRentalSystem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       Admin_ManageBooking c = new Admin_ManageBooking();
+       Admin_Booking c = new Admin_Booking();
        c.setVisible(true);
     }
     

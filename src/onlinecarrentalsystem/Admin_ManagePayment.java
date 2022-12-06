@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -574,18 +575,12 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
 
     private void readTable(){
         DefaultTableModel tableModel = (DefaultTableModel)paymentTable.getModel();
-        tableModel.setRowCount(0);        
-        //read rows into table
-        String line;
-        try(BufferedReader r = new BufferedReader(new FileReader("payment.txt"))){
-            while ((line = r.readLine())!=null){
-                String payment[] = line.split(";");
-                tableModel.insertRow(tableModel.getRowCount(), new Object[]{payment[0],payment[1],payment[2],payment[3]});
-            }
-            r.close();
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null,"Error occurs.");
+        tableModel.setRowCount(0);
+        
+        ArrayList<String> paymentArray = payment.readPayment();
+        for(String paymentRecord:paymentArray){
+            String payment[] = paymentRecord.split(";");
+            tableModel.insertRow(tableModel.getRowCount(), new Object[]{payment[0],payment[1],payment[2],payment[3]});
         }
     }
         

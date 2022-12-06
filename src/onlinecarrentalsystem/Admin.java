@@ -23,7 +23,7 @@ public class Admin extends User {
         
         boolean found = false;
         ArrayList<String> file = new ArrayList<String>();
-        file = fh.readFile("customer.txt");
+        file = fh.readFile("admin.txt");
         
         for(String line : file){
             String[] detail = line.split(";");
@@ -31,7 +31,6 @@ public class Admin extends User {
             if (detail[1].equals(username) && detail[2].equals(password))
             {
                 found = true;
-                currentCustomer = detail[0];
                 break;
             }
         }
