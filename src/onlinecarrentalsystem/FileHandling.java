@@ -119,10 +119,6 @@ public class FileHandling {
         }catch(IOException e){
             System.out.println(e);
         }
-        
-        if(!found){
-            JOptionPane.showMessageDialog(null, "Record not found","Error Message",JOptionPane.ERROR_MESSAGE);
-        }
         return result;
     }
     

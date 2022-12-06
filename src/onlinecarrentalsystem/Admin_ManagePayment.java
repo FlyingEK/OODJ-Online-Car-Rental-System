@@ -590,7 +590,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
 
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here:
-        noResult.setVisible(false);
+        noResult.setVisible(false); 
         payment.setPaymentID(searchTxt.getText());
         if(payment.searchPayment()){
             Booking b = new Booking(payment.getBookingID());
@@ -603,6 +603,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
             paymentDate.setText(payment.getDate());  
         } else {
             noResult.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Record not found","Error Message",JOptionPane.ERROR_MESSAGE);
         }  
     }//GEN-LAST:event_SearchBtnActionPerformed
 

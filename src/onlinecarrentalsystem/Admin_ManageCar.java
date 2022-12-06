@@ -588,6 +588,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
             
         } else {
             noResult.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Record not found","Error Message",JOptionPane.ERROR_MESSAGE);
         }  
     }//GEN-LAST:event_SearchBtnActionPerformed
 
