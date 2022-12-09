@@ -36,6 +36,10 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         car = new Car();
         fh = new FileHandling();
         
+        noResult.setVisible(false);
+        noResult1.setVisible(false);
+        dateRequired.setVisible(false);
+        
         pupolateTable();
     }
     
@@ -64,7 +68,6 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
     }
     
     private void setTextField(String bookId,String CarId){
-        String [] data;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         
         car.setCarID(CarId);
@@ -93,6 +96,19 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 }
             }
         }
+    }
+    
+    private void clearTextField(){
+        bookID.setText("");
+        carID.setText("");
+        model.setText("");
+        plateNo.setText("");
+        seat.setText("");
+        color.setText("");
+        year.setText("");
+        price.setText("");
+        dateOut.setDate(null);
+        dateReturn.setDate(null);
     }
 
     /**
@@ -240,17 +256,14 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(150, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(216, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(noResult)
-                        .addGap(68, 68, 68))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addComponent(noResult)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(SearchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -406,25 +419,25 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel7))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(103, 103, 103)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel7))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(103, 103, 103)))
+                                    .addComponent(jLabel6))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(plateNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                    .addComponent(model, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(carID, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(seat)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(68, 68, 68)
-                                .addComponent(bookID, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel14))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bookID, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(plateNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                        .addComponent(model, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(carID, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(seat)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,7 +541,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -895,14 +908,14 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1079, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(464, 464, 464))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -924,27 +937,76 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
         // TODO add your handling code here:
         boolean found = false;
-        String[] foundBooking = {};
-
+        String id = SearchTxt.getText();
+        ArrayList<String> dataFound = new ArrayList<String>();
         DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
-        tableModel.setRowCount(0);
-        ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
-        String booking_id = SearchTxt.getText();
+        
+        if(id != ""){ // 这个有问题，field空空也能accept
+            System.out.println("enter");
+            if (id.substring(0, 1).toUpperCase().equals("B")){
+                booking.setBookingID(id);
+                if(booking.searchBooking()){
+                    found = true;
+                }
+            }else if(id.substring(0,1).toUpperCase().equals("C")){
+                ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
 
-        for (String line:bookData){
-            String[] bookDetail = line.split(";");
 
-            if (bookDetail[0].equals(booking_id)){
-                found = true;
-                foundBooking = bookDetail;
+                for (String line:bookData){
+                    String[] bookDetail = line.split(";");
+                    if (bookDetail[1].equals(id)){
+                        found = true;
+                        dataFound.add(line);
+                    }
+                }
+            }else{
+                found = false;
             }
         }
+        
+        if(found){
+            if(id.substring(0, 1).toUpperCase().equals("B")){
+                tableModel.setRowCount(0);
+                tableModel.insertRow(tableModel.getRowCount(),
+                new Object[]{booking.getBookingID(),booking.getCarID(),booking.getOutDate(),booking.getReturnDate(),booking.getStatus()});
+                setTextField(booking.getBookingID(),booking.getCarID());
+                noResult.setVisible(false);
+            }
+            
+            if(id.substring(0,1).toUpperCase().equals("C")){
+                tableModel.setRowCount(0);
+                for (String line : dataFound){
+                    String detail[] = line.split(";");
+                    tableModel.insertRow(tableModel.getRowCount(), new Object[]{detail[0],detail[1],detail[2],detail[3],detail[4]});
+                }
+                clearTextField();
+                noResult.setVisible(false);
+            }
+        }else{
+            noResult.setVisible(true);
+            pupolateTable();
+        }
+        
+        
+        
+//        String[] foundBooking = {};
+//
+//        DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
+//        tableModel.setRowCount(0);
+//        ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
+//        String booking_id = SearchTxt.getText();
+
+//        for (String line:bookData){
+//            String[] bookDetail = line.split(";");
+//
+//            if (bookDetail[0].equals(booking_id)){
+//                found = true;
+//                foundBooking = bookDetail;
+//            }
+//        }
 
         if(found){
-            tableModel.insertRow(tableModel.getRowCount(),
-                new Object[]{foundBooking[0],foundBooking[1],foundBooking[3],foundBooking[4],foundBooking[5]});
-            setTextField(foundBooking[0],foundBooking[1]);
-            noResult.setVisible(false);
+            
         }else{
             noResult.setVisible(true);
             pupolateTable();
@@ -966,35 +1028,6 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
 
     private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
 
-        //        if(!(dateOut == null || dateReturn == null) || !(carID == null)){
-            //            dateRequired.setVisible(false);
-            //
-            //            String car_id = carID.getText();
-            //            String custID = fh.getCurrentCustomer();
-            //            Date date_out = dateOut.getDate();
-            //            Date date_return = dateReturn.getDate();
-            //
-            //            if(!date_out.equals(date_return)){
-                //                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                //                String strDateOut = dateFormat.format(date_out);
-                //                String strDateReturn = dateFormat.format(date_return);
-                //
-                //                if(booking.checkCarAvailability(car_id,date_out,date_return)){
-                    //                    System.out.println("Enter");
-                    //                    ArrayList<String> newBooking = new ArrayList<String>();
-                    //                    newBooking.add("B"+fh.incrementID("booking.txt")+";"+car_id+";"+custID+";"+strDateOut+";"+strDateReturn+";"+"processing");
-                    //
-                    //                    booking.addBooking(newBooking);
-                    //                    JOptionPane.showMessageDialog(null, "Booking Success");
-                    //                }else{
-                    //                    JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day.","Error Message",JOptionPane.ERROR_MESSAGE);
-                    //                }
-                //            }else{
-                //                JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day.","Error Message",JOptionPane.ERROR_MESSAGE);
-                //            }
-            //        }else{
-            //            dateRequired.setVisible(true);
-            //        }
         Date date_out = dateOut.getDate();
         Date date_return = dateReturn.getDate();
         String car_id = bookID.getText();
