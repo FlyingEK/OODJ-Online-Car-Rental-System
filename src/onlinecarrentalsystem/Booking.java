@@ -156,28 +156,146 @@ public class Booking {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date bDateOut;
         Date bDateReturn;
-        
-        ArrayList<String> booking = new ArrayList<String>(readBooking());
-        for (String line:booking){
-            String[] bookingDetail = line.split(";");
+        Date today;
+        try {
+            today = dateFormat.parse(dateFormat.format(new Date()));
             
-            if (carID.equals(bookingDetail[1])){
-                try {
-                    bDateOut = dateFormat.parse(bookingDetail[3]);
-                    bDateReturn = dateFormat.parse(bookingDetail[4]);
-                    if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
-                        available = true;
+            if(dateOut.equals(today) || dateOut.after(today)){
+                ArrayList<String> booking = new ArrayList<String>(readBooking());
+                for (String line:booking){
+                    String[] bookingDetail = line.split(";");
+
+                    if (carID.equals(bookingDetail[1])){
+                        try {
+                            bDateOut = dateFormat.parse(bookingDetail[3]);
+                            bDateReturn = dateFormat.parse(bookingDetail[4]);
+                            if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
+                                available = true;
+                            }else{
+                                available = false;
+                                break;
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }else{
-                        available = false;
-                        break;
+                        available = true;
                     }
-                } catch (ParseException ex) {
-                    Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else{
-                available = true;
+                available = false;
             }
+        } catch (ParseException ex) {
+            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
         }
         return available;
     }
+    
+    //a
+    public boolean checkCarAvailability(Date dateOut, String carID){
+        boolean available = true;
+        ArrayList<String> book = readBooking();
+        Date d1 = null;
+        Date d2 = null;
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        for (String bookRec: book){
+            try{
+                d1 = df.parse(bookRec.split(";")[3]);
+                d2 = df.parse(bookRec.split(";")[4]);
+            }catch(ParseException pe){
+                pe.printStackTrace();
+            }
+        
+            if ((dateOut.equals(d1) || dateOut.equals(d2)) ||(dateOut.after(d1) && dateOut.before(d2))){
+                available = false;
+            }
+        }    
+        return available;
+    }
+    
+    public boolean checkCarAvailability(String carID,Date dateOut){
+        boolean available = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date bDateOut;
+        Date bDateReturn;
+        Date today;
+        
+        try {
+            today = dateFormat.parse(dateFormat.format(new Date()));
+            
+            if(dateOut.equals(today) || dateOut.after(today)){
+                ArrayList<String> booking = new ArrayList<String>(readBooking());
+                for (String line:booking){
+                    String[] bookingDetail = line.split(";");
+
+                    if (carID.equals(bookingDetail[1])){
+                        try {
+                            bDateOut = dateFormat.parse(bookingDetail[3]);
+                            bDateReturn = dateFormat.parse(bookingDetail[4]);
+                            if ((dateOut.before(bDateOut)  || dateOut.after(bDateReturn)) && !dateOut.equals(bDateReturn) ){
+                                available = true;
+                            }
+                            else{
+                                available = false;
+                                break;
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }else{
+                        available = true;
+                    }
+                }
+            }else{
+                available = false;
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return available;
+    }
+    
+    public boolean checkCarAvailability(String bookID, String carID,Date dateOut, Date dateReturn){
+        boolean available = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date bDateOut;
+        Date bDateReturn;
+        Date today;
+        try {
+            today = dateFormat.parse(dateFormat.format(new Date()));
+            
+            if(dateOut.equals(today) || dateOut.after(today)){
+                ArrayList<String> booking = new ArrayList<String>(readBooking());
+                for (String line:booking){
+                    String[] bookingDetail = line.split(";");
+
+                    if (carID.equals(bookingDetail[1])){
+                        if(!bookID.equals(bookingDetail[0])){
+                            try {
+                                bDateOut = dateFormat.parse(bookingDetail[3]);
+                                bDateReturn = dateFormat.parse(bookingDetail[4]);
+                                if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
+                                    available = true;
+                                }else{
+                                    available = false;
+                                    break;
+                                }
+                            } catch (ParseException ex) {
+                                Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }else{
+                        available = true;
+                    }
+                }
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return available;
+    }
+    
+    
 }

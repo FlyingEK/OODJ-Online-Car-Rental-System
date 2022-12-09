@@ -1407,6 +1407,11 @@ private Booking booking;
                 jCalendarMouseClicked(evt);
             }
         });
+        jCalendar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendarPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1415,25 +1420,27 @@ private Booking booking;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
-                .addComponent(jCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(jCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
@@ -1839,32 +1846,62 @@ private Booking booking;
 
     private void jCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendarMouseClicked
         // TODO add your handling code here:
-        SimpleDateFormat df= new SimpleDateFormat("dd-MM-yyyy");
-        Date date = jCalendar.getDate();
-        Date d1 = null;
-        Date d2 = null;
-        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
-        tableModel.setRowCount(0);        
-        //read rows into table
-        ArrayList<String> bookArray = booking.readBooking();
-        for (String bookRecord:bookArray){
-            String booking[] = bookRecord.split(";");
-            try{
-                d1 = df.parse(booking[3]);
-                d2 = df.parse(booking[4]);
-            }catch(ParseException pe){
-                pe.printStackTrace();
-            }
-            
-            if (!((date.equals(d1) || date.equals(d2)) ||(date.after(d1) && date.before(d2)))){
-                Car car= new Car();
-                tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[1],booking[2],booking[3],booking[4]});
-            }
-        }
+//        SimpleDateFormat df= new SimpleDateFormat("dd-MM-yyyy");
+//        Date date = jCalendar.getDate();
+//
+//        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
+//        tableModel.setRowCount(0);    
+//        Car car = new Car();
+//        ArrayList<String> carArray = car.readCar();
+//        for (String carRec : carArray){
+//            if (booking.checkCarAvailability(carRec.split(";")[0], date)){
+//                car.setCarID(carRec.split(";")[0]);
+//                car.searchCar();
+//                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car.getCarID(),car.getModel(),car.getColor(),car.getSeat(),car.getYear(),car.getPrice()});
+//            }
+//        }
+        //booking.checkCarAvailability(carID, date)
+//        //read rows into table
+//        ArrayList<String> bookArray = booking.readBooking();
+//        for (String bookRecord:bookArray){
+//            String booking[] = bookRecord.split(";");
+//            try{
+//                d1 = df.parse(booking[3]);
+//                d2 = df.parse(booking[4]);
+//            }catch(ParseException pe){
+//                pe.printStackTrace();
+//            }
+//            
+//            if (!((date.equals(d1) || date.equals(d2)) ||(date.after(d1) && date.before(d2)))){
+//                Car car= new Car();
+//                tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[1],booking[2],booking[3],booking[4]});
+//            }
+//       }
         
         
         
     }//GEN-LAST:event_jCalendarMouseClicked
+
+    private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
+        // TODO add your handling code here:
+        SimpleDateFormat df= new SimpleDateFormat("dd-MM-yyyy");
+        Date date = jCalendar.getDate();
+
+        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
+        tableModel.setRowCount(0);    
+        Car car = new Car();
+        booking = new Booking();
+        ArrayList<String> carArray = car.readCar();
+        for (String carRec : carArray){
+            if (this.booking.checkCarAvailability(date, carRec.split(";")[0])){
+                car.setCarID(carRec.split(";")[0]);
+                car.searchCar();
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car.getCarID(),car.getModel(),car.getColor(),car.getSeat(),car.getYear(),car.getPrice()});
+            }else{
+                continue;
+            }
+        }
+    }//GEN-LAST:event_jCalendarPropertyChange
 
     /**
      * @param args the command line arguments

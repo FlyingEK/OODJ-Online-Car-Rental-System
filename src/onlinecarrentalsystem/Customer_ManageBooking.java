@@ -39,26 +39,41 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         noResult.setVisible(false);
         noResult1.setVisible(false);
         dateRequired.setVisible(false);
+        DateNotAvailable.setVisible(false);
         
         pupolateTable();
     }
     
     private void pupolateTable(){
+        int count = 0;
         String columns[] = {"Booking ID","Car ID","Date Out","Date Return","Approval"};
         
         ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
-        String[][] rows = new String[bookData.size()][5];
-        
+        ArrayList<String> custBook = new ArrayList<String>();
         
         for (int i = 0; i < bookData.size();i++){
             String line = bookData.get(i);
             String [] carDetail = line.split(";");
             
-            int index = 0;
-            for(int j = 0;j<6;j++){
-                if (j!=2){
-                    rows[i][index] = carDetail[j];
-                    index++;
+            if(carDetail[2].equals(fh.getCurrentCustomer())){
+                count++;
+                custBook.add(line);
+            }
+        }
+        
+        String[][] rows = new String[count][5];
+        
+        for (int i = 0; i < custBook.size();i++){
+            String line = custBook.get(i);
+            String [] carDetail = line.split(";");
+            
+            if(carDetail[2].equals(fh.getCurrentCustomer())){
+                int index = 0;
+                for(int j = 0;j<6;j++){
+                    if (j!=2){
+                        rows[i][index] = carDetail[j];
+                        index++;
+                    }
                 }
             }
         }
@@ -141,7 +156,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         year = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        book = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
         color = new javax.swing.JTextField();
         price = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -151,9 +166,11 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         dateOut = new com.toedter.calendar.JDateChooser();
         dateReturn = new com.toedter.calendar.JDateChooser();
-        dateRequired = new javax.swing.JLabel();
+        DateNotAvailable = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         carID = new javax.swing.JTextField();
+        dateRequired = new javax.swing.JLabel();
+        delete = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         cBookTable1 = new javax.swing.JTable();
@@ -342,14 +359,14 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel6.setText("Booking ID:");
 
-        book.setBackground(new java.awt.Color(102, 0, 255));
-        book.setFont(new java.awt.Font("Candara", 1, 15)); // NOI18N
-        book.setForeground(new java.awt.Color(255, 255, 255));
-        book.setText("Book");
-        book.setBorder(null);
-        book.addActionListener(new java.awt.event.ActionListener() {
+        edit.setBackground(new java.awt.Color(102, 0, 255));
+        edit.setFont(new java.awt.Font("Candara", 1, 15)); // NOI18N
+        edit.setForeground(new java.awt.Color(255, 255, 255));
+        edit.setText("Edit");
+        edit.setBorder(null);
+        edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bookActionPerformed(evt);
+                editActionPerformed(evt);
             }
         });
 
@@ -391,11 +408,17 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel11.setText("Date Return:");
 
-        dateRequired.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        dateRequired.setForeground(new java.awt.Color(255, 51, 51));
-        dateRequired.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        dateRequired.setText("Please  select car, set Date Out and Date Return");
-        dateRequired.setToolTipText("");
+        dateOut.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateOutPropertyChange(evt);
+            }
+        });
+
+        DateNotAvailable.setFont(new java.awt.Font("Candara", 0, 12)); // NOI18N
+        DateNotAvailable.setForeground(new java.awt.Color(255, 51, 51));
+        DateNotAvailable.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        DateNotAvailable.setText("Car not available for this date.");
+        DateNotAvailable.setToolTipText("");
 
         jLabel7.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel7.setText("Car ID:");
@@ -410,6 +433,23 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             }
         });
 
+        dateRequired.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        dateRequired.setForeground(new java.awt.Color(255, 51, 51));
+        dateRequired.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        dateRequired.setText("Please  select booking, set Date Out and Date Return");
+        dateRequired.setToolTipText("");
+
+        delete.setBackground(new java.awt.Color(255, 51, 51));
+        delete.setFont(new java.awt.Font("Candara", 1, 15)); // NOI18N
+        delete.setForeground(new java.awt.Color(255, 255, 255));
+        delete.setText("Delete");
+        delete.setBorder(null);
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -418,56 +458,63 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7))
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addGap(103, 103, 103)))
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bookID, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(plateNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                        .addComponent(model, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(carID, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(seat)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateRequired))
+                                .addGap(29, 29, 29)
+                                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(seat))
+                                    .addComponent(jLabel14)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel7)
+                                                    .addComponent(jLabel4))
+                                                .addGap(103, 103, 103))
+                                            .addComponent(jLabel6))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(bookID, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(plateNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                                .addComponent(model, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(carID, javax.swing.GroupLayout.Alignment.LEADING)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(dateReturn, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jlab)
-                                                    .addComponent(jLabel9))
+                                                    .addComponent(jLabel9)
+                                                    .addComponent(jLabel8))
                                                 .addGap(35, 35, 35))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                                .addComponent(jLabel11)
-                                                .addGap(40, 40, 40)))
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addGap(79, 79, 79)))
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(year)
-                                        .addComponent(price)
-                                        .addComponent(dateOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dateReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(dateRequired)
-                            .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(jLabel10)
+                                                .addGap(60, 60, 60)))
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(DateNotAvailable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(year)
+                                            .addComponent(price)
+                                            .addComponent(dateOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(color, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))))
+                        .addContainerGap(18, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,6 +530,14 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(dateOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dateReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(carID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7))
@@ -497,37 +552,31 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel14)))
-                                .addGap(36, 36, 36))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(seat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(seat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jlab)
-                                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(20, 20, 20)
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel9)
-                                            .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(21, 21, 21)
-                                        .addComponent(jLabel10))
-                                    .addComponent(dateOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel11))
-                            .addComponent(dateReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(dateRequired)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(8, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlab)
+                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DateNotAvailable)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(dateRequired)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -553,7 +602,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Current Booking", jPanel1);
@@ -898,7 +947,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Booking History", jPanel4);
@@ -908,7 +957,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -923,8 +972,8 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -941,7 +990,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         ArrayList<String> dataFound = new ArrayList<String>();
         DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
         
-        if(id != ""){ // 这个有问题，field空空也能accept
+        if(!id.equals("")){ // 这个有问题，field空空也能accept
             System.out.println("enter");
             if (id.substring(0, 1).toUpperCase().equals("B")){
                 booking.setBookingID(id);
@@ -1026,13 +1075,14 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_yearActionPerformed
 
-    private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
 
         Date date_out = dateOut.getDate();
         Date date_return = dateReturn.getDate();
-        String car_id = bookID.getText();
+        String car_id = carID.getText();
+        String booking_id = bookID.getText();
 
-        if (date_out == null || date_return == null || car_id == ""){
+        if (date_out == null || date_return == null || car_id.equals("")){
             dateRequired.setVisible(true);
         }else{
             dateRequired.setVisible(false);
@@ -1040,28 +1090,32 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             String custID = fh.getCurrentCustomer();
 
             if(date_out.before(date_return) && !date_out.equals(date_return)){
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                String strDateOut = dateFormat.format(date_out);
-                String strDateReturn = dateFormat.format(date_return);
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+                String strDateOut = dateFormat.format(date_out);  
+                String strDateReturn = dateFormat.format(date_return);  
 
-                if(booking.checkCarAvailability(car_id,date_out,date_return)){
-                    System.out.println("Enter");
+                if(booking.checkCarAvailability(booking_id,car_id,date_out,date_return)){
                     ArrayList<String> newBooking = new ArrayList<String>();
-                    newBooking.add("B"+fh.incrementID("booking.txt")+";"+car_id+";"+custID+";"+strDateOut+";"+strDateReturn+";"+"processing");
+                    newBooking.add(booking_id);
+                    newBooking.add(car_id);
+                    newBooking.add(custID);
+                    newBooking.add(strDateOut);
+                    newBooking.add(strDateReturn);
+                    newBooking.add("processing");
 
-                    booking.addBooking(newBooking);
-                    //clearField();
-                    JOptionPane.showMessageDialog(null, "Booking Success");
+                    booking.modifyBooking(newBooking);
+                    clearTextField();
+                    JOptionPane.showMessageDialog(null, "Edit Success");
                 }else{
-                    JOptionPane.showMessageDialog(null, "Car Not Available.","Error Message",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Car not available for the booking date.","Error Message",JOptionPane.ERROR_MESSAGE);
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day. \n Cannot set Date Return before Date Out ",
-                    "Error Message",JOptionPane.ERROR_MESSAGE);
+                        "Error Message",JOptionPane.ERROR_MESSAGE);
             }
         }
 
-    }//GEN-LAST:event_bookActionPerformed
+    }//GEN-LAST:event_editActionPerformed
 
     private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
         // TODO add your handling code here:
@@ -1124,11 +1178,37 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         
         //put them in data fields
         setTextField(data[0],data[1]);
-        
-        
-        
+        DateNotAvailable.setVisible(false);
         
     }//GEN-LAST:event_cBookTableMouseClicked
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+    }//GEN-LAST:event_deleteActionPerformed
+
+    private void dateOutPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateOutPropertyChange
+        // TODO add your handling code here:
+        Date date_out = dateOut.getDate();
+        String car_id = carID.getText();
+
+        if (!(date_out == null  || car_id.equals(""))){
+            
+            String custID = fh.getCurrentCustomer();
+
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+            String strDateOut = dateFormat.format(date_out);    
+
+            if(!booking.checkCarAvailability(car_id,date_out)){
+                DateNotAvailable.setVisible(true);
+            }else{
+                DateNotAvailable.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_dateOutPropertyChange
 
     /**
      * @param args the command line arguments
@@ -1150,11 +1230,11 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DateNotAvailable;
     private javax.swing.JButton SearchBtn;
     private javax.swing.JButton SearchBtn1;
     private javax.swing.JTextField SearchTxt;
     private javax.swing.JTextField SearchTxt1;
-    private javax.swing.JButton book;
     private javax.swing.JTextField bookID;
     private javax.swing.JTextField bookID1;
     private javax.swing.JTable cBookTable;
@@ -1166,6 +1246,8 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateOut;
     private javax.swing.JLabel dateRequired;
     private com.toedter.calendar.JDateChooser dateReturn;
+    private javax.swing.JButton delete;
+    private javax.swing.JButton edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
