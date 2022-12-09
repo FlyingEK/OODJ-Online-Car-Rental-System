@@ -1,4 +1,4 @@
-M1;Luna;password
-M2;Violin;7891
-M3;Uzi;1231
+M1;Meiaa;1234;Jamie Mei;016-123-2213;oop@gmail.com;991223011231;7 Jalan Kluang, Sugai Besi, Kuala Lumpur
+M2;DannyBoi;ffa1231;Danny Tan;018-122-1113;bboi@gmail.com;801023011000;6 Jalan Abu, Batu Pahat, Johor
+M3;GOGOGO;oohh1231;Ali Bakar;012-666-2213;gogogo@gmail.com;021223011203;20 Jalan Air, Sugai Besi, Kuala Lumpur
 M4;NaNa;9987;John Alian;012-712-2213;gg@gmail.com;011223011123;6 Jalan Kluang, Sugai Besi, Kuala Lumpur
