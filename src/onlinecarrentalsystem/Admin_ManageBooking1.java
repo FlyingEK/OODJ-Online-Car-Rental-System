@@ -1642,25 +1642,42 @@ private Booking booking;
     }//GEN-LAST:event_emailActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        ArrayList<String> bookArray = booking.readBooking();
-        Boolean flag = true;
-        Date inputOut = this.dateOut.getDate();
-        Date inputReturn = this.dateReturn.getDate();
+        booking.setBookingID(bookID.getText());
+        if(booking.searchBooking()){
+            //check if it is already paid
+            Boolean paid = false;
+            Payment pay = new Payment();
+            ArrayList<String> payment = pay.readPayment();
+            for(String paymentRec : payment){
+                if (paymentRec.split(";")[1].equals(bookID.getText())){
+                    paid = true;
+                }
+            }
+            if (!paid){
+                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                ArrayList<String> bookArray = booking.readBooking();
+                Boolean flag = true;
+                Date inputOut = this.dateOut.getDate();
+                Date inputReturn = this.dateReturn.getDate();
 
-        if(booking.checkCarAvailability(carID.getText(), inputOut, inputReturn)){
-            ArrayList<String> record = new ArrayList<String>();
-            record.add(bookID.getText());
-            record.add(carID.getText());
-            record.add(custID.getText());
-            record.add(df.format(inputOut));
-            record.add(df.format(inputReturn));
-            record.add("approved");
-            booking.modifyBooking(record);
-            JOptionPane.showMessageDialog(null, "Record Edited Successfully");
- 
-        }
-        readBookingTable();
+                if(booking.checkCarAvailability(carID.getText(), inputOut, inputReturn)){
+                    ArrayList<String> record = new ArrayList<String>();
+                    record.add(bookID.getText());
+                    record.add(carID.getText());
+                    record.add(custID.getText());
+                    record.add(df.format(inputOut));
+                    record.add(df.format(inputReturn));
+                    record.add("approved");
+                    booking.modifyBooking(record);
+                    JOptionPane.showMessageDialog(null, "Record Edited Successfully");
+
+                }
+                readBookingTable();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "This booking has been paid.");
+            }
+        }             
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
@@ -1832,14 +1849,20 @@ private Booking booking;
         String strOut = df.format(dateOut2.getDate());
         String strReturn = df.format(dateReturn2.getDate());
         newBooking.add(booking.newBookingID()+";"+carID2.getText()+";"+custID2.getText()+";"+strOut+";"+strReturn+";approved");
-        
-        //date validation        
-        if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
-            booking.addBooking(newBooking);
-            JOptionPane.showMessageDialog(null, "Record added successfully!");
+        //customer ID validation
+        Customer cust = new Customer();
+        cust.setCustomerID(custID2.getText());
+        if(cust.searchCustomer()){
+            //date validation        
+            if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
+                booking.addBooking(newBooking);
+                JOptionPane.showMessageDialog(null, "Record added successfully!");
+            }else{
+                JOptionPane.showMessageDialog(null, "Car is booked on chosen dates!","Error", JOptionPane.ERROR_MESSAGE);
+            }
         }else{
-            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates!","Error", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
+        }  
     }//GEN-LAST:event_bookActionPerformed
 
     private void color2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_color2ActionPerformed
@@ -1865,18 +1888,9 @@ private Booking booking;
         for (String carRec : carArray){
             String[] recSplit = carRec.split(";");
             if (booking.checkCarAvailability(date, recSplit[0])){
-//                car.setCarID(carRec.split(";")[0]);
-//                car.searchCar();
-                //availableCar.add(carRec);
-                ///tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
             }
         }
-        
-        
-        //for(String rec:availableCar){
-         //   String[] recSplit = rec.split(";");
-         //   tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
-        //}
     }//GEN-LAST:event_jCalendarPropertyChange
 
     private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked

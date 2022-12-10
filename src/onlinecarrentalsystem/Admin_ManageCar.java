@@ -675,7 +675,8 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         } catch (Exception e){
             e.printStackTrace();
         }
-        
+        JOptionPane.showMessageDialog(null, "Booking added successfully");
+           
         //read latest table
         readTable();
     }//GEN-LAST:event_addBtnActionPerformed
