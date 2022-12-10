@@ -33,70 +33,7 @@ private Booking booking;
         noResult.setVisible(false);
         noResult2.setVisible(false);
         days.setVisible(false);
-        pendingBookingTable.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            int  row = pendingBookingTable.rowAtPoint(evt.getPoint());
-            Object id = pendingBookingTable.getValueAt( row, 0 );
-            booking.setBookingID(id+"");
-            if(booking.searchBooking()){
-                bookID1.setText(booking.getBookingID());
-                carID1.setText(booking.getCarID());
-                custID1.setText(booking.getCustomerID());
-                dateOut1.setText(booking.getOutDate());
-                dateReturn1.setText(booking.getReturnDate());
 
-                Car car = new Car(booking.getCarID());
-                model1.setText(car.getModel());
-                color1.setText(car.getColor());
-                plateNo1.setText(car.getPlateNo());
-
-                Customer cust = new Customer(booking.getCustomerID());
-                custName1.setText(cust.getCustomerName());
-                ic.setText(cust.getCustomerIC());
-                email1.setText(cust.getCustomerEmail());
-                contactNo1.setText(cust.getCustomerContact());
-
-            }  else {
-                JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record"); 
-            }
-          }
-    });
-        bookingTable.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            noResult.setVisible(false);
-            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-            int  row = bookingTable.rowAtPoint(evt.getPoint());
-            Object id = bookingTable.getValueAt( row, 0 );
-            booking.setBookingID(id+"");
-            if(booking.searchBooking()){
-                bookID.setText(booking.getBookingID());
-                carID.setText(booking.getCarID());
-                custID.setText(booking.getCustomerID());
-                try {
-                    dateOut.setDate(df.parse(booking.getOutDate()));
-                    dateReturn.setDate(df.parse(booking.getReturnDate()));
-                } catch(ParseException pe) {
-                    pe.printStackTrace();
-                }
-                
-                Car car = new Car(booking.getCarID());
-                model.setText(car.getModel());
-                color.setText(car.getColor());
-                plateNo.setText(car.getPlateNo());
-
-                Customer cust = new Customer(booking.getCustomerID());
-                custName.setText(cust.getCustomerName());
-                IC.setText(cust.getCustomerIC());
-                email.setText(cust.getCustomerEmail());
-                contactNo.setText(cust.getCustomerContact());
-
-            }  else {
-                JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record"); 
-            }
-          }
-    });
     }
                 
 
@@ -220,17 +157,17 @@ private Booking booking;
         jLabel32 = new javax.swing.JLabel();
         book = new javax.swing.JButton();
         color2 = new javax.swing.JTextField();
-        price = new javax.swing.JTextField();
         jLabel37 = new javax.swing.JLabel();
         model2 = new javax.swing.JTextField();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
-        dateOut2 = new com.toedter.calendar.JDateChooser();
         dateReturn2 = new com.toedter.calendar.JDateChooser();
         dateRequired = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         custID2 = new javax.swing.JTextField();
+        price = new javax.swing.JTextField();
+        dateOut2 = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         carTable = new javax.swing.JTable();
         jCalendar = new com.toedter.calendar.JCalendar();
@@ -257,6 +194,11 @@ private Booking booking;
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        pendingBookingTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pendingBookingTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(pendingBookingTable);
@@ -344,7 +286,7 @@ private Booking booking;
 
         ic.setEditable(false);
         ic.setBackground(new java.awt.Color(204, 204, 255));
-        ic.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        ic.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
         ic.setBorder(null);
         ic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -364,7 +306,7 @@ private Booking booking;
 
         contactNo1.setEditable(false);
         contactNo1.setBackground(new java.awt.Color(204, 204, 255));
-        contactNo1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        contactNo1.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
         contactNo1.setBorder(null);
         contactNo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -397,7 +339,7 @@ private Booking booking;
 
         dateReturn1.setEditable(false);
         dateReturn1.setBackground(new java.awt.Color(204, 204, 255));
-        dateReturn1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        dateReturn1.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
         dateReturn1.setBorder(null);
         dateReturn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -407,7 +349,7 @@ private Booking booking;
 
         dateOut1.setEditable(false);
         dateOut1.setBackground(new java.awt.Color(204, 204, 255));
-        dateOut1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        dateOut1.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
         dateOut1.setBorder(null);
         dateOut1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -502,44 +444,40 @@ private Booking booking;
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(bookID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20)
+                    .addComponent(custID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(custName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19)
+                    .addComponent(carID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(ic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18)
+                    .addComponent(model1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(bookID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20)
-                            .addComponent(custID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(custName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(ic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18)
-                            .addComponent(model1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel22)
-                                .addComponent(plateNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel15)
-                                .addComponent(contactNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel23)
-                                .addComponent(color1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jlab1)
-                                .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(carID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel22)
+                        .addComponent(plateNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(contactNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel23)
+                        .addComponent(color1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jlab1)
+                        .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -548,7 +486,7 @@ private Booking booking;
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlab11)
                         .addComponent(dateOut1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -571,7 +509,7 @@ private Booking booking;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
@@ -591,6 +529,11 @@ private Booking booking;
                 "Booking ID", "Car ID", "Customer ID", "Date Out", "Date Return"
             }
         ));
+        bookingTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bookingTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(bookingTable);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
@@ -649,7 +592,7 @@ private Booking booking;
         custID.setBackground(new java.awt.Color(204, 204, 255));
         custID.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         custID.setBorder(null);
-        jPanel2.add(custID, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 150, -1));
+        jPanel2.add(custID, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 150, -1));
 
         jLabel5.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel5.setText("IC no:");
@@ -684,7 +627,7 @@ private Booking booking;
                 modelActionPerformed(evt);
             }
         });
-        jPanel2.add(model, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 150, -1));
+        jPanel2.add(model, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 150, -1));
 
         jLabel9.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel9.setText("Car ID:");
@@ -694,13 +637,13 @@ private Booking booking;
         jLabel3.setText("Customer ID:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 92, -1, -1));
         jPanel2.add(dateOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 140, -1));
-        jPanel2.add(dateReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 300, 140, -1));
+        jPanel2.add(dateReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 140, -1));
 
         carID.setEditable(false);
         carID.setBackground(new java.awt.Color(204, 204, 255));
         carID.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         carID.setBorder(null);
-        jPanel2.add(carID, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 130, 150, -1));
+        jPanel2.add(carID, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, 150, -1));
 
         bookID.setEditable(false);
         bookID.setBackground(new java.awt.Color(204, 204, 255));
@@ -726,7 +669,7 @@ private Booking booking;
 
         IC.setEditable(false);
         IC.setBackground(new java.awt.Color(204, 204, 255));
-        IC.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        IC.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
         IC.setBorder(null);
         IC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -737,7 +680,7 @@ private Booking booking;
 
         contactNo.setEditable(false);
         contactNo.setBackground(new java.awt.Color(204, 204, 255));
-        contactNo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        contactNo.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
         contactNo.setBorder(null);
         contactNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -799,7 +742,7 @@ private Booking booking;
                 colorActionPerformed(evt);
             }
         });
-        jPanel2.add(color, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, 150, -1));
+        jPanel2.add(color, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 150, -1));
 
         plateNo.setEditable(false);
         plateNo.setBackground(new java.awt.Color(204, 204, 255));
@@ -810,7 +753,7 @@ private Booking booking;
                 plateNoActionPerformed(evt);
             }
         });
-        jPanel2.add(plateNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 150, -1));
+        jPanel2.add(plateNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 150, -1));
 
         payPane.setBackground(new java.awt.Color(232, 232, 247));
 
@@ -1021,7 +964,7 @@ private Booking booking;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, payPaneLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(receiptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139))
+                .addGap(148, 148, 148))
         );
         payPaneLayout.setVerticalGroup(
             payPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1075,7 +1018,7 @@ private Booking booking;
                     .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(receiptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(33, 33, 33)
                 .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1088,10 +1031,10 @@ private Booking booking;
                 .addGap(6, 6, 6)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(payPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1102,9 +1045,10 @@ private Booking booking;
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(payPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(payPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(49, 49, 49))
         );
 
@@ -1252,16 +1196,6 @@ private Booking booking;
             }
         });
 
-        price.setEditable(false);
-        price.setBackground(new java.awt.Color(204, 204, 255));
-        price.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        price.setBorder(null);
-        price.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                priceActionPerformed(evt);
-            }
-        });
-
         jLabel37.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel37.setText("Plate Number:");
 
@@ -1288,6 +1222,16 @@ private Booking booking;
 
         jLabel41.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel41.setText("Customer ID:");
+
+        price.setEditable(false);
+        price.setBackground(new java.awt.Color(204, 204, 255));
+        price.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        price.setBorder(null);
+        price.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                priceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -1320,9 +1264,8 @@ private Booking booking;
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dateRequired)
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel39)
-                                .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1334,12 +1277,15 @@ private Booking booking;
                                                 .addComponent(jLabel41)
                                                 .addComponent(jLabel40))
                                             .addGap(40, 40, 40)))
-                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(year, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                        .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                        .addComponent(dateOut2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dateReturn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(custID2)))))
+                                    .addGroup(jPanel7Layout.createSequentialGroup()
+                                        .addComponent(jLabel39)
+                                        .addGap(62, 62, 62)))
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(year, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(dateReturn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(custID2)
+                                    .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(dateOut2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(13, 13, 13))
                     .addComponent(jLabel38)))
         );
@@ -1351,31 +1297,31 @@ private Booking booking;
                 .addGap(14, 14, 14)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(carID2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jlab2)
-                                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(20, 20, 20)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel25)
-                                    .addComponent(model2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel28)
-                                    .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(21, 21, 21)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel37)
-                                    .addComponent(plateNo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel39)))
-                            .addComponent(dateOut2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(carID2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel32)
+                            .addComponent(jlab2)
+                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel25)
+                            .addComponent(model2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28)
+                            .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel37)
+                            .addComponent(plateNo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel39))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel26)
                             .addComponent(seat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel40)))
-                    .addComponent(dateReturn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(dateOut2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dateReturn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
@@ -1400,8 +1346,14 @@ private Booking booking;
                 "Car ID", "Model", "Color", "Seat", "Year", "Price"
             }
         ));
+        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                carTableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(carTable);
 
+        jCalendar.setBackground(new java.awt.Color(153, 153, 255));
         jCalendar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCalendarMouseClicked(evt);
@@ -1441,7 +1393,7 @@ private Booking booking;
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Add Booking", jPanel5);
@@ -1525,6 +1477,7 @@ private Booking booking;
                 ArrayList<String> paymentArray = new ArrayList<String>();
                 paymentArray.add(payment.newPaymentID()+";"+PBookID.getText()+";"+totalPrice.getText()+";"+PDate.getText());
                 payment.addPayment(paymentArray);
+                JOptionPane.showMessageDialog(null, "Payment record is saved!");
             }else{
                 JOptionPane.showMessageDialog(null, "Please enter paid value.");
             
@@ -1581,9 +1534,24 @@ private Booking booking;
         bookArray.add(dateReturn1.getText());
         bookArray.add("approved");
         booking.modifyBooking(bookArray);
+        
         //update table
         readPendingBookingTable();
         readBookingTable();
+        
+        //clear all field
+        bookID1.setText("");
+        carID1.setText("");
+        custID1.setText("");
+        dateOut1.setText("");
+        dateReturn1.setText("");
+        model1.setText("");
+        color1.setText("");
+        plateNo1.setText("");
+        custName1.setText("");
+        ic.setText("");
+        email1.setText("");
+        contactNo1.setText("");
     }//GEN-LAST:event_approveBtnActionPerformed
 
     private void declineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineBtnActionPerformed
@@ -1596,9 +1564,24 @@ private Booking booking;
         bookArray.add(dateReturn1.getText());
         bookArray.add("rejected");
         booking.modifyBooking(bookArray);
+        
         //update table
         readPendingBookingTable();
         readBookingTable();
+        
+         //clear all field
+        bookID1.setText("");
+        carID1.setText("");
+        custID1.setText("");
+        dateOut1.setText("");
+        dateReturn1.setText("");
+        model1.setText("");
+        color1.setText("");
+        plateNo1.setText("");
+        custName1.setText("");
+        ic.setText("");
+        email1.setText("");
+        contactNo1.setText("");
     }//GEN-LAST:event_declineBtnActionPerformed
 
     private void icActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_icActionPerformed
@@ -1676,14 +1659,12 @@ private Booking booking;
             booking.modifyBooking(record);
             JOptionPane.showMessageDialog(null, "Record Edited Successfully");
  
-        } else {
-            JOptionPane.showMessageDialog(null, "The car is already booked on the chosen date.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         readBookingTable();
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
-        
+  
         booking.setBookingID(bookID.getText());
         if(booking.searchBooking()){
             //check if it is already paid
@@ -1735,8 +1716,23 @@ private Booking booking;
         // TODO add your handling code here:
         booking.setBookingID(bookID.getText());
         booking.deleteBooking();
+
         //update table
         readBookingTable();
+
+        //clear all field
+        bookID.setText("");
+        carID.setText("");
+        custID.setText("");
+        dateOut.setDate(null);
+        dateReturn.setDate(null);
+        model.setText("");
+        color.setText("");
+        plateNo.setText("");
+        custName.setText("");
+        IC.setText("");
+        email.setText("");
+        contactNo.setText("");
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -1799,15 +1795,15 @@ private Booking booking;
         // TODO add your handling code here:
         noResult2.setVisible(false);
         Car car = new Car();
-        car.setCarID(SearchTxt.getText());
+        car.setCarID(SearchTxt2.getText());
         if (car.searchCar()){
             carID2.setText(car.getCarID());
-            model2.setText(car.getCarID());
-            plateNo2.setText(car.getCarID());
-            seat.setText(car.getCarID());
-            color2.setText(car.getCarID());
-            year.setText(car.getCarID());
-            price.setText(car.getCarID());
+            model2.setText(car.getModel());
+            plateNo2.setText(car.getPlateNo());
+            seat.setText(car.getSeat());
+            color2.setText(car.getColor());
+            year.setText(car.getYear());
+            price.setText(car.getPrice());
         }else{
             noResult2.setVisible(true);
         }
@@ -1831,77 +1827,142 @@ private Booking booking;
     }//GEN-LAST:event_yearActionPerformed
 
     private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
-
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        ArrayList<String> newBooking = new ArrayList<String>();
+        String strOut = df.format(dateOut2.getDate());
+        String strReturn = df.format(dateReturn2.getDate());
+        newBooking.add(booking.newBookingID()+";"+carID2.getText()+";"+custID2.getText()+";"+strOut+";"+strReturn+";approved");
         
-
+        //date validation        
+        if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
+            booking.addBooking(newBooking);
+            JOptionPane.showMessageDialog(null, "Record added successfully!");
+        }else{
+            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates!","Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_bookActionPerformed
 
     private void color2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_color2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_color2ActionPerformed
 
-    private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_priceActionPerformed
-
     private void jCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendarMouseClicked
-        // TODO add your handling code here:
-//        SimpleDateFormat df= new SimpleDateFormat("dd-MM-yyyy");
-//        Date date = jCalendar.getDate();
-//
-//        DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
-//        tableModel.setRowCount(0);    
-//        Car car = new Car();
-//        ArrayList<String> carArray = car.readCar();
-//        for (String carRec : carArray){
-//            if (booking.checkCarAvailability(carRec.split(";")[0], date)){
-//                car.setCarID(carRec.split(";")[0]);
-//                car.searchCar();
-//                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car.getCarID(),car.getModel(),car.getColor(),car.getSeat(),car.getYear(),car.getPrice()});
-//            }
-//        }
-        //booking.checkCarAvailability(carID, date)
-//        //read rows into table
-//        ArrayList<String> bookArray = booking.readBooking();
-//        for (String bookRecord:bookArray){
-//            String booking[] = bookRecord.split(";");
-//            try{
-//                d1 = df.parse(booking[3]);
-//                d2 = df.parse(booking[4]);
-//            }catch(ParseException pe){
-//                pe.printStackTrace();
-//            }
-//            
-//            if (!((date.equals(d1) || date.equals(d2)) ||(date.after(d1) && date.before(d2)))){
-//                Car car= new Car();
-//                tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[1],booking[2],booking[3],booking[4]});
-//            }
-//       }
-        
-        
-        
+   
     }//GEN-LAST:event_jCalendarMouseClicked
 
     private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
         // TODO add your handling code here:
         SimpleDateFormat df= new SimpleDateFormat("dd-MM-yyyy");
         Date date = jCalendar.getDate();
-
+        dateOut2.setDate(date);
         DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
         tableModel.setRowCount(0);    
         Car car = new Car();
         booking = new Booking();
         ArrayList<String> carArray = car.readCar();
+        ArrayList<String> availableCar = new ArrayList<String>();
+        
         for (String carRec : carArray){
-            if (this.booking.checkCarAvailability(date, carRec.split(";")[0])){
-                car.setCarID(carRec.split(";")[0]);
-                car.searchCar();
-                tableModel.insertRow(tableModel.getRowCount(), new Object[]{car.getCarID(),car.getModel(),car.getColor(),car.getSeat(),car.getYear(),car.getPrice()});
-            }else{
-                continue;
+            String[] recSplit = carRec.split(";");
+            if (booking.checkCarAvailability(date, recSplit[0])){
+//                car.setCarID(carRec.split(";")[0]);
+//                car.searchCar();
+                //availableCar.add(carRec);
+                ///tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
             }
         }
+        
+        
+        //for(String rec:availableCar){
+         //   String[] recSplit = rec.split(";");
+         //   tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
+        //}
     }//GEN-LAST:event_jCalendarPropertyChange
+
+    private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
+        // TODO add your handling code here:
+        int  row = carTable.rowAtPoint(evt.getPoint());
+        Object id = carTable.getValueAt( row, 0 );
+        Car car = new Car();
+        car.setCarID(id+"");
+        if(car.searchCar()){
+            carID2.setText(car.getCarID());
+            model2.setText(car.getModel());
+            plateNo2.setText(car.getPlateNo());
+            seat.setText(car.getSeat());
+            color2.setText(car.getColor());
+            year.setText(car.getYear());
+            price.setText(car.getPrice());
+        }  else {
+            JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record"); 
+        }
+    }//GEN-LAST:event_carTableMouseClicked
+
+    private void pendingBookingTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendingBookingTableMouseClicked
+        // TODO add your handling code here:
+        int  row = pendingBookingTable.rowAtPoint(evt.getPoint());
+        Object id = pendingBookingTable.getValueAt( row, 0 );
+        booking.setBookingID(id+"");
+        if(booking.searchBooking()){
+            bookID1.setText(booking.getBookingID());
+            carID1.setText(booking.getCarID());
+            custID1.setText(booking.getCustomerID());
+            dateOut1.setText(booking.getOutDate());
+            dateReturn1.setText(booking.getReturnDate());
+
+            Car car = new Car(booking.getCarID());
+            model1.setText(car.getModel());
+            color1.setText(car.getColor());
+            plateNo1.setText(car.getPlateNo());
+
+            Customer cust = new Customer(booking.getCustomerID());
+            custName1.setText(cust.getCustomerName());
+            ic.setText(cust.getCustomerIC());
+            email1.setText(cust.getCustomerEmail());
+            contactNo1.setText(cust.getCustomerContact());
+
+        }  else {
+            JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record"); 
+        }
+    }//GEN-LAST:event_pendingBookingTableMouseClicked
+
+    private void bookingTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingTableMouseClicked
+        // TODO add your handling code here:
+        noResult.setVisible(false);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        int  row = bookingTable.rowAtPoint(evt.getPoint());
+        Object id = bookingTable.getValueAt( row, 0 );
+        booking.setBookingID(id+"");
+        if(booking.searchBooking()){
+            bookID.setText(booking.getBookingID());
+            carID.setText(booking.getCarID());
+            custID.setText(booking.getCustomerID());
+            try {
+                dateOut.setDate(df.parse(booking.getOutDate()));
+                dateReturn.setDate(df.parse(booking.getReturnDate()));
+            } catch(ParseException pe) {
+                pe.printStackTrace();
+            }
+
+            Car car = new Car(booking.getCarID());
+            model.setText(car.getModel());
+            color.setText(car.getColor());
+            plateNo.setText(car.getPlateNo());
+
+            Customer cust = new Customer(booking.getCustomerID());
+            custName.setText(cust.getCustomerName());
+            IC.setText(cust.getCustomerIC());
+            email.setText(cust.getCustomerEmail());
+            contactNo.setText(cust.getCustomerContact());
+
+        }  else {
+            JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record"); 
+        }
+    }//GEN-LAST:event_bookingTableMouseClicked
+
+    private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_priceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1920,13 +1981,13 @@ private Booking booking;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Admin_Booking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_ManageBooking1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Admin_Booking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_ManageBooking1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Admin_Booking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_ManageBooking1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Admin_Booking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_ManageBooking1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

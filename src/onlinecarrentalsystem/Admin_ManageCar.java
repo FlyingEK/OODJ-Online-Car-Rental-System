@@ -31,28 +31,6 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         noResult.setVisible(false);
         
         readTable();
-        
-        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            int row = carTable.rowAtPoint(evt.getPoint());
-            Object id = carTable.getValueAt( row, 0 );
-            car.setCarID(id+"");
-            if(car.searchCar()){
-            carID.setText(car.getCarID());
-            model.setText(car.getModel());
-            plateNo.setText(car.getPlateNo());
-            seat.setText(car.getSeat());
-            color.setText(car.getColor());
-            year.setText(car.getYear());
-            price.setText(car.getPrice());
-            
-        } else {
-            JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record");
-        }  
-            
-        }
-    });
     }
     
 
@@ -131,6 +109,11 @@ public class Admin_ManageCar extends javax.swing.JFrame {
                 "Car ID", "Model", "Plate No", "Seat", "Color", "Year", "Price /Day"
             }
         ));
+        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                carTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(carTable);
 
         jPanel2.setBackground(new java.awt.Color(226, 226, 255));
@@ -704,6 +687,25 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private void model1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_model1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_model1ActionPerformed
+
+    private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
+        // TODO add your handling code here:
+        int row = carTable.rowAtPoint(evt.getPoint());
+            Object id = carTable.getValueAt( row, 0 );
+            car.setCarID(id+"");
+            if(car.searchCar()){
+            carID.setText(car.getCarID());
+            model.setText(car.getModel());
+            plateNo.setText(car.getPlateNo());
+            seat.setText(car.getSeat());
+            color.setText(car.getColor());
+            year.setText(car.getYear());
+            price.setText(car.getPrice());
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selected row doesn't contain any record");
+        }  
+    }//GEN-LAST:event_carTableMouseClicked
 
     /**
      * @param args the command line arguments

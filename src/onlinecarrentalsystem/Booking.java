@@ -38,6 +38,12 @@ public class Booking {
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
     }
+    
+    public String newBookingID(){
+        String newBookingID = fh.incrementID("booking.txt");
+        return "B"+newBookingID;
+    }
+    
     public ArrayList readBooking(){
         ArrayList<String> bookingArray = fh.readFile("booking.txt");
         return bookingArray;
@@ -205,9 +211,10 @@ public class Booking {
             }catch(ParseException pe){
                 pe.printStackTrace();
             }
-        
-            if ((dateOut.equals(d1) || dateOut.equals(d2)) ||(dateOut.after(d1) && dateOut.before(d2))){
-                available = false;
+            if(bookRec.split(";")[5].equals("approved")){
+                if ((dateOut.equals(d1) || dateOut.equals(d2)) ||(dateOut.after(d1) && dateOut.before(d2))){
+                    available = false;
+                }
             }
         }    
         return available;
