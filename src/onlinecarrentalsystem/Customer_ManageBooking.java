@@ -42,13 +42,14 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         DateNotAvailable.setVisible(false);
         
         pupolateTable();
+        pupolateHistory();
     }
     
     private void pupolateTable(){
         int count = 0;
         String columns[] = {"Booking ID","Car ID","Date Out","Date Return","Approval"};
         
-        ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
+        ArrayList<String> bookData = new ArrayList<String>(booking.checkCurrentBooking());
         ArrayList<String> custBook = new ArrayList<String>();
         
         for (int i = 0; i < bookData.size();i++){
@@ -82,6 +83,44 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         cBookTable.setModel(model);
     }
     
+    private void pupolateHistory(){
+        int count = 0;
+        String columns[] = {"Booking ID","Car ID","Date Out","Date Return","Approval"};
+        
+        ArrayList<String> bookData = new ArrayList<String>(booking.checkBookingHistory());
+        ArrayList<String> custBook = new ArrayList<String>();
+        
+        for (int i = 0; i < bookData.size();i++){
+            String line = bookData.get(i);
+            String [] carDetail = line.split(";");
+            
+            if(carDetail[2].equals(fh.getCurrentCustomer())){
+                count++;
+                custBook.add(line);
+            }
+        }
+        
+        String[][] rows = new String[count][5];
+        
+        for (int i = 0; i < custBook.size();i++){
+            String line = custBook.get(i);
+            String [] carDetail = line.split(";");
+            
+            if(carDetail[2].equals(fh.getCurrentCustomer())){
+                int index = 0;
+                for(int j = 0;j<6;j++){
+                    if (j!=2){
+                        rows[i][index] = carDetail[j];
+                        index++;
+                    }
+                }
+            }
+        }
+        
+        DefaultTableModel model = new DefaultTableModel(rows,columns);
+        hBookTable.setModel(model);
+    }
+    
     private void setTextField(String bookId,String CarId){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         
@@ -113,6 +152,26 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         }
     }
     
+    private void setHistoryField(String bookId,String CarId){
+        car.setCarID(CarId);
+        booking.setBookingID(bookId);
+        
+        if(booking.searchBooking()){
+            if(car.searchCar()){
+                bookID1.setText(booking.getBookingID());
+                carID1.setText(car.getCarID());
+                model1.setText(car.getModel());
+                plateNo1.setText(car.getPlateNo());
+                seat1.setText(car.getSeat());
+                color1.setText(car.getColor());
+                year1.setText(car.getYear());
+                price1.setText(car.getPrice());
+                dateOut1.setText(booking.getOutDate());
+                dateReturn1.setText(booking.getReturnDate());
+            }
+        }
+    }
+    
     private void clearTextField(){
         bookID.setText("");
         carID.setText("");
@@ -124,6 +183,19 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         price.setText("");
         dateOut.setDate(null);
         dateReturn.setDate(null);
+    }
+    
+    private void clearHistoryField(){
+        bookID1.setText("");
+        carID1.setText("");
+        model1.setText("");
+        plateNo1.setText("");
+        seat1.setText("");
+        color1.setText("");
+        year1.setText("");
+        price1.setText("");
+        dateOut1.setText("");
+        dateReturn1.setText("");
     }
 
     /**
@@ -173,7 +245,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         delete = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        cBookTable1 = new javax.swing.JTable();
+        hBookTable = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         SearchTxt1 = new javax.swing.JTextField();
@@ -199,8 +271,8 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         carID1 = new javax.swing.JTextField();
-        price2 = new javax.swing.JTextField();
-        price3 = new javax.swing.JTextField();
+        dateOut1 = new javax.swing.JTextField();
+        dateReturn1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -609,7 +681,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
 
-        cBookTable1.setModel(new javax.swing.table.DefaultTableModel(
+        hBookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -628,12 +700,17 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(cBookTable1);
+        hBookTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hBookTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(hBookTable);
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel12.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel12.setText("Search by Booking ID:");
+        jLabel12.setText("Search by Booking ID or Car ID:");
 
         SearchTxt1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         SearchTxt1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
@@ -664,7 +741,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
+                .addContainerGap(210, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(noResult1)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -800,23 +877,23 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             }
         });
 
-        price2.setEditable(false);
-        price2.setBackground(new java.awt.Color(226, 226, 255));
-        price2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        price2.setBorder(null);
-        price2.addActionListener(new java.awt.event.ActionListener() {
+        dateOut1.setEditable(false);
+        dateOut1.setBackground(new java.awt.Color(226, 226, 255));
+        dateOut1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        dateOut1.setBorder(null);
+        dateOut1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                price2ActionPerformed(evt);
+                dateOut1ActionPerformed(evt);
             }
         });
 
-        price3.setEditable(false);
-        price3.setBackground(new java.awt.Color(226, 226, 255));
-        price3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        price3.setBorder(null);
-        price3.addActionListener(new java.awt.event.ActionListener() {
+        dateReturn1.setEditable(false);
+        dateReturn1.setBackground(new java.awt.Color(226, 226, 255));
+        dateReturn1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        dateReturn1.setBorder(null);
+        dateReturn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                price3ActionPerformed(evt);
+                dateReturn1ActionPerformed(evt);
             }
         });
 
@@ -873,8 +950,8 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                                     .addComponent(price1, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(year1, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(color1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(price2, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                                    .addComponent(price3))))
+                                    .addComponent(dateOut1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                    .addComponent(dateReturn1))))
                         .addContainerGap(23, Short.MAX_VALUE))))
         );
         jPanel6Layout.setVerticalGroup(
@@ -902,11 +979,11 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel21)
-                            .addComponent(price2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateOut1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
-                            .addComponent(price3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dateReturn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addGap(20, 20, 20)
@@ -989,23 +1066,34 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         String id = SearchTxt.getText();
         ArrayList<String> dataFound = new ArrayList<String>();
         DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
+        boolean current = false;
         
-        if(!id.equals("")){ // 这个有问题，field空空也能accept
-            System.out.println("enter");
+        ArrayList<String> bookData = new ArrayList<String>(booking.checkCurrentBooking());
+        for (String line:bookData){
+            String[] bookDetail = line.split(";");
+            if(bookDetail[0].equals(id)){
+                current = true;
+            }
+        }
+        
+        if(!id.equals("")){ 
             if (id.substring(0, 1).toUpperCase().equals("B")){
                 booking.setBookingID(id);
                 if(booking.searchBooking()){
-                    found = true;
+                    if(booking.getCustomerID().equals(fh.getCurrentCustomer())){
+                        if(current){
+                            found = true; 
+                        }
+                    }
                 }
             }else if(id.substring(0,1).toUpperCase().equals("C")){
-                ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
-
-
                 for (String line:bookData){
                     String[] bookDetail = line.split(";");
                     if (bookDetail[1].equals(id)){
-                        found = true;
+                        if(bookDetail[2].equals(fh.getCurrentCustomer())){
+                            found = true;
                         dataFound.add(line);
+                        }
                     }
                 }
             }else{
@@ -1020,45 +1108,23 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 new Object[]{booking.getBookingID(),booking.getCarID(),booking.getOutDate(),booking.getReturnDate(),booking.getStatus()});
                 setTextField(booking.getBookingID(),booking.getCarID());
                 noResult.setVisible(false);
+                DateNotAvailable.setVisible(false);
             }
             
             if(id.substring(0,1).toUpperCase().equals("C")){
                 tableModel.setRowCount(0);
                 for (String line : dataFound){
                     String detail[] = line.split(";");
-                    tableModel.insertRow(tableModel.getRowCount(), new Object[]{detail[0],detail[1],detail[2],detail[3],detail[4]});
+                    tableModel.insertRow(tableModel.getRowCount(), new Object[]{detail[0],detail[1],detail[3],detail[4],detail[5]});
                 }
                 clearTextField();
                 noResult.setVisible(false);
+                DateNotAvailable.setVisible(false);
             }
         }else{
             noResult.setVisible(true);
             pupolateTable();
-        }
-        
-        
-        
-//        String[] foundBooking = {};
-//
-//        DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
-//        tableModel.setRowCount(0);
-//        ArrayList<String> bookData = new ArrayList<String>(booking.readBooking());
-//        String booking_id = SearchTxt.getText();
-
-//        for (String line:bookData){
-//            String[] bookDetail = line.split(";");
-//
-//            if (bookDetail[0].equals(booking_id)){
-//                found = true;
-//                foundBooking = bookDetail;
-//            }
-//        }
-
-        if(found){
-            
-        }else{
-            noResult.setVisible(true);
-            pupolateTable();
+            clearTextField();
         }
 
     }//GEN-LAST:event_SearchBtnActionPerformed
@@ -1105,7 +1171,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
 
                     booking.modifyBooking(newBooking);
                     clearTextField();
-                    JOptionPane.showMessageDialog(null, "Edit Success");
+                    pupolateTable();
                 }else{
                     JOptionPane.showMessageDialog(null, "Car not available for the booking date.","Error Message",JOptionPane.ERROR_MESSAGE);
                 }
@@ -1135,6 +1201,69 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
 
     private void SearchBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtn1ActionPerformed
         // TODO add your handling code here:
+        boolean found = false;
+        String id = SearchTxt1.getText();
+        ArrayList<String> dataFound = new ArrayList<String>();
+        DefaultTableModel tableModel = (DefaultTableModel)hBookTable.getModel();
+        ArrayList<String> bookData = new ArrayList<String>(booking.checkBookingHistory());
+        boolean history = false;
+        
+        for (String line:bookData){
+            String[] bookDetail = line.split(";");
+            if(bookDetail[0].equals(id)){
+                history = true;
+            }
+        }
+        
+        if(!id.equals("")){ 
+            if (id.substring(0, 1).toUpperCase().equals("B")){
+                booking.setBookingID(id);
+                if(booking.searchBooking()){
+                    if(booking.getCustomerID().equals(fh.getCurrentCustomer())){
+                        if(history){
+                            found = true; 
+                        }
+                    }
+                }
+            }else if(id.substring(0,1).toUpperCase().equals("C")){
+
+                for (String line:bookData){
+                    String[] bookDetail = line.split(";");
+                    if (bookDetail[1].equals(id)){
+                        if(bookDetail[2].equals(fh.getCurrentCustomer())){
+                            found = true;
+                        dataFound.add(line);
+                        }
+                    }
+                }
+            }else{
+                found = false;
+            }
+        }
+        
+        if(found){
+            if(id.substring(0, 1).toUpperCase().equals("B")){
+                tableModel.setRowCount(0);
+                tableModel.insertRow(tableModel.getRowCount(),
+                new Object[]{booking.getBookingID(),booking.getCarID(),booking.getOutDate(),booking.getReturnDate(),booking.getStatus()});
+                setHistoryField(booking.getBookingID(),booking.getCarID());
+                noResult1.setVisible(false);
+            }
+            
+            if(id.substring(0,1).toUpperCase().equals("C")){
+                tableModel.setRowCount(0);
+                for (String line : dataFound){
+                    String detail[] = line.split(";");
+                    tableModel.insertRow(tableModel.getRowCount(), new Object[]{detail[0],detail[1],detail[3],detail[4],detail[5]});
+                }
+                clearHistoryField();
+                noResult1.setVisible(false);
+            }
+        }else{
+            noResult1.setVisible(true);
+            pupolateHistory();
+            clearHistoryField();
+        }
     }//GEN-LAST:event_SearchBtn1ActionPerformed
 
     private void bookID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookID1ActionPerformed
@@ -1161,13 +1290,13 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_carID1ActionPerformed
 
-    private void price2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_price2ActionPerformed
+    private void dateOut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateOut1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_price2ActionPerformed
+    }//GEN-LAST:event_dateOut1ActionPerformed
 
-    private void price3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_price3ActionPerformed
+    private void dateReturn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateReturn1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_price3ActionPerformed
+    }//GEN-LAST:event_dateReturn1ActionPerformed
 
     private void cBookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cBookTableMouseClicked
         // TODO add your handling code here:
@@ -1184,16 +1313,18 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-        
+        String booking_id = bookID.getText();
+        booking.setBookingID(booking_id);
+        booking.deleteBooking();
+        pupolateTable();
+        clearTextField();
     }//GEN-LAST:event_deleteActionPerformed
 
     private void dateOutPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateOutPropertyChange
         // TODO add your handling code here:
         Date date_out = dateOut.getDate();
         String car_id = carID.getText();
+        String booking_id = bookID.getText();
 
         if (!(date_out == null  || car_id.equals(""))){
             
@@ -1202,13 +1333,24 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
             String strDateOut = dateFormat.format(date_out);    
 
-            if(!booking.checkCarAvailability(car_id,date_out)){
+            if(!booking.checkCarAvailability(booking_id,car_id,date_out)){
                 DateNotAvailable.setVisible(true);
             }else{
                 DateNotAvailable.setVisible(false);
             }
         }
     }//GEN-LAST:event_dateOutPropertyChange
+
+    private void hBookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hBookTableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tableModel = (DefaultTableModel) hBookTable.getModel();
+        Vector table = tableModel.getDataVector().elementAt(hBookTable.convertRowIndexToModel(hBookTable.getSelectedRow()));
+        Object[] dataTable = table.toArray();
+        String[] data = Arrays.copyOf(dataTable, dataTable.length, String[].class);
+        
+        //put them in data fields
+        setHistoryField(data[0],data[1]);
+    }//GEN-LAST:event_hBookTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1238,16 +1380,18 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
     private javax.swing.JTextField bookID;
     private javax.swing.JTextField bookID1;
     private javax.swing.JTable cBookTable;
-    private javax.swing.JTable cBookTable1;
     private javax.swing.JTextField carID;
     private javax.swing.JTextField carID1;
     private javax.swing.JTextField color;
     private javax.swing.JTextField color1;
     private com.toedter.calendar.JDateChooser dateOut;
+    private javax.swing.JTextField dateOut1;
     private javax.swing.JLabel dateRequired;
     private com.toedter.calendar.JDateChooser dateReturn;
+    private javax.swing.JTextField dateReturn1;
     private javax.swing.JButton delete;
     private javax.swing.JButton edit;
+    private javax.swing.JTable hBookTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1290,8 +1434,6 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
     private javax.swing.JTextField plateNo1;
     private javax.swing.JTextField price;
     private javax.swing.JTextField price1;
-    private javax.swing.JTextField price2;
-    private javax.swing.JTextField price3;
     private javax.swing.JTextField seat;
     private javax.swing.JTextField seat1;
     private javax.swing.JTextField year;
