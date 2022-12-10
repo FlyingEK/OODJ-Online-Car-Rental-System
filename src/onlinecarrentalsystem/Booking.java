@@ -166,17 +166,19 @@ public class Booking {
                     String[] bookingDetail = line.split(";");
 
                     if (carID.equals(bookingDetail[1])){
-                        try {
-                            bDateOut = dateFormat.parse(bookingDetail[3]);
-                            bDateReturn = dateFormat.parse(bookingDetail[4]);
-                            if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
-                                available = true;
-                            }else{
-                                available = false;
-                                break;
+                        if(!bookingDetail[5].equals("rejected")){
+                            try {
+                                bDateOut = dateFormat.parse(bookingDetail[3]);
+                                bDateReturn = dateFormat.parse(bookingDetail[4]);
+                                if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
+                                    available = true;
+                                }else{
+                                    available = false;
+                                    break;
+                                }
+                            } catch (ParseException ex) {
+                                Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        } catch (ParseException ex) {
-                            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }else{
                         available = true;
@@ -207,19 +209,22 @@ public class Booking {
                     String[] bookingDetail = line.split(";");
 
                     if (carID.equals(bookingDetail[1])){
-                        try {
-                            bDateOut = dateFormat.parse(bookingDetail[3]);
-                            bDateReturn = dateFormat.parse(bookingDetail[4]);
-                            if ((dateOut.before(bDateOut)  || dateOut.after(bDateReturn)) && !dateOut.equals(bDateReturn) ){
-                                available = true;
+                        if(!bookingDetail[5].equals("rejected")){
+                            try {
+                                bDateOut = dateFormat.parse(bookingDetail[3]);
+                                bDateReturn = dateFormat.parse(bookingDetail[4]);
+                                if ((dateOut.before(bDateOut)  || dateOut.after(bDateReturn)) && !dateOut.equals(bDateReturn) ){
+                                    available = true;
+                                }
+                                else{
+                                    available = false;
+                                    break;
+                                }
+                            } catch (ParseException ex) {
+                                Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            else{
-                                available = false;
-                                break;
-                            }
-                        } catch (ParseException ex) {
-                            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
                     }else{
                         available = true;
                     }
@@ -251,17 +256,19 @@ public class Booking {
 
                     if (carID.equals(bookingDetail[1])){
                         if(!bookID.equals(bookingDetail[0])){
-                            try {
-                                bDateOut = dateFormat.parse(bookingDetail[3]);
-                                bDateReturn = dateFormat.parse(bookingDetail[4]);
-                                if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
-                                    available = true;
-                                }else{
-                                    available = false;
-                                    break;
+                            if(!bookingDetail[5].equals("rejected")){
+                                try {
+                                    bDateOut = dateFormat.parse(bookingDetail[3]);
+                                    bDateReturn = dateFormat.parse(bookingDetail[4]);
+                                    if ((dateOut.before(bDateOut) && dateReturn.before(bDateOut)) || (dateOut.after(bDateReturn) && dateReturn.after(bDateReturn))){
+                                        available = true;
+                                    }else{
+                                        available = false;
+                                        break;
+                                    }
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                            } catch (ParseException ex) {
-                                Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }else{
@@ -292,21 +299,22 @@ public class Booking {
 
                     if (carID.equals(bookingDetail[1])){
                         if(!bookID.equals(bookingDetail[0])){
-                           try {
-                                bDateOut = dateFormat.parse(bookingDetail[3]);
-                                bDateReturn = dateFormat.parse(bookingDetail[4]);
-                                if ((dateOut.before(bDateOut)  || dateOut.after(bDateReturn)) && !dateOut.equals(bDateReturn) ){
-                                    available = true;
-                                }
-                                else{
-                                    available = false;
-                                    break;
-                                }
-                            } catch (ParseException ex) {
-                                Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
-                            } 
+                            if(!bookingDetail[5].equals("rejected")){
+                                try {
+                                    bDateOut = dateFormat.parse(bookingDetail[3]);
+                                    bDateReturn = dateFormat.parse(bookingDetail[4]);
+                                    if ((dateOut.before(bDateOut)  || dateOut.after(bDateReturn)) && !dateOut.equals(bDateReturn) ){
+                                        available = true;
+                                    }
+                                    else{
+                                        available = false;
+                                        break;
+                                    }
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                                } 
+                            }
                         }
-                        
                     }else{
                         available = true;
                     }
