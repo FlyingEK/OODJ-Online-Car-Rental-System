@@ -275,5 +275,50 @@ public class Booking {
         return available;
     }
     
-    
+    public boolean checkCarAvailability(String bookID, String carID,Date dateOut){
+        boolean available = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date bDateOut;
+        Date bDateReturn;
+        Date today;
+        
+        try {
+            today = dateFormat.parse(dateFormat.format(new Date()));
+            
+            if(dateOut.equals(today) || dateOut.after(today)){
+                ArrayList<String> booking = new ArrayList<String>(readBooking());
+                for (String line:booking){
+                    String[] bookingDetail = line.split(";");
+
+                    if (carID.equals(bookingDetail[1])){
+                        if(!bookID.equals(bookingDetail[0])){
+                           try {
+                                bDateOut = dateFormat.parse(bookingDetail[3]);
+                                bDateReturn = dateFormat.parse(bookingDetail[4]);
+                                if ((dateOut.before(bDateOut)  || dateOut.after(bDateReturn)) && !dateOut.equals(bDateReturn) ){
+                                    available = true;
+                                }
+                                else{
+                                    available = false;
+                                    break;
+                                }
+                            } catch (ParseException ex) {
+                                Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+                            } 
+                        }
+                        
+                    }else{
+                        available = true;
+                    }
+                }
+            }else{
+                available = false;
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return available;
+    }
 }

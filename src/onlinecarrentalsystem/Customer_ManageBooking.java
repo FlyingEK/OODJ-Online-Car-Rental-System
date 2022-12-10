@@ -1106,6 +1106,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                     booking.modifyBooking(newBooking);
                     clearTextField();
                     JOptionPane.showMessageDialog(null, "Edit Success");
+                    pupolateTable();
                 }else{
                     JOptionPane.showMessageDialog(null, "Car not available for the booking date.","Error Message",JOptionPane.ERROR_MESSAGE);
                 }
@@ -1194,6 +1195,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         // TODO add your handling code here:
         Date date_out = dateOut.getDate();
         String car_id = carID.getText();
+        String booking_id = bookID.getText();
 
         if (!(date_out == null  || car_id.equals(""))){
             
@@ -1202,7 +1204,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
             String strDateOut = dateFormat.format(date_out);    
 
-            if(!booking.checkCarAvailability(car_id,date_out)){
+            if(!booking.checkCarAvailability(booking_id,car_id,date_out)){
                 DateNotAvailable.setVisible(true);
             }else{
                 DateNotAvailable.setVisible(false);
