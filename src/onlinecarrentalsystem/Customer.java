@@ -30,6 +30,7 @@ public class Customer extends User{
         this.customerID = customerID;
         fh = new FileHandling();
         a = new ActivityLog();
+        searchCustomer();
     }
     
     //getter

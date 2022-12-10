@@ -167,10 +167,10 @@ public class FileHandling {
         
         if(modified)
         {
-            JOptionPane.showMessageDialog(null, "Record Edited");
+            JOptionPane.showMessageDialog(null, "Record Updated");
         }
         else{
-            JOptionPane.showMessageDialog(null, "Failed to edit record!","Error Message",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Failed to update record!","Error Message",JOptionPane.ERROR_MESSAGE);
         }
     }
     

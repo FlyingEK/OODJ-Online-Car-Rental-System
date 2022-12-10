@@ -38,6 +38,12 @@ public class Booking {
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
     }
+    
+    public String newBookingID(){
+        String newBookingID = fh.incrementID("booking.txt");
+        return "B"+newBookingID;
+    }
+    
     public ArrayList readBooking(){
         ArrayList<String> bookingArray = fh.readFile("booking.txt");
         return bookingArray;
@@ -190,6 +196,29 @@ public class Booking {
         } catch (ParseException ex) {
             Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return available;
+    }
+    
+    //a
+    public boolean checkCarAvailability(Date dateOut, String carID){
+        boolean available = true;
+        ArrayList<String> book = readBooking();
+        Date d1 = null;
+        Date d2 = null;
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        for (String bookRec: book){
+            try{
+                d1 = df.parse(bookRec.split(";")[3]);
+                d2 = df.parse(bookRec.split(";")[4]);
+            }catch(ParseException pe){
+                pe.printStackTrace();
+            }
+            if(bookRec.split(";")[5].equals("approved")){
+                if ((dateOut.equals(d1) || dateOut.equals(d2)) ||(dateOut.after(d1) && dateOut.before(d2))){
+                    available = false;
+                }
+            }
+        }    
         return available;
     }
     

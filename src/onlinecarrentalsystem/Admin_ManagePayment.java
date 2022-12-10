@@ -7,8 +7,11 @@ package onlinecarrentalsystem;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,25 +30,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         noResult.setVisible(false);
         
         readTable();
-        
-        paymentTable.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-           int row = paymentTable.rowAtPoint(evt.getPoint());
-           Object id = paymentTable.getValueAt( row, 0 );
-           payment.setPaymentID(id+"");
-           if(payment.searchPayment()){
-                Booking b = new Booking(payment.getBookingID());
-                Car c = new Car(b.getCarID());
-                pID.setText(payment.getPaymentID());
-                car.setText(c.getModel()+" ("+b.getCarID()+")");
-                price.setText("RM "+ c.getPrice());
-                amount.setText(payment.getAmount());
-                rentalDate.setText(b.getOutDate() +" - "+b.getReturnDate());
-                paymentDate.setText(payment.getDate());      
-            }
-        }
-    });
     }
 
     /**
@@ -85,12 +69,10 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         car = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         customer = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         jlab = new javax.swing.JLabel();
         price = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        days = new javax.swing.JTextField();
         amount = new javax.swing.JTextField();
         deleteBtn2 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
@@ -254,6 +236,11 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
                 "Payment ID", "Booking ID", "Amount", "Date"
             }
         ));
+        paymentTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paymentTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(paymentTable);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
@@ -316,9 +303,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel8.setText("Days of Rental: ");
-
         jlab.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jlab.setText("Price Per Day:");
 
@@ -337,16 +321,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel3.setText("Payment ID:");
-
-        days.setEditable(false);
-        days.setBackground(new java.awt.Color(204, 204, 255));
-        days.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        days.setBorder(null);
-        days.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                daysActionPerformed(evt);
-            }
-        });
 
         amount.setEditable(false);
         amount.setBackground(new java.awt.Color(204, 204, 255));
@@ -410,7 +384,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addGap(82, 82, 82)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,32 +399,33 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
                                         .addComponent(searchTxt)
                                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jlab, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
                                     .addComponent(jLabel14))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                                .addComponent(pID, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(paymentID))
-                                            .addComponent(car, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(customer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(rentalDate)
-                                        .addComponent(paymentDate))
+                                        .addComponent(paymentDate)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addGap(0, 0, Short.MAX_VALUE)
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                                        .addComponent(pID, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(paymentID))
+                                                    .addComponent(car, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(customer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(amount))
                                     .addComponent(SearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(81, Short.MAX_VALUE))))
+                        .addGap(81, 81, 81))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(194, 194, 194)
                 .addComponent(deleteBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -480,10 +455,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(customer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(days, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlab)
@@ -595,10 +566,12 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         if(payment.searchPayment()){
             Booking b = new Booking(payment.getBookingID());
             Car c = new Car(b.getCarID());
+            Customer cust = new Customer(b.getCustomerID());
             pID.setText(payment.getPaymentID());
             car.setText(c.getModel()+" ("+b.getCarID()+")");
+            customer.setText(cust.getCustomerName()+" ("+cust.getCustomerID()+")");
             price.setText("RM "+ c.getPrice());
-            amount.setText(payment.getAmount());
+            amount.setText("RM "+ payment.getAmount());
             rentalDate.setText(b.getOutDate() +" - "+b.getReturnDate());
             paymentDate.setText(payment.getDate());  
         } else {
@@ -618,10 +591,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_priceActionPerformed
-
-    private void daysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daysActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_daysActionPerformed
 
     private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
         // TODO add your handling code here:
@@ -661,7 +630,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         paymentID.setText("");
         car.setText("");
         customer.setText("");
-        days.setText("");
         price.setText("");
         amount.setText("");
         rentalDate.setText("");
@@ -683,6 +651,26 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void paymentTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentTableMouseClicked
+        // TODO add your handling code here:
+        int row = paymentTable.rowAtPoint(evt.getPoint());
+        Object id = paymentTable.getValueAt( row, 0 );
+        payment.setPaymentID(id+"");
+        if(payment.searchPayment()){
+             Booking b = new Booking(payment.getBookingID());
+             Car c = new Car(b.getCarID());
+             Customer cust = new Customer(b.getCustomerID());
+             customer.setText(cust.getCustomerName()+" ("+cust.getCustomerID()+")");
+             pID.setText(payment.getPaymentID());
+             car.setText(c.getModel()+" ("+b.getCarID()+")");
+             price.setText("RM "+ c.getPrice());
+             amount.setText("RM "+ payment.getAmount());
+             rentalDate.setText(b.getOutDate() +" - "+b.getReturnDate());
+             paymentDate.setText(payment.getDate());   
+             
+         }
+    }//GEN-LAST:event_paymentTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -745,7 +733,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
     private javax.swing.JTextField amount;
     private javax.swing.JTextField car;
     private javax.swing.JTextField customer;
-    private javax.swing.JTextField days;
     private javax.swing.JButton deleteBtn1;
     private javax.swing.JButton deleteBtn2;
     private javax.swing.JLabel jLabel1;
@@ -759,7 +746,6 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
