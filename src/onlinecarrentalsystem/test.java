@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,7 +46,29 @@ public class test {
         //cust.Register(customerDetail);
         
         Booking book = new Booking();
-        System.out.println(book.checkCurrentBooking());
-
+        //System.out.println(book.checkCurrentBooking());
+        
+        ArrayList<String> bookRecord = new ArrayList<String>(book.readBooking());
+        ArrayList<String> cust1 = new ArrayList<String>();
+        
+        for(String line:bookRecord){
+            String[] detail = line.split(";");
+            cust1.add(detail[2]);
+        }
+        
+        Map<String, Long> occurrences = 
+        cust1.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+        System.out.println(occurrences);
+        
+        String mostRepeatedWord 
+        = cust1.stream()
+            .collect(Collectors.groupingBy(w -> w, Collectors.counting()))
+            .entrySet()
+            .stream()
+            .max(Comparator.comparing(Entry::getValue))
+            .get()
+            .getKey();
+       
+        System.out.println(mostRepeatedWord);
     } 
 }

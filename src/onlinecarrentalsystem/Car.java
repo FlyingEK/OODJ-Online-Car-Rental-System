@@ -63,7 +63,7 @@ public class Car {
         return price;
     }
     
-    public ArrayList readCar(){
+    public ArrayList<String> readCar(){
         ArrayList<String> carArray = fh.readFile("car.txt");
         return carArray;
     }
@@ -73,7 +73,7 @@ public class Car {
         return "C"+newCarID;
     }
     
-    public void addCar(ArrayList carArray){
+    public void addCar(ArrayList<String> carArray){
         fh.writeFile("car.txt", carArray);
     }
     

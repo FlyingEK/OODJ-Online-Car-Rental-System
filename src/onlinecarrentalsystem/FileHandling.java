@@ -23,7 +23,7 @@ public class FileHandling {
         System.out.println("test");
     }
             
-    public ArrayList readFile(String filename)
+    public ArrayList<String> readFile(String filename)
     {
         ArrayList<String> file = new ArrayList<String>();
         try

@@ -44,12 +44,12 @@ public class Booking {
         return "B"+newBookingID;
     }
     
-    public ArrayList readBooking(){
+    public ArrayList<String> readBooking(){
         ArrayList<String> bookingArray = fh.readFile("booking.txt");
         return bookingArray;
     }
     
-    public void addBooking(ArrayList bookingArray){
+    public void addBooking(ArrayList<String> bookingArray){
         fh.writeFile("booking.txt", bookingArray);
     }
     
@@ -101,7 +101,7 @@ public class Booking {
         fh.delete("booking.txt", bookingID);
     }
     
-    public ArrayList checkBookingHistory(){
+    public ArrayList<String> checkBookingHistory(){
         String custID = fh.getCurrentCustomer();
         
         ArrayList<String> booking = new ArrayList<String>();
@@ -129,7 +129,7 @@ public class Booking {
         return customerBooking;
     }
     
-    public ArrayList checkCurrentBooking(){
+    public ArrayList<String> checkCurrentBooking(){
         String custID = fh.getCurrentCustomer();
         
         ArrayList<String> booking = new ArrayList<String>();

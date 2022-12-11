@@ -5,6 +5,8 @@
 package onlinecarrentalsystem;
 
 import java.util.ArrayList;
+import java.util.Map;
+import javafx.stage.Stage;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,6 +35,9 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
         pupolateTable();
         totalBook.setText(rp.totalBooking());
         totalBookCust.setText(rp.totalBookingCustomer());
+        highestBook.setText(rp.hishestBooking());
+        AverageRent.setText(rp.averageDate());
+        rejected.setText(rp.rejectedBooking());
     }
     
     private void pupolateTable(){
@@ -52,6 +57,10 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
         
         DefaultTableModel model = new DefaultTableModel(rows,columns);
         bookReportTable.setModel(model);
+    }
+    
+    public void getCarRatio(){
+        //rp.carRatio();
     }
 
     /**
@@ -96,6 +105,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
         totalBookCust = new javax.swing.JTextField();
         rejected = new javax.swing.JTextField();
         AverageRent = new javax.swing.JTextField();
+        pieButton = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -373,6 +383,18 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
             }
         });
 
+        pieButton.setBackground(new java.awt.Color(102, 0, 255));
+        pieButton.setFont(new java.awt.Font("Candara", 1, 12)); // NOI18N
+        pieButton.setForeground(new java.awt.Color(255, 255, 255));
+        pieButton.setText("View Pie Chart");
+        pieButton.setBorder(null);
+        pieButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pieButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pieButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -382,7 +404,6 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel9)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -392,10 +413,6 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(AverageRent, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rejected, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(totalBook, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -404,7 +421,15 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(highestBook, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(highestBook, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rejected, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -436,7 +461,9 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(rejected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel9)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(pieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(14, 14, 14))
         );
 
@@ -528,6 +555,14 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_carRatio1ActionPerformed
 
+    private void pieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pieButtonActionPerformed
+        // TODO add your handling code here:
+        Pie_Chart pieChart = new Pie_Chart();
+        Stage stage = primaryStage;
+        pieChart.start(stage);
+        
+    }//GEN-LAST:event_pieButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -592,6 +627,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton pieButton;
     private javax.swing.JTextField rejected;
     private javax.swing.JTextField rejected1;
     private javax.swing.JTextField totalBook;
