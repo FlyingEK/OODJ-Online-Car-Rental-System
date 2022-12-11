@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class Admin_GenerateReport extends javax.swing.JFrame {
+public class Admin_GenerateReport extends javax.swing.JFrame{
 
     private Booking booking;
     private Car car;
@@ -560,6 +560,8 @@ public class Admin_GenerateReport extends javax.swing.JFrame {
         Pie_Chart pieChart = new Pie_Chart();
         Stage stage = primaryStage;
         pieChart.start(stage);
+        
+        
         
     }//GEN-LAST:event_pieButtonActionPerformed
 
