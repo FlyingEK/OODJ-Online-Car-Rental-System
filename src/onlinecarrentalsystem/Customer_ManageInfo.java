@@ -16,6 +16,7 @@ public class Customer_ManageInfo extends javax.swing.JFrame {
     public Customer_ManageInfo() {
         initComponents();
         customer = new Customer();
+        getContentPane().setBackground(new java.awt.Color(204,204,255));
     }
 
     /**
@@ -236,6 +237,13 @@ public class Customer_ManageInfo extends javax.swing.JFrame {
         String custID = fh.getCurrentCustomer();
         ArrayList<String> custArray = new ArrayList<String>();
         custArray.add(custID);
+        custArray.add(username.getText());
+        custArray.add(password.getText());
+        custArray.add(name.getText());
+        custArray.add(contactNo.getText());
+        custArray.add(email.getText());
+        custArray.add(ic.getText());
+        custArray.add(address.getText());
         customer.modifyCustomer(custArray);
     }//GEN-LAST:event_editBtnActionPerformed
 

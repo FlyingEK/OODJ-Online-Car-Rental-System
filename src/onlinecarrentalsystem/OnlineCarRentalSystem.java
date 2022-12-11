@@ -15,8 +15,8 @@ public class OnlineCarRentalSystem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       backup c = new backup();
-       c.setVisible(true);
+       WelcomePage wp = new WelcomePage();
+       wp.setVisible(true);
     }
     
 }

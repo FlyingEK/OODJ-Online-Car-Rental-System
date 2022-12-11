@@ -85,6 +85,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         price1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         plateNo1 = new javax.swing.JTextField();
+        menuBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -510,6 +511,16 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Add New", jPanel3);
 
+        menuBtn.setBackground(new java.awt.Color(255, 102, 153));
+        menuBtn.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        menuBtn.setForeground(new java.awt.Color(255, 255, 255));
+        menuBtn.setText("Menu");
+        menuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -523,11 +534,17 @@ public class Admin_ManageCar extends javax.swing.JFrame {
                         .addGap(435, 435, 435)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(94, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(menuBtn)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addContainerGap()
+                .addComponent(menuBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jTabbedPane1)
@@ -708,6 +725,13 @@ public class Admin_ManageCar extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_carTableMouseClicked
 
+    private void menuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnActionPerformed
+        // TODO add your handling code here:
+        Admin_HomePage menu = new Admin_HomePage();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menuBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -774,6 +798,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlab;
     private javax.swing.JLabel jlab1;
+    private javax.swing.JButton menuBtn;
     private javax.swing.JTextField model;
     private javax.swing.JTextField model1;
     private javax.swing.JLabel noResult;
