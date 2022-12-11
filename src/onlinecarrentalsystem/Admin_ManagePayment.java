@@ -81,6 +81,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
         pID = new javax.swing.JTextField();
         paymentDate = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
+        menuBtn = new javax.swing.JButton();
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -507,6 +508,16 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
             }
         });
 
+        menuBtn.setBackground(new java.awt.Color(255, 102, 153));
+        menuBtn.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        menuBtn.setForeground(new java.awt.Color(255, 255, 255));
+        menuBtn.setText("Menu");
+        menuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -519,7 +530,9 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(349, 349, 349))))
+                        .addGap(253, 253, 253)
+                        .addComponent(menuBtn)
+                        .addGap(20, 20, 20))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -530,7 +543,9 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -672,6 +687,13 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_paymentTableMouseClicked
 
+    private void menuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnActionPerformed
+        // TODO add your handling code here:
+        Admin_HomePage menu = new Admin_HomePage();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menuBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -755,6 +777,7 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlab;
     private javax.swing.JLabel jlab1;
+    private javax.swing.JButton menuBtn;
     private javax.swing.JLabel noResult;
     private javax.swing.JTextField pID;
     private javax.swing.JTextField paymentDate;

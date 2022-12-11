@@ -146,5 +146,9 @@ public class Customer extends User{
         }
         return found;
     }
+    
+    public void modifyCustomer(ArrayList<String> customerArray){
+        fh.modifyRecord("customer.txt",customerArray);
+    }
             
 }

@@ -172,6 +172,7 @@ private Booking booking;
         carTable = new javax.swing.JTable();
         jCalendar = new com.toedter.calendar.JCalendar();
         jTextField2 = new javax.swing.JTextField();
+        menuBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1354,6 +1355,7 @@ private Booking booking;
         jScrollPane3.setViewportView(carTable);
 
         jCalendar.setBackground(new java.awt.Color(153, 153, 255));
+        jCalendar.setDecorationBackgroundColor(new java.awt.Color(224, 224, 255));
         jCalendar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCalendarMouseClicked(evt);
@@ -1409,6 +1411,16 @@ private Booking booking;
             }
         });
 
+        menuBtn.setBackground(new java.awt.Color(255, 102, 153));
+        menuBtn.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        menuBtn.setForeground(new java.awt.Color(255, 255, 255));
+        menuBtn.setText("Menu");
+        menuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1416,17 +1428,24 @@ private Booking booking;
             .addGroup(layout.createSequentialGroup()
                 .addGap(593, 593, 593)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(660, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(menuBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(menuBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1642,25 +1661,46 @@ private Booking booking;
     }//GEN-LAST:event_emailActionPerformed
 
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        ArrayList<String> bookArray = booking.readBooking();
-        Boolean flag = true;
-        Date inputOut = this.dateOut.getDate();
-        Date inputReturn = this.dateReturn.getDate();
+        try{
+            booking.setBookingID(bookID.getText());
+            if(booking.searchBooking()){
+                //check if it is already paid
+                Boolean paid = false;
+                Payment pay = new Payment();
+                ArrayList<String> payment = pay.readPayment();
+                for(String paymentRec : payment){
+                    if (paymentRec.split(";")[1].equals(bookID.getText())){
+                        paid = true;
+                    }
+                }
+                if (!paid){
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    ArrayList<String> bookArray = booking.readBooking();
+                    Boolean flag = true;
+                    Date inputOut = this.dateOut.getDate();
+                    Date inputReturn = this.dateReturn.getDate();
 
-        if(booking.checkCarAvailability(carID.getText(), inputOut, inputReturn)){
-            ArrayList<String> record = new ArrayList<String>();
-            record.add(bookID.getText());
-            record.add(carID.getText());
-            record.add(custID.getText());
-            record.add(df.format(inputOut));
-            record.add(df.format(inputReturn));
-            record.add("approved");
-            booking.modifyBooking(record);
-            JOptionPane.showMessageDialog(null, "Record Edited Successfully");
- 
+                    if(booking.checkCarAvailability(carID.getText(), inputOut, inputReturn)){
+                        ArrayList<String> record = new ArrayList<String>();
+                        record.add(bookID.getText());
+                        record.add(carID.getText());
+                        record.add(custID.getText());
+                        record.add(df.format(inputOut));
+                        record.add(df.format(inputReturn));
+                        record.add("approved");
+                        booking.modifyBooking(record);
+                        JOptionPane.showMessageDialog(null, "Record Edited Successfully");
+
+                    }
+                    readBookingTable();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "This booking has been paid.");
+                }
+            }
+        } catch(NullPointerException pe){
+            JOptionPane.showMessageDialog(null, "Please select the booking dates.","Error",JOptionPane.ERROR_MESSAGE);
         }
-        readBookingTable();
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
@@ -1829,17 +1869,35 @@ private Booking booking;
     private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         ArrayList<String> newBooking = new ArrayList<String>();
-        String strOut = df.format(dateOut2.getDate());
-        String strReturn = df.format(dateReturn2.getDate());
-        newBooking.add(booking.newBookingID()+";"+carID2.getText()+";"+custID2.getText()+";"+strOut+";"+strReturn+";approved");
-        
-        //date validation        
-        if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
-            booking.addBooking(newBooking);
-            JOptionPane.showMessageDialog(null, "Record added successfully!");
-        }else{
-            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates!","Error", JOptionPane.ERROR_MESSAGE);
+        try{
+            String strOut = df.format(dateOut2.getDate());
+            String strReturn = df.format(dateReturn2.getDate());
+            newBooking.add(booking.newBookingID()+";"+carID2.getText()+";"+custID2.getText()+";"+strOut+";"+strReturn+";approved");
+            //Car ID validation
+            if(!carID2.getText().equals("")){
+                //customer ID validation
+                Customer cust = new Customer();
+                cust.setCustomerID(custID2.getText());
+                if(cust.searchCustomer()){
+                    //date validation   
+                        if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
+                            booking.addBooking(newBooking);
+                            JOptionPane.showMessageDialog(null, "Record added successfully!");
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates!","Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
+                    }
+            }else{
+               JOptionPane.showMessageDialog(null, "Please select a car.","Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
+        catch(NullPointerException pe){
+            JOptionPane.showMessageDialog(null, "Please select the booking dates.","Error", JOptionPane.ERROR_MESSAGE);
+        } 
+
+        
     }//GEN-LAST:event_bookActionPerformed
 
     private void color2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_color2ActionPerformed
@@ -1865,18 +1923,9 @@ private Booking booking;
         for (String carRec : carArray){
             String[] recSplit = carRec.split(";");
             if (booking.checkCarAvailability(date, recSplit[0])){
-//                car.setCarID(carRec.split(";")[0]);
-//                car.searchCar();
-                //availableCar.add(carRec);
-                ///tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
+                tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
             }
         }
-        
-        
-        //for(String rec:availableCar){
-         //   String[] recSplit = rec.split(";");
-         //   tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
-        //}
     }//GEN-LAST:event_jCalendarPropertyChange
 
     private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
@@ -1963,6 +2012,13 @@ private Booking booking;
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_priceActionPerformed
+
+    private void menuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnActionPerformed
+        // TODO add your handling code here:
+        Admin_HomePage menu = new Admin_HomePage();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menuBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2107,6 +2163,7 @@ private Booking booking;
     private javax.swing.JLabel jlab10;
     private javax.swing.JLabel jlab11;
     private javax.swing.JLabel jlab2;
+    private javax.swing.JButton menuBtn;
     private javax.swing.JTextField model;
     private javax.swing.JTextField model1;
     private javax.swing.JTextField model2;

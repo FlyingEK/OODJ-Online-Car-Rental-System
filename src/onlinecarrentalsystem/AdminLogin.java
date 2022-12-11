@@ -46,6 +46,8 @@ public class AdminLogin extends javax.swing.JFrame {
         cusUsername.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         cusUsername.setText("Username");
 
+        username.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+
         jLabel1.setBackground(new java.awt.Color(204, 204, 255));
         jLabel1.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel1.setText("Password");
@@ -60,6 +62,8 @@ public class AdminLogin extends javax.swing.JFrame {
                 adminLoginBtnActionPerformed(evt);
             }
         });
+
+        password.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -128,7 +132,7 @@ public class AdminLogin extends javax.swing.JFrame {
             if(admin.login(username.getText(), password.getText())){
                 Admin_HomePage home = new Admin_HomePage();
                 home.setVisible(true);
-                dispose();
+                this.dispose();
             } 
             else {
                 i--;

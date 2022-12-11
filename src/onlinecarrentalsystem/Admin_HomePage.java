@@ -153,6 +153,9 @@ public class Admin_HomePage extends javax.swing.JFrame {
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         // TODO add your handling code here:
+        WelcomePage wp= new WelcomePage();
+        wp.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void bookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBtnActionPerformed
