@@ -4,10 +4,17 @@
  */
 package onlinecarrentalsystem;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
-import javafx.stage.Stage;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -19,6 +26,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
     private Car car;
     private FileHandling fh;
     private Report rp;
+    private Payment pay;
     
     /**
      * Creates new form Admin_GenerateReport
@@ -31,13 +39,29 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         car = new Car();
         fh = new FileHandling();
         rp = new Report();
+        pay = new Payment();
         
+        
+        //booking report
         pupolateTable();
         totalBook.setText(rp.totalBooking());
         totalBookCust.setText(rp.totalBookingCustomer());
-        highestBook.setText(rp.hishestBooking());
+        highestBook.setText(rp.highestBooking());
         AverageRent.setText(rp.averageDate());
         rejected.setText(rp.rejectedBooking());
+        
+        //payment report
+        pupolatePaymentTable();
+        totalPayment.setText(rp.totalPayment());
+        totalPayCust.setText(rp.totalPayCustomer());
+        
+        String[] highestPayData = rp.highestPayData();
+        highestPay.setText(highestPayData[0]);
+        custPaid.setText(highestPayData[1]);
+        AveragePay.setText("");
+        highestPayCar.setText("");
+        highestPayMonth.setText("");
+        
     }
     
     private void pupolateTable(){
@@ -59,8 +83,24 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         bookReportTable.setModel(model);
     }
     
-    public void getCarRatio(){
-        //rp.carRatio();
+    private void pupolatePaymentTable(){
+        String columns[] = {"Payment ID","Booking ID","Amount","Date"};
+        
+        ArrayList<String> payData = new ArrayList<String>(pay.readPayment());
+        String[][] rows = new String[payData.size()][4];
+        
+        for (int i = 0; i < payData.size();i++){
+            String line = payData.get(i);
+            String [] payDetail = line.split(";");
+            for(int j = 0;j<4;j++){
+                rows[i][j] = payDetail[j];
+            }
+        }
+        
+        System.out.println(rows);
+        
+        DefaultTableModel model = new DefaultTableModel(rows,columns);
+        payReportTable.setModel(model);
     }
 
     /**
@@ -75,21 +115,23 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        bookingTable = new javax.swing.JTable();
+        payReportTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        totalBook1 = new javax.swing.JTextField();
+        totalPayment = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        totalCust1 = new javax.swing.JTextField();
+        totalPayCust = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        highestBook1 = new javax.swing.JTextField();
+        custPaid = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        AverageRent1 = new javax.swing.JTextField();
+        AveragePay = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        rejected1 = new javax.swing.JTextField();
+        highestPayCar = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        carRatio1 = new javax.swing.JTextField();
+        highestPayMonth = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        highestPay = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         bookReportTable = new javax.swing.JTable();
@@ -114,18 +156,23 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
 
-        bookingTable.setModel(new javax.swing.table.DefaultTableModel(
+        payReportTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Booking ID", "Car ID", "Customer ID", "Date Out", "Date Return"
+                "Payment ID", "Booking ID", "Amount", "Date"
             }
         ));
-        jScrollPane2.setViewportView(bookingTable);
+        payReportTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                payReportTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(payReportTable);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -133,83 +180,96 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         jLabel4.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel4.setText("Total Payment:");
 
-        totalBook1.setEditable(false);
-        totalBook1.setBackground(new java.awt.Color(204, 204, 255));
-        totalBook1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        totalBook1.setBorder(null);
-        totalBook1.addActionListener(new java.awt.event.ActionListener() {
+        totalPayment.setEditable(false);
+        totalPayment.setBackground(new java.awt.Color(204, 204, 255));
+        totalPayment.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        totalPayment.setBorder(null);
+        totalPayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                totalBook1ActionPerformed(evt);
+                totalPaymentActionPerformed(evt);
             }
         });
 
         jLabel10.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel10.setText("Total Customer:");
 
-        totalCust1.setEditable(false);
-        totalCust1.setBackground(new java.awt.Color(204, 204, 255));
-        totalCust1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        totalCust1.setBorder(null);
-        totalCust1.addActionListener(new java.awt.event.ActionListener() {
+        totalPayCust.setEditable(false);
+        totalPayCust.setBackground(new java.awt.Color(204, 204, 255));
+        totalPayCust.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        totalPayCust.setBorder(null);
+        totalPayCust.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                totalCust1ActionPerformed(evt);
+                totalPayCustActionPerformed(evt);
             }
         });
 
         jLabel11.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel11.setText("Highest Paying Customer:");
 
-        highestBook1.setEditable(false);
-        highestBook1.setBackground(new java.awt.Color(204, 204, 255));
-        highestBook1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        highestBook1.setBorder(null);
-        highestBook1.addActionListener(new java.awt.event.ActionListener() {
+        custPaid.setEditable(false);
+        custPaid.setBackground(new java.awt.Color(204, 204, 255));
+        custPaid.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        custPaid.setBorder(null);
+        custPaid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                highestBook1ActionPerformed(evt);
+                custPaidActionPerformed(evt);
             }
         });
 
         jLabel12.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jLabel12.setText("Average Payment Amount:");
+        jLabel12.setText("Amount the Customer Paid:");
 
-        AverageRent1.setEditable(false);
-        AverageRent1.setBackground(new java.awt.Color(204, 204, 255));
-        AverageRent1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        AverageRent1.setBorder(null);
-        AverageRent1.addActionListener(new java.awt.event.ActionListener() {
+        AveragePay.setEditable(false);
+        AveragePay.setBackground(new java.awt.Color(204, 204, 255));
+        AveragePay.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        AveragePay.setBorder(null);
+        AveragePay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AverageRent1ActionPerformed(evt);
+                AveragePayActionPerformed(evt);
             }
         });
 
         jLabel13.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jLabel13.setText("Rejected Booking: ");
+        jLabel13.setText("Highest Payment Car:");
 
-        rejected1.setEditable(false);
-        rejected1.setBackground(new java.awt.Color(204, 204, 255));
-        rejected1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        rejected1.setBorder(null);
-        rejected1.addActionListener(new java.awt.event.ActionListener() {
+        highestPayCar.setEditable(false);
+        highestPayCar.setBackground(new java.awt.Color(204, 204, 255));
+        highestPayCar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        highestPayCar.setBorder(null);
+        highestPayCar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rejected1ActionPerformed(evt);
+                highestPayCarActionPerformed(evt);
             }
         });
 
         jLabel14.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jLabel14.setText("Booked Car Ratio:");
+        jLabel14.setText("Total Profit:");
 
-        carRatio1.setEditable(false);
-        carRatio1.setBackground(new java.awt.Color(204, 204, 255));
-        carRatio1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        carRatio1.setBorder(null);
-        carRatio1.addActionListener(new java.awt.event.ActionListener() {
+        highestPayMonth.setEditable(false);
+        highestPayMonth.setBackground(new java.awt.Color(204, 204, 255));
+        highestPayMonth.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        highestPayMonth.setBorder(null);
+        highestPayMonth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                carRatio1ActionPerformed(evt);
+                highestPayMonthActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         jLabel2.setText("Payment Report");
+
+        jLabel15.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        jLabel15.setText("Average Payment Amount:");
+
+        highestPay.setEditable(false);
+        highestPay.setBackground(new java.awt.Color(204, 204, 255));
+        highestPay.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        highestPay.setBorder(null);
+        highestPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                highestPayActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -225,30 +285,33 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(carRatio1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(highestPayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totalCust1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(totalPayCust, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                        .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(AverageRent1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(AveragePay, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rejected1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(highestPayCar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totalBook1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(totalPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addComponent(highestBook1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(180, Short.MAX_VALUE))
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(highestPay, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(custPaid, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,27 +327,31 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                         .addGap(22, 22, 22)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(totalBook1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(totalPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(totalCust1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(totalPayCust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(highestBook1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(highestPay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(AverageRent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(custPaid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(AveragePay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(rejected1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(highestPayCar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
-                            .addComponent(carRatio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(highestPayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
@@ -336,6 +403,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         highestBook.setEditable(false);
         highestBook.setBackground(new java.awt.Color(204, 204, 255));
         highestBook.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        highestBook.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         highestBook.setBorder(null);
         highestBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,6 +414,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         totalBook.setEditable(false);
         totalBook.setBackground(new java.awt.Color(204, 204, 255));
         totalBook.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        totalBook.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         totalBook.setBorder(null);
         totalBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,6 +425,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         totalBookCust.setEditable(false);
         totalBookCust.setBackground(new java.awt.Color(204, 204, 255));
         totalBookCust.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        totalBookCust.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         totalBookCust.setBorder(null);
         totalBookCust.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,6 +436,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         rejected.setEditable(false);
         rejected.setBackground(new java.awt.Color(204, 204, 255));
         rejected.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        rejected.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         rejected.setBorder(null);
         rejected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -376,6 +447,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         AverageRent.setEditable(false);
         AverageRent.setBackground(new java.awt.Color(204, 204, 255));
         AverageRent.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        AverageRent.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         AverageRent.setBorder(null);
         AverageRent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -405,32 +477,32 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totalBookCust, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(98, 98, 98)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rejected)
+                            .addComponent(pieButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(AverageRent, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totalBook, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(AverageRent, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(highestBook, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(highestBook, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rejected, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(123, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(totalBook, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                            .addComponent(totalBookCust))))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,7 +533,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                             .addComponent(jLabel8)
                             .addComponent(rejected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(pieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(14, 14, 14))
@@ -484,22 +556,21 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(376, 376, 376))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(593, 593, 593)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1073, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -531,39 +602,62 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_AverageRentActionPerformed
 
-    private void totalBook1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalBook1ActionPerformed
+    private void totalPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPaymentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_totalBook1ActionPerformed
+    }//GEN-LAST:event_totalPaymentActionPerformed
 
-    private void totalCust1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalCust1ActionPerformed
+    private void totalPayCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPayCustActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_totalCust1ActionPerformed
+    }//GEN-LAST:event_totalPayCustActionPerformed
 
-    private void highestBook1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highestBook1ActionPerformed
+    private void custPaidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custPaidActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_highestBook1ActionPerformed
+    }//GEN-LAST:event_custPaidActionPerformed
 
-    private void AverageRent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AverageRent1ActionPerformed
+    private void AveragePayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AveragePayActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_AverageRent1ActionPerformed
+    }//GEN-LAST:event_AveragePayActionPerformed
 
-    private void rejected1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejected1ActionPerformed
+    private void highestPayCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highestPayCarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rejected1ActionPerformed
-
-    private void carRatio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carRatio1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_carRatio1ActionPerformed
+    }//GEN-LAST:event_highestPayCarActionPerformed
 
     private void pieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pieButtonActionPerformed
-        // TODO add your handling code here:
-        Pie_Chart pieChart = new Pie_Chart();
-        Stage stage = primaryStage;
-        pieChart.start(stage);
+        // TODO add your handling code here:       
+        Report rp = new Report();
+
+        //ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList(data);
+        //PieChart pie = new PieChart(pieData);
         
         
+        DefaultPieDataset pie = new DefaultPieDataset();
+        for (Map.Entry<String, Long> e : rp.carRatio().entrySet()){
+            pie.setValue(e.getKey(),Math.toIntExact(e.getValue()));
+        }
         
+        JFreeChart chart = ChartFactory.createPieChart("Car Rented Ratio",pie,true,true,false);
+        
+        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator(  
+        "{0} : ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));  
+        ((PiePlot) chart.getPlot()).setLabelGenerator(labelGenerator);  
+        
+        ChartFrame frame = new ChartFrame("Pie Chart",chart);
+        frame.setVisible(true);
+        frame.setSize(600,500);
     }//GEN-LAST:event_pieButtonActionPerformed
+
+    private void payReportTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_payReportTableMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_payReportTableMouseClicked
+
+    private void highestPayMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highestPayMonthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_highestPayMonthActionPerformed
+
+    private void highestPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highestPayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_highestPayActionPerformed
 
     /**
      * @param args the command line arguments
@@ -601,19 +695,21 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AveragePay;
     private javax.swing.JTextField AverageRent;
-    private javax.swing.JTextField AverageRent1;
     private javax.swing.JTable bookReportTable;
-    private javax.swing.JTable bookingTable;
-    private javax.swing.JTextField carRatio1;
+    private javax.swing.JTextField custPaid;
     private javax.swing.JTextField highestBook;
-    private javax.swing.JTextField highestBook1;
+    private javax.swing.JTextField highestPay;
+    private javax.swing.JTextField highestPayCar;
+    private javax.swing.JTextField highestPayMonth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -629,12 +725,12 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable payReportTable;
     private javax.swing.JButton pieButton;
     private javax.swing.JTextField rejected;
-    private javax.swing.JTextField rejected1;
     private javax.swing.JTextField totalBook;
-    private javax.swing.JTextField totalBook1;
     private javax.swing.JTextField totalBookCust;
-    private javax.swing.JTextField totalCust1;
+    private javax.swing.JTextField totalPayCust;
+    private javax.swing.JTextField totalPayment;
     // End of variables declaration//GEN-END:variables
 }

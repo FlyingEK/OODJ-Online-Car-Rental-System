@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -27,11 +28,13 @@ public class Report {
     private FileHandling fh;
     private Booking booking;
     private Car car;
+    private Payment pay;
     
     public Report(){
         fh = new FileHandling();
         booking = new Booking();
         car = new Car();
+        pay = new Payment();
     }
     
     public String totalBooking(){
@@ -56,7 +59,7 @@ public class Report {
         return Integer.toString(count);
     }
     
-    public String hishestBooking(){
+    public String highestBooking(){
         ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
         ArrayList<String> cust = new ArrayList<String>();
         
@@ -126,4 +129,89 @@ public class Report {
         
         return ratio;
     }
+    
+    //total payment
+    public String totalPayment(){
+        String count;
+        ArrayList<String> payRecord = new ArrayList<String>(pay.readPayment());
+        count = Integer.toString(payRecord.size());
+        return count;
+    }
+    
+    //total customer
+    public String totalPayCustomer(){
+        int count = 0;
+        
+        ArrayList<String> payRecord = new ArrayList<String>(pay.readPayment());
+        Set<String> set = new HashSet<String>();
+        
+        for(String line:payRecord){
+            String[] detail = line.split(";");
+            booking.setBookingID(detail[1]);
+            if(booking.searchBooking()){
+                String cust = booking.getCustomerID();
+                if (set.add(cust)){
+                    count ++;
+                }
+            }
+        }
+        return Integer.toString(count);
+    }
+    
+    //highest paying customer
+    public String[] highestPayData(){
+         int count = 0;
+        
+        ArrayList<String> payRecord = new ArrayList<String>(pay.readPayment());
+        Set<String> set = new HashSet<String>();
+        
+        for(String line:payRecord){
+            String[] detail = line.split(";");
+            booking.setBookingID(detail[1]);
+            if(booking.searchBooking()){
+                String cust = booking.getCustomerID();
+                if (set.add(cust)){
+                    count ++;
+                }
+            }
+        }
+        
+        ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
+        ArrayList<Double> payment = new ArrayList<Double>();
+        
+        for (String cus : set){
+            double amount = 0;
+            for(String line : bookRecord){
+                String[] bookDetail = line.split(";");
+                if (cus.equals(bookDetail[2])){
+                    for(String line1:payRecord){
+                        String[] payDetail = line1.split(";");
+                        if(payDetail[1].equals(bookDetail[0])){
+                            amount += Double.parseDouble(payDetail[2]);
+                        }
+                    }
+                } 
+            }
+            payment.add(amount);
+        }
+        
+        double maxPay = Collections.max(payment);
+        
+        int maxCustIndex = payment.indexOf(maxPay); 
+        String[] custList = set.toArray(new String[set.size()]);
+        String customer = custList[maxCustIndex];
+        
+        String[] highestData = {customer,String.valueOf(maxPay)};
+        
+        return highestData;
+    }
+    
+    
+    //Average Payment
+    
+    
+    
+    //highest paid car
+    
+    //highest paying month
 }
