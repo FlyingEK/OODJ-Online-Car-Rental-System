@@ -208,10 +208,35 @@ public class Report {
     
     
     //Average Payment
+    public String AveragePayment(){
+        int count = 0;
+        int amount = 0;
+        ArrayList<String> payRecord = new ArrayList<String>(pay.readPayment());
+        
+        for(String line:payRecord){
+            String[] detail = line.split(";");
+            pay.setPaymentID(detail[0]);
+            if (pay.searchPayment()){
+                amount += Double.parseDouble(pay.getAmount());   
+                count++;
+            }
+        }
+        double average = amount/count;
+        return Double.toString(average);
+    }
     
-    
-    
-    //highest paid car
-    
-    //highest paying month
+    //total profit
+    public String totalProfit(){
+        int amount = 0;
+        ArrayList<String> payRecord = new ArrayList<String>(pay.readPayment());
+        
+        for(String line:payRecord){
+            String[] detail = line.split(";");
+            pay.setPaymentID(detail[0]);
+            if (pay.searchPayment()){
+                amount += Double.parseDouble(pay.getAmount());   
+            }
+        }
+        return Double.toString(amount);
+    }
 }

@@ -9,13 +9,15 @@ package onlinecarrentalsystem;
  * @author User
  */
 public class Customer_Login extends javax.swing.JFrame {
-
+private Customer cust;
     /**
      * Creates new form Customer_Login
      */
     public Customer_Login() {
         initComponents();
         getContentPane().setBackground(new java.awt.Color(204,204,255));
+        
+        cust = new Customer();
     }
 
     /**
@@ -28,8 +30,8 @@ public class Customer_Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cusUsername = new javax.swing.JLabel();
-        cusUsername1 = new javax.swing.JTextField();
+        label = new javax.swing.JLabel();
+        cusUsername = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cusLoginBut = new javax.swing.JButton();
         cusPassword = new javax.swing.JPasswordField();
@@ -42,9 +44,9 @@ public class Customer_Login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        cusUsername.setBackground(new java.awt.Color(204, 204, 255));
-        cusUsername.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        cusUsername.setText("Username");
+        label.setBackground(new java.awt.Color(204, 204, 255));
+        label.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        label.setText("Username");
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 255));
         jLabel1.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
@@ -55,6 +57,11 @@ public class Customer_Login extends javax.swing.JFrame {
         cusLoginBut.setForeground(new java.awt.Color(255, 255, 255));
         cusLoginBut.setText("Login");
         cusLoginBut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cusLoginBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cusLoginButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -63,8 +70,8 @@ public class Customer_Login extends javax.swing.JFrame {
             .addComponent(cusLoginBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label)
                     .addComponent(cusUsername)
-                    .addComponent(cusUsername1)
                     .addComponent(jLabel1)
                     .addComponent(cusPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -72,9 +79,9 @@ public class Customer_Login extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(cusUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cusUsername1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cusUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -102,6 +109,11 @@ public class Customer_Login extends javax.swing.JFrame {
         toRegister.setContentAreaFilled(false);
 
         toRegister.setBorderPainted(false);
+        toRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toRegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,6 +151,22 @@ public class Customer_Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cusLoginButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cusLoginButActionPerformed
+        // TODO add your handling code here:
+        if(cust.login(cusUsername.getText(),cusPassword.getText())){
+            Customer_HomePage menu = new Customer_HomePage();
+            menu.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_cusLoginButActionPerformed
+
+    private void toRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toRegisterActionPerformed
+        // TODO add your handling code here:
+        Customer_Register register = new Customer_Register();
+        register.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_toRegisterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,12 +206,12 @@ public class Customer_Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cusLoginBut;
     private javax.swing.JPasswordField cusPassword;
-    private javax.swing.JLabel cusUsername;
-    private javax.swing.JTextField cusUsername1;
+    private javax.swing.JTextField cusUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel label;
     private javax.swing.JButton toRegister;
     // End of variables declaration//GEN-END:variables
 }

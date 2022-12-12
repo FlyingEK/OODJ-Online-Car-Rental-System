@@ -9,12 +9,14 @@ package onlinecarrentalsystem;
  * @author User
  */
 public class Customer_HomePage extends javax.swing.JFrame {
-
+private Customer cust;
     /**
      * Creates new form Customer_HomePage
      */
     public Customer_HomePage() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(204,204,255));
+        cust = new Customer();
     }
 
     /**
@@ -26,21 +28,136 @@ public class Customer_HomePage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        makeBooking = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        manageProfile = new javax.swing.JButton();
+        manageBooking = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        makeBooking.setBackground(new java.awt.Color(102, 51, 255));
+        makeBooking.setFont(new java.awt.Font("Candara", 1, 17)); // NOI18N
+        makeBooking.setForeground(new java.awt.Color(255, 255, 255));
+        makeBooking.setText("Make Booking");
+        makeBooking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeBookingActionPerformed(evt);
+            }
+        });
+
+        logout.setBackground(new java.awt.Color(255, 0, 0));
+        logout.setFont(new java.awt.Font("Candara", 1, 17)); // NOI18N
+        logout.setForeground(new java.awt.Color(255, 255, 255));
+        logout.setText("Logout");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+
+        jTextField2.setEditable(false);
+        jTextField2.setBackground(new java.awt.Color(204, 204, 255));
+        jTextField2.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
+        jTextField2.setText("Home");
+        jTextField2.setBorder(null);
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        manageProfile.setBackground(new java.awt.Color(102, 51, 255));
+        manageProfile.setFont(new java.awt.Font("Candara", 1, 17)); // NOI18N
+        manageProfile.setForeground(new java.awt.Color(255, 255, 255));
+        manageProfile.setText("Manage Profile");
+        manageProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageProfileActionPerformed(evt);
+            }
+        });
+
+        manageBooking.setBackground(new java.awt.Color(102, 51, 255));
+        manageBooking.setFont(new java.awt.Font("Candara", 1, 17)); // NOI18N
+        manageBooking.setForeground(new java.awt.Color(255, 255, 255));
+        manageBooking.setText("Manage Booking");
+        manageBooking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageBookingActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(205, 205, 205)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(makeBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(manageProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(64, 64, 64)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(manageBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(makeBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manageBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(manageProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void makeBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeBookingActionPerformed
+        // TODO add your handling code here:
+        Customer_ViewCar bookCar = new Customer_ViewCar();
+        bookCar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_makeBookingActionPerformed
+
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        // TODO add your handling code here:
+        WelcomePage wp= new WelcomePage();
+        wp.setVisible(true);
+        cust.logout();
+        this.dispose();
+    }//GEN-LAST:event_logoutActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void manageProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageProfileActionPerformed
+        // TODO add your handling code here:
+        Customer_ManageInfo profile = new Customer_ManageInfo();
+        profile.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_manageProfileActionPerformed
+
+    private void manageBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBookingActionPerformed
+        // TODO add your handling code here:
+        Customer_ManageBooking book = new Customer_ManageBooking();
+        book.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_manageBookingActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +195,10 @@ public class Customer_HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton logout;
+    private javax.swing.JButton makeBooking;
+    private javax.swing.JButton manageBooking;
+    private javax.swing.JButton manageProfile;
     // End of variables declaration//GEN-END:variables
 }

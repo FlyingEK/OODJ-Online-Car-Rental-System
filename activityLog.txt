@@ -1,3 +1,5 @@
 06-12-2022 20:04:51;Admin;0;1;failed login
 
 11-12-2022 18:47:41;Admin;A1;Neong;successful login
+12-12-2022 21:15:02;Customer;M1;Meiaa;successful login
+12-12-2022 21:16:56;Customer;M1;Meiaa;successful login

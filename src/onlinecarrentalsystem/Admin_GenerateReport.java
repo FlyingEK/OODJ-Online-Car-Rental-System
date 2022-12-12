@@ -58,10 +58,8 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         String[] highestPayData = rp.highestPayData();
         highestPay.setText(highestPayData[0]);
         custPaid.setText(highestPayData[1]);
-        AveragePay.setText("");
-        highestPayCar.setText("");
-        highestPayMonth.setText("");
-        
+        AveragePay.setText(rp.AveragePayment());
+        totalProfit.setText(rp.totalProfit());
     }
     
     private void pupolateTable(){
@@ -125,10 +123,8 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         custPaid = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         AveragePay = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        highestPayCar = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        highestPayMonth = new javax.swing.JTextField();
+        totalProfit = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         highestPay = new javax.swing.JTextField();
@@ -149,6 +145,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         AverageRent = new javax.swing.JTextField();
         pieButton = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
+        menuBtn1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -229,29 +226,16 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jLabel13.setText("Highest Payment Car:");
-
-        highestPayCar.setEditable(false);
-        highestPayCar.setBackground(new java.awt.Color(204, 204, 255));
-        highestPayCar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        highestPayCar.setBorder(null);
-        highestPayCar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                highestPayCarActionPerformed(evt);
-            }
-        });
-
         jLabel14.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel14.setText("Total Profit:");
 
-        highestPayMonth.setEditable(false);
-        highestPayMonth.setBackground(new java.awt.Color(204, 204, 255));
-        highestPayMonth.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        highestPayMonth.setBorder(null);
-        highestPayMonth.addActionListener(new java.awt.event.ActionListener() {
+        totalProfit.setEditable(false);
+        totalProfit.setBackground(new java.awt.Color(204, 204, 255));
+        totalProfit.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        totalProfit.setBorder(null);
+        totalProfit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                highestPayMonthActionPerformed(evt);
+                totalProfitActionPerformed(evt);
             }
         });
 
@@ -285,7 +269,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(highestPayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(totalProfit, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -294,10 +278,6 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(AveragePay, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(highestPayCar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -320,8 +300,9 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
@@ -346,14 +327,9 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                             .addComponent(jLabel15))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(highestPayCar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
-                            .addComponent(highestPayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                            .addComponent(totalProfit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(108, 108, 108))
         );
 
         jTabbedPane1.addTab("Payment Report", jPanel4);
@@ -507,9 +483,9 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
@@ -536,7 +512,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(pieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(14, 14, 14))
+                .addGap(107, 107, 107))
         );
 
         jTabbedPane1.addTab("Booking Report", jPanel1);
@@ -552,27 +528,42 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
             }
         });
 
+        menuBtn1.setBackground(new java.awt.Color(255, 102, 153));
+        menuBtn1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        menuBtn1.setForeground(new java.awt.Color(255, 255, 255));
+        menuBtn1.setText("Menu");
+        menuBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtn1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(376, 376, 376))
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(276, 276, 276)
+                        .addComponent(menuBtn1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuBtn1))
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -618,10 +609,6 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_AveragePayActionPerformed
 
-    private void highestPayCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highestPayCarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_highestPayCarActionPerformed
-
     private void pieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pieButtonActionPerformed
         // TODO add your handling code here:       
         Report rp = new Report();
@@ -651,13 +638,20 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
 
     }//GEN-LAST:event_payReportTableMouseClicked
 
-    private void highestPayMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highestPayMonthActionPerformed
+    private void totalProfitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalProfitActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_highestPayMonthActionPerformed
+    }//GEN-LAST:event_totalProfitActionPerformed
 
     private void highestPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highestPayActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_highestPayActionPerformed
+
+    private void menuBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtn1ActionPerformed
+        // TODO add your handling code here:
+        Admin_HomePage menu = new Admin_HomePage();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menuBtn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -701,13 +695,10 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
     private javax.swing.JTextField custPaid;
     private javax.swing.JTextField highestBook;
     private javax.swing.JTextField highestPay;
-    private javax.swing.JTextField highestPayCar;
-    private javax.swing.JTextField highestPayMonth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
@@ -725,6 +716,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton menuBtn1;
     private javax.swing.JTable payReportTable;
     private javax.swing.JButton pieButton;
     private javax.swing.JTextField rejected;
@@ -732,5 +724,6 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
     private javax.swing.JTextField totalBookCust;
     private javax.swing.JTextField totalPayCust;
     private javax.swing.JTextField totalPayment;
+    private javax.swing.JTextField totalProfit;
     // End of variables declaration//GEN-END:variables
 }
