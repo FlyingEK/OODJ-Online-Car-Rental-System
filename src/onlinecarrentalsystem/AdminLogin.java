@@ -12,11 +12,13 @@ import javax.swing.JOptionPane;
  */
 public class AdminLogin extends javax.swing.JFrame {
     private Admin admin;
+    int count;
     /**
      * Creates new form AdminLogin
      */
     public AdminLogin() {
         initComponents();
+        count = 3;
         getContentPane().setBackground(new java.awt.Color(204,204,255));
         admin = new Admin();
     }
@@ -125,18 +127,18 @@ public class AdminLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    int i = 3;
+
     private void adminLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginBtnActionPerformed
         // TODO add your handling code here:
-        if (i != 0){
+        if (count != 0){
             if(admin.login(username.getText(), password.getText())){
                 Admin_HomePage home = new Admin_HomePage();
                 home.setVisible(true);
                 this.dispose();
             } 
             else {
-                i--;
-                JOptionPane.showMessageDialog(null, "Login failed. "+i+" attempt(s) left.","Error Message",JOptionPane.ERROR_MESSAGE);
+                count--;
+                JOptionPane.showMessageDialog(null, "Login failed. "+count+" attempt(s) left.","Error Message",JOptionPane.ERROR_MESSAGE);
             }
         }
         else{

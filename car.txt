@@ -1,5 +1,5 @@
 C1;Perodua Myvi;JPJ7671;5;Red;4;160
-C2;Mercedes SUV A1;WEE888;3;Silver;1;1600
+C2;Mercedes SUV A1;WEE888;3;Silver;1;3400
 C3;Nissan Navara;JLY1234;7;Black;2;1500
 C4;Nissan Navara;WYE3799;7;Blue;1;2000
-C5;Toyota Rush1;WZQ10231;71;Brown1;2;25001
+C5;Toyota Rush1;WZQ10231;71;Brown1;2;2500

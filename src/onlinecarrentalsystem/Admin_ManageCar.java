@@ -109,7 +109,15 @@ public class Admin_ManageCar extends javax.swing.JFrame {
             new String [] {
                 "Car ID", "Model", "Plate No", "Seat", "Color", "Year", "Price /Day"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         carTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 carTableMouseClicked(evt);
@@ -607,27 +615,33 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
         // TODO add your handling code here: 
         try {
-            ArrayList<String> carArray = new ArrayList<String>();
-            carArray.add(carID.getText());
-            carArray.add(model.getText());
-            carArray.add(plateNo.getText());
-            carArray.add(seat.getText());
-            carArray.add(color.getText());
-            carArray.add(year.getText());
-            carArray.add(price.getText());
-            try{
-                car.modifyCar(carArray);
-            }catch(Exception e){
-                e.printStackTrace();
+            if(!model.getText().equals("") && !plateNo.getText().equals("") && !seat.getText().equals("") && !color.getText()
+            .equals("") && !year.getText().equals("") && !price.getText().equals("")){
+                ArrayList<String> carArray = new ArrayList<String>();
+                carArray.add(carID.getText());
+                carArray.add(model.getText());
+                carArray.add(plateNo.getText());
+                carArray.add(seat.getText());
+                carArray.add(color.getText());
+                carArray.add(year.getText());
+                carArray.add(price.getText());
+                try{
+                    car.modifyCar(carArray);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                //read latest table
+                readTable();
+            } else {
+                JOptionPane.showMessageDialog(null, "Please fill up all fields.");
             }
         } catch (NullPointerException n){
-            JOptionPane.showMessageDialog(null, "Please fill up all field");
+            JOptionPane.showMessageDialog(null, "Please fill up all fields.");
         } catch (Exception e){
             e.printStackTrace();
         }
         
-        //read latest table
-        readTable();
+        
         
     }//GEN-LAST:event_EditBtnActionPerformed
 
@@ -676,23 +690,30 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:   
         try{
-            ArrayList<String> carArray = new ArrayList<String>();
-            carArray.add(carID1.getText()+";"+model1.getText()+";"+plateNo1.getText()+";"+seat1.getText()+";"+color1.getText()
-            +";"+year1.getText()+";"+price1.getText());
-            car.addCar(carArray);
-            carID1.setText(car.newCarID());
-            model1.setText("");
-            plateNo1.setText("");
-            seat1.setText("");
-            color1.setText("");
-            year1.setText("");
-            price1.setText("");
+            //if no empty input
+            if(!model1.getText().equals("") && !plateNo1.getText().equals("") && !seat1.getText().equals("") && !color1.getText()
+            .equals("") && !year1.getText().equals("") && !price1.getText().equals("")){
+                ArrayList<String> carArray = new ArrayList<String>();
+                carArray.add(carID1.getText()+";"+model1.getText()+";"+plateNo1.getText()+";"+seat1.getText()+";"+color1.getText()
+                +";"+year1.getText()+";"+price1.getText());
+                car.addCar(carArray);
+                carID1.setText(car.newCarID());
+                model1.setText("");
+                plateNo1.setText("");
+                seat1.setText("");
+                color1.setText("");
+                year1.setText("");
+                price1.setText("");
+                JOptionPane.showMessageDialog(null, "Booking added successfully");
+            }else{
+                JOptionPane.showMessageDialog(null, "Please fill up all fields.");
+            }
         } catch (NullPointerException n){
             JOptionPane.showMessageDialog(null, "Please fill up all field");
         } catch (Exception e){
             e.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, "Booking added successfully");
+        
            
         //read latest table
         readTable();
