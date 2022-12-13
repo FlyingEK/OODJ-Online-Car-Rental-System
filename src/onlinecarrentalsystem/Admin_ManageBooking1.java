@@ -1712,7 +1712,7 @@ private Booking booking;
                         record.add("approved");
                         booking.modifyBooking(record);
                     } else{
-                        JOptionPane.showMessageDialog(null, "The car is not available on the chosen booking dates. \n Or the date return is set before date out.","Error",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "The car is not available on the chosen booking dates. \n Or unusual date inputs.","Error",JOptionPane.ERROR_MESSAGE);
                     }
                     readBookingTable();
                 }
@@ -1901,16 +1901,18 @@ private Booking booking;
                 Customer cust = new Customer();
                 cust.setCustomerID(custID2.getText());
                 if(cust.searchCustomer()){
-                    //date validation   
-                        if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
-                            booking.addBooking(newBooking);
-                            JOptionPane.showMessageDialog(null, "Record added successfully!");
-                        }else{
-                            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates. \nOr the date return is set before date out.","Error", JOptionPane.ERROR_MESSAGE);
-                        }
+                //date validation   
+                    if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
+                        booking.addBooking(newBooking);
+                        JOptionPane.showMessageDialog(null, "Record added successfully!");
+                        //Refresh table
+                        readCarTable();
                     }else{
-                        JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Car is booked on chosen dates. \nOr unusual date inputs.","Error", JOptionPane.ERROR_MESSAGE);
                     }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
+                }
             }else{
                JOptionPane.showMessageDialog(null, "Please select a car.","Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1929,10 +1931,7 @@ private Booking booking;
     private void jCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendarMouseClicked
    
     }//GEN-LAST:event_jCalendarMouseClicked
-
-    private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
-        // TODO add your handling code here:
-        SimpleDateFormat df= new SimpleDateFormat("dd-MM-yyyy");
+    private void readCarTable(){
         Date date = jCalendar.getDate();
         dateOut2.setDate(date);
         DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
@@ -1948,6 +1947,11 @@ private Booking booking;
                 tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
             }
         }
+    }
+    
+    private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
+        // TODO add your handling code here:
+        readCarTable();
     }//GEN-LAST:event_jCalendarPropertyChange
 
     private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
