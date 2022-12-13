@@ -297,15 +297,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             new String [] {
                 "Booking ID", "Car ID", "Date Out", "Date Return", "Approval"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         cBookTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cBookTableMouseClicked(evt);
@@ -1163,38 +1155,50 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         Date date_return = dateReturn.getDate();
         String car_id = carID.getText();
         String booking_id = bookID.getText();
-
-        if (date_out == null || date_return == null || car_id.equals("")){
-            dateRequired.setVisible(true);
-        }else{
-            dateRequired.setVisible(false);
-
-            String custID = fh.getCurrentCustomer();
-
-            if(date_out.before(date_return) && !date_out.equals(date_return)){
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
-                String strDateOut = dateFormat.format(date_out);  
-                String strDateReturn = dateFormat.format(date_return);  
-
-                if(booking.checkCarAvailability(booking_id,car_id,date_out,date_return)){
-                    ArrayList<String> newBooking = new ArrayList<String>();
-                    newBooking.add(booking_id);
-                    newBooking.add(car_id);
-                    newBooking.add(custID);
-                    newBooking.add(strDateOut);
-                    newBooking.add(strDateReturn);
-                    newBooking.add("processing");
-
-                    booking.modifyBooking(newBooking);
-                    clearTextField();
-                    pupolateTable();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Car not available for the booking date.","Error Message",JOptionPane.ERROR_MESSAGE);
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day. \n Cannot set Date Return before Date Out ",
-                        "Error Message",JOptionPane.ERROR_MESSAGE);
+        
+        Boolean paid = false;
+        Payment pay = new Payment();
+        ArrayList<String> payment = pay.readPayment();
+        for(String paymentRec : payment){
+            if (paymentRec.split(";")[1].equals(bookID.getText())){
+                paid = true;
             }
+        }
+        if (!paid){
+            if (date_out == null || date_return == null || car_id.equals("")){
+                dateRequired.setVisible(true);
+            }else{
+                dateRequired.setVisible(false);
+
+                String custID = fh.getCurrentCustomer();
+
+                if(date_out.before(date_return) && !date_out.equals(date_return)){
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+                    String strDateOut = dateFormat.format(date_out);  
+                    String strDateReturn = dateFormat.format(date_return);  
+
+                    if(booking.checkCarAvailability(booking_id,car_id,date_out,date_return)){
+                        ArrayList<String> newBooking = new ArrayList<String>();
+                        newBooking.add(booking_id);
+                        newBooking.add(car_id);
+                        newBooking.add(custID);
+                        newBooking.add(strDateOut);
+                        newBooking.add(strDateReturn);
+                        newBooking.add("processing");
+
+                        booking.modifyBooking(newBooking);
+                        clearTextField();
+                        pupolateTable();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Car not available for the booking date.","Error Message",JOptionPane.ERROR_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day. \n Or unusual date input ",
+                            "Error Message",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "This booking has been paid.");
         }
 
     }//GEN-LAST:event_editActionPerformed
