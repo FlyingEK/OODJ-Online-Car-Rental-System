@@ -19,10 +19,10 @@ public class Admin extends User {
         fh = new FileHandling();
         a = new ActivityLog();
     }
+
     
     //login funstion
     public Boolean login(String username,String password){
-        
         boolean found = false;
         String activity = "failed login";
         String adminID = "0";
