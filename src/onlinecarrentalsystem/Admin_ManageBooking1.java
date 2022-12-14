@@ -163,7 +163,6 @@ private Booking booking;
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         dateReturn2 = new com.toedter.calendar.JDateChooser();
-        dateRequired = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         custID2 = new javax.swing.JTextField();
         price = new javax.swing.JTextField();
@@ -529,7 +528,15 @@ private Booking booking;
             new String [] {
                 "Booking ID", "Car ID", "Customer ID", "Date Out", "Date Return"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         bookingTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bookingTableMouseClicked(evt);
@@ -1215,12 +1222,6 @@ private Booking booking;
         jLabel40.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel40.setText("Date Return:");
 
-        dateRequired.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        dateRequired.setForeground(new java.awt.Color(255, 51, 51));
-        dateRequired.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        dateRequired.setText("Please  select car, set Date Out and Date Return");
-        dateRequired.setToolTipText("");
-
         jLabel41.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel41.setText("Customer ID:");
 
@@ -1261,10 +1262,9 @@ private Booking booking;
                                     .addComponent(seat, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(model2)))
                             .addComponent(jLabel37))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateRequired)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1329,9 +1329,7 @@ private Booking booking;
                     .addComponent(color2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel41)
                     .addComponent(custID2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(dateRequired)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -1346,7 +1344,15 @@ private Booking booking;
             new String [] {
                 "Car ID", "Model", "Color", "Seat", "Year", "Price"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         carTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 carTableMouseClicked(evt);
@@ -1485,26 +1491,42 @@ private Booking booking;
 
     private void receiptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiptBtnActionPerformed
         // TODO add your handling code here:
-        //display balance 
-        if (!PBookID.getText().equals("")){
-            if(!paid.getText().equals("")){
-                double balancetxt = Double.parseDouble(paid.getText()) - Double.parseDouble(totalPrice.getText());
-                balance.setText(balancetxt+"");
+        //check if it is already paid
+        Boolean paidStatus = false;
+        Payment payment = new Payment();
+        ArrayList<String> paymentArray = payment.readPayment();
+        for(String paymentRec : paymentArray){
+            if (paymentRec.split(";")[1].equals(bookID.getText())){
+                paidStatus = true;
+            }
+        }
+        //catch paid value number format exception
+        try{
+            if(!paidStatus){
+                if (!PBookID.getText().equals("")){
+                    if(!this.paid.getText().equals("")){
+                        //display balance 
+                        double balancetxt = Double.parseDouble(this.paid.getText()) - Double.parseDouble(totalPrice.getText());
+                        balance.setText(balancetxt+"");
 
-                //store payment record into payment.txt
-                Payment payment = new Payment();
-                ArrayList<String> paymentArray = new ArrayList<String>();
-                paymentArray.add(payment.newPaymentID()+";"+PBookID.getText()+";"+totalPrice.getText()+";"+PDate.getText());
-                payment.addPayment(paymentArray);
-                JOptionPane.showMessageDialog(null, "Payment record is saved!");
+                        //store payment record into payment.txt
+                        ArrayList<String> paymentArray1 = new ArrayList<String>();
+                        paymentArray1.add(payment.newPaymentID()+";"+PBookID.getText()+";"+totalPrice.getText()+";"+PDate.getText());
+                        payment.addPayment(paymentArray1);
+                        JOptionPane.showMessageDialog(null, "Payment record is saved!");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please enter paid value.");
+
+                    }  
+                }else{
+                    JOptionPane.showMessageDialog(null, "Please choose a booking record and click the pay button.");
+                }
             }else{
-                JOptionPane.showMessageDialog(null, "Please enter paid value.");
-            
-            }  
-       }else{
-            JOptionPane.showMessageDialog(null, "Please choose a booking record and click the pay button.");
-       }
-
+            JOptionPane.showMessageDialog(null, "Payment has already been made.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }catch(NumberFormatException ne){
+           JOptionPane.showMessageDialog(null, "Please enter an integer value for the paid value.");
+        }
     }//GEN-LAST:event_receiptBtnActionPerformed
 
     private void PBookIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PBookIDActionPerformed
@@ -1679,8 +1701,8 @@ private Booking booking;
                     Boolean flag = true;
                     Date inputOut = this.dateOut.getDate();
                     Date inputReturn = this.dateReturn.getDate();
-
-                    if(booking.checkCarAvailability(carID.getText(), inputOut, inputReturn)){
+                     //check if the dates are not booked
+                    if(booking.checkCarAvailability(bookID.getText(),carID.getText(), inputOut, inputReturn)){
                         ArrayList<String> record = new ArrayList<String>();
                         record.add(bookID.getText());
                         record.add(carID.getText());
@@ -1689,8 +1711,8 @@ private Booking booking;
                         record.add(df.format(inputReturn));
                         record.add("approved");
                         booking.modifyBooking(record);
-                        JOptionPane.showMessageDialog(null, "Record Edited Successfully");
-
+                    } else{
+                        JOptionPane.showMessageDialog(null, "The car is not available on the chosen booking dates. \n Or the date return is set before date out.","Error",JOptionPane.ERROR_MESSAGE);
                     }
                     readBookingTable();
                 }
@@ -1884,7 +1906,7 @@ private Booking booking;
                             booking.addBooking(newBooking);
                             JOptionPane.showMessageDialog(null, "Record added successfully!");
                         }else{
-                            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates!","Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates. \nOr the date return is set before date out.","Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }else{
                         JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
@@ -2091,7 +2113,6 @@ private Booking booking;
     private com.toedter.calendar.JDateChooser dateOut;
     private javax.swing.JTextField dateOut1;
     private com.toedter.calendar.JDateChooser dateOut2;
-    private javax.swing.JLabel dateRequired;
     private com.toedter.calendar.JDateChooser dateReturn;
     private javax.swing.JTextField dateReturn1;
     private com.toedter.calendar.JDateChooser dateReturn2;

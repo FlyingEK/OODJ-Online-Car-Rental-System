@@ -236,7 +236,15 @@ public class Admin_ManagePayment extends javax.swing.JFrame {
             new String [] {
                 "Payment ID", "Booking ID", "Amount", "Date"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         paymentTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 paymentTableMouseClicked(evt);

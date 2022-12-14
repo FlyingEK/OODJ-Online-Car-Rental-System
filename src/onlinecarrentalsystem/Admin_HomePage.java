@@ -91,6 +91,11 @@ public class Admin_HomePage extends javax.swing.JFrame {
         reportBtn.setFont(new java.awt.Font("Candara", 1, 17)); // NOI18N
         reportBtn.setForeground(new java.awt.Color(255, 255, 255));
         reportBtn.setText("Report");
+        reportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,6 +183,13 @@ public class Admin_HomePage extends javax.swing.JFrame {
         pay.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_paymentBtnActionPerformed
+
+    private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
+        // TODO add your handling code here:
+        Admin_GenerateReport report = new Admin_GenerateReport();
+        report.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_reportBtnActionPerformed
 
     /**
      * @param args the command line arguments
