@@ -21,10 +21,11 @@ public class Admin extends User {
     }
 
     
-    //login funstion
+    //login function
     public Boolean login(String username,String password){
         boolean found = false;
         String activity = "failed login";
+        // 0 is the initial admin ID
         String adminID = "0";
         ArrayList<String> file = new ArrayList<String>();
         file = fh.readFile("admin.txt");

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class ActivityLog {
     
     public void addActivityLog(String role, String ID, String username, String activity){
+        //get current datetime
         LocalDateTime dtNow = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         ArrayList<String> log = new ArrayList<String>();

@@ -15,7 +15,10 @@ public class Payment {
     private FileHandling fh;
     
     public Payment(){
-        this.paymentID = null;
+        paymentID = null;
+        bookingID = null;
+        amount = null;
+        date =null;
         fh = new FileHandling();
     }
     

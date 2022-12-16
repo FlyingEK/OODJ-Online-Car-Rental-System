@@ -18,9 +18,10 @@ public class AdminLogin extends javax.swing.JFrame {
      */
     public AdminLogin() {
         initComponents();
-        count = 3;
         getContentPane().setBackground(new java.awt.Color(204,204,255));
         admin = new Admin();
+        //initialize login attempt count
+        count = 3;
     }
 
     /**
@@ -137,6 +138,7 @@ public class AdminLogin extends javax.swing.JFrame {
                 this.dispose();
             } 
             else {
+                //minus one attempt for each fail login
                 count--;
                 JOptionPane.showMessageDialog(null, "Login failed. "+count+" attempt(s) left.","Error Message",JOptionPane.ERROR_MESSAGE);
             }

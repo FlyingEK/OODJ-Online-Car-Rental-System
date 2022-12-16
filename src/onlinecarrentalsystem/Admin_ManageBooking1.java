@@ -1466,6 +1466,7 @@ private Booking booking;
         ArrayList<String> bookArray = booking.readBooking();
         for (String bookRecord:bookArray){
             String booking[] = bookRecord.split(";");
+            //read only processing records
             if (booking[5].trim().toLowerCase().equals("processing")){
                     tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[1],booking[2],booking[3],booking[4]});
             }
@@ -1479,6 +1480,7 @@ private Booking booking;
         ArrayList<String> bookArray = booking.readBooking();
         for (String bookRecord:bookArray){
             String booking[] = bookRecord.split(";");
+            //read only approved records
             if (booking[5].trim().toLowerCase().equals("approved")){
                     tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[1],booking[2],booking[3],booking[4]});
             }
@@ -1502,7 +1504,9 @@ private Booking booking;
         }
         //catch paid value number format exception
         try{
+            // run if not yet paid
             if(!paidStatus){
+                // if no empty input
                 if (!PBookID.getText().equals("")){
                     if(!this.paid.getText().equals("")){
                         //display balance 
@@ -1573,6 +1577,7 @@ private Booking booking;
         bookArray.add(custID1.getText());
         bookArray.add(dateOut1.getText());
         bookArray.add(dateReturn1.getText());
+        //booking status change to approved
         bookArray.add("approved");
         booking.modifyBooking(bookArray);
         
@@ -1603,6 +1608,7 @@ private Booking booking;
         bookArray.add(custID1.getText());
         bookArray.add(dateOut1.getText());
         bookArray.add(dateReturn1.getText());
+        //booking status change to rejected
         bookArray.add("rejected");
         booking.modifyBooking(bookArray);
         
@@ -1660,12 +1666,12 @@ private Booking booking;
             } catch (ParseException p){
                 p.printStackTrace();
             }
-            
+            //get car details
             Car car = new Car(booking.getCarID());
             model.setText(car.getModel());
             color1.setText(car.getColor());
             plateNo.setText(car.getPlateNo());
-            
+            //get customer details
             Customer cust = new Customer(booking.getCustomerID());
             custName.setText(cust.getCustomerName());
             IC.setText(cust.getCustomerIC());
@@ -1695,26 +1701,32 @@ private Booking booking;
                         paid = true;
                     }
                 }
+                //if not yet paid
                 if (!paid){
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     ArrayList<String> bookArray = booking.readBooking();
                     Boolean flag = true;
                     Date inputOut = this.dateOut.getDate();
                     Date inputReturn = this.dateReturn.getDate();
-                     //check if the dates are not booked
-                    if(booking.checkCarAvailability(bookID.getText(),carID.getText(), inputOut, inputReturn)){
-                        ArrayList<String> record = new ArrayList<String>();
-                        record.add(bookID.getText());
-                        record.add(carID.getText());
-                        record.add(custID.getText());
-                        record.add(df.format(inputOut));
-                        record.add(df.format(inputReturn));
-                        record.add("approved");
-                        booking.modifyBooking(record);
+                     //check if the date out is set before date return.
+                    if(inputOut.before(inputReturn)){
+                        //check if the dates are not booked
+                        if(booking.checkCarAvailability(bookID.getText(),carID.getText(), inputOut, inputReturn)){
+                            ArrayList<String> record = new ArrayList<String>();
+                            record.add(bookID.getText());
+                            record.add(carID.getText());
+                            record.add(custID.getText());
+                            record.add(df.format(inputOut));
+                            record.add(df.format(inputReturn));
+                            record.add("approved");
+                            booking.modifyBooking(record);
+                        } else{
+                            JOptionPane.showMessageDialog(null, "The car is not available on the chosen booking dates. \n Or unusual date inputs.","Error",JOptionPane.ERROR_MESSAGE);
+                        }
+                        readBookingTable();
                     } else{
-                        JOptionPane.showMessageDialog(null, "The car is not available on the chosen booking dates. \n Or the date return is set before date out.","Error",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "The date return is set before date out.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    readBookingTable();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "This booking has been paid.");
@@ -1738,6 +1750,7 @@ private Booking booking;
                     paid = true;
                 }
             }
+            //if not paid
             if (!paid){
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 Date today = new Date();          
@@ -1752,16 +1765,21 @@ private Booking booking;
                 } catch (ParseException pe){
                     pe.printStackTrace();
                 }
+                //calculate the days of rental
                 long daysOfRent = date2.getTime() -date1.getTime();
                 daysOfRent = TimeUnit.DAYS.convert(daysOfRent, TimeUnit.MILLISECONDS);
-                days.setText(daysOfRent+"");       
+                days.setText(daysOfRent+"");
+                //get car and customer details
                 Car car = new Car(booking.getCarID());
                 Customer cust = new Customer(booking.getCustomerID());
                 PCustName.setText(cust.getCustomerName()+" ("+cust.getCustomerID()+")");
                 this.car.setText(car.getColor()+" "+car.getModel()+" ("+car.getCarID()+")");
+                //calculate subtotal
                 int subtotalVal = Integer.parseInt(car.getPrice())* Integer.parseInt(days.getText());
                 subtotal.setText(""+subtotalVal);
+                //calculate tax 
                 double taxVal = subtotalVal * 0.1;
+                //calculate total 
                 double total = subtotalVal + taxVal + 250;
                 tax.setText(taxVal+"");
                 deposit.setText("250.00");
@@ -1901,16 +1919,22 @@ private Booking booking;
                 Customer cust = new Customer();
                 cust.setCustomerID(custID2.getText());
                 if(cust.searchCustomer()){
-                    //date validation   
+                //date validation   
+                    if(dateOut2.getDate().before(dateReturn2.getDate())){
                         if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
                             booking.addBooking(newBooking);
                             JOptionPane.showMessageDialog(null, "Record added successfully!");
+                            //Refresh table
+                            readCarTable();
                         }else{
-                            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates. \nOr the date return is set before date out.","Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates. \nOr unusual date inputs.","Error", JOptionPane.ERROR_MESSAGE);
                         }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
+                    } else{
+                        JOptionPane.showMessageDialog(null, "The date return is set before date out.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
+                }
             }else{
                JOptionPane.showMessageDialog(null, "Please select a car.","Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1929,10 +1953,9 @@ private Booking booking;
     private void jCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendarMouseClicked
    
     }//GEN-LAST:event_jCalendarMouseClicked
-
-    private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
-        // TODO add your handling code here:
-        SimpleDateFormat df= new SimpleDateFormat("dd-MM-yyyy");
+    
+    //method to read available car into table
+    private void readCarTable(){
         Date date = jCalendar.getDate();
         dateOut2.setDate(date);
         DefaultTableModel tableModel = (DefaultTableModel)carTable.getModel();
@@ -1948,6 +1971,11 @@ private Booking booking;
                 tableModel.insertRow(tableModel.getRowCount(), new Object[]{recSplit[0],recSplit[1],recSplit[4],recSplit[3],recSplit[5],recSplit[6]});
             }
         }
+    }
+    
+    private void jCalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarPropertyChange
+        // TODO add your handling code here:
+        readCarTable();
     }//GEN-LAST:event_jCalendarPropertyChange
 
     private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked

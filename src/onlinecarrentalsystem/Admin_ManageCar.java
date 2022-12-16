@@ -615,6 +615,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
         // TODO add your handling code here: 
         try {
+            // if no empty inputs
             if(!model.getText().equals("") && !plateNo.getText().equals("") && !seat.getText().equals("") && !color.getText()
             .equals("") && !year.getText().equals("") && !price.getText().equals("")){
                 ArrayList<String> carArray = new ArrayList<String>();
@@ -626,6 +627,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
                 carArray.add(year.getText());
                 carArray.add(price.getText());
                 try{
+                    //edit car details
                     car.modifyCar(carArray);
                 }catch(Exception e){
                     e.printStackTrace();
@@ -651,6 +653,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
+        //delete car
         car.setCarID(carID.getText());
         car.deleteCar();
         //read latest table
@@ -697,6 +700,7 @@ public class Admin_ManageCar extends javax.swing.JFrame {
                 carArray.add(carID1.getText()+";"+model1.getText()+";"+plateNo1.getText()+";"+seat1.getText()+";"+color1.getText()
                 +";"+year1.getText()+";"+price1.getText());
                 car.addCar(carArray);
+                //clear all inputs and set the new car ID
                 carID1.setText(car.newCarID());
                 model1.setText("");
                 plateNo1.setText("");
