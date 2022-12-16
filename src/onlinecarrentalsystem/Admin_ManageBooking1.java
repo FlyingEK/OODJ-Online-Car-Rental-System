@@ -1708,20 +1708,25 @@ private Booking booking;
                     Boolean flag = true;
                     Date inputOut = this.dateOut.getDate();
                     Date inputReturn = this.dateReturn.getDate();
-                     //check if the dates are not booked
-                    if(booking.checkCarAvailability(bookID.getText(),carID.getText(), inputOut, inputReturn)){
-                        ArrayList<String> record = new ArrayList<String>();
-                        record.add(bookID.getText());
-                        record.add(carID.getText());
-                        record.add(custID.getText());
-                        record.add(df.format(inputOut));
-                        record.add(df.format(inputReturn));
-                        record.add("approved");
-                        booking.modifyBooking(record);
+                     //check if the date out is set before date return.
+                    if(inputOut.before(inputReturn)){
+                        //check if the dates are not booked
+                        if(booking.checkCarAvailability(bookID.getText(),carID.getText(), inputOut, inputReturn)){
+                            ArrayList<String> record = new ArrayList<String>();
+                            record.add(bookID.getText());
+                            record.add(carID.getText());
+                            record.add(custID.getText());
+                            record.add(df.format(inputOut));
+                            record.add(df.format(inputReturn));
+                            record.add("approved");
+                            booking.modifyBooking(record);
+                        } else{
+                            JOptionPane.showMessageDialog(null, "The car is not available on the chosen booking dates. \n Or unusual date inputs.","Error",JOptionPane.ERROR_MESSAGE);
+                        }
+                        readBookingTable();
                     } else{
-                        JOptionPane.showMessageDialog(null, "The car is not available on the chosen booking dates. \n Or unusual date inputs.","Error",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "The date return is set before date out.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    readBookingTable();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "This booking has been paid.");
@@ -1915,13 +1920,17 @@ private Booking booking;
                 cust.setCustomerID(custID2.getText());
                 if(cust.searchCustomer()){
                 //date validation   
-                    if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
-                        booking.addBooking(newBooking);
-                        JOptionPane.showMessageDialog(null, "Record added successfully!");
-                        //Refresh table
-                        readCarTable();
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Car is booked on chosen dates. \nOr unusual date inputs.","Error", JOptionPane.ERROR_MESSAGE);
+                    if(dateOut2.getDate().before(dateReturn2.getDate())){
+                        if (booking.checkCarAvailability(carID2.getText(), dateOut2.getDate(), dateReturn2.getDate())){
+                            booking.addBooking(newBooking);
+                            JOptionPane.showMessageDialog(null, "Record added successfully!");
+                            //Refresh table
+                            readCarTable();
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Car is booked on chosen dates. \nOr unusual date inputs.","Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else{
+                        JOptionPane.showMessageDialog(null, "The date return is set before date out.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Customer ID is invalid.","Error", JOptionPane.ERROR_MESSAGE);
