@@ -37,6 +37,7 @@ public class Report {
         pay = new Payment();
     }
     
+    // calculate total number of booking
     public String totalBooking(){
         String count;
         ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
@@ -44,6 +45,7 @@ public class Report {
         return count;
     }
     
+    // calculate total customer make bookings
     public String totalBookingCustomer(){
         int count = 0;
         ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
@@ -59,15 +61,18 @@ public class Report {
         return Integer.toString(count);
     }
     
+    //calculate customer that make the most bookings
     public String highestBooking(){
         ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
         ArrayList<String> cust = new ArrayList<String>();
         
+        //get only customer id for each booking
         for(String line:bookRecord){
             String[] detail = line.split(";");
             cust.add(detail[2]);
         }
         
+        // get the highest booking customer
         String customer 
         = cust.stream()
             .collect(Collectors.groupingBy(w -> w, Collectors.counting()))
@@ -80,6 +85,7 @@ public class Report {
         return customer;
     }
     
+    // calculate average rental days
     public String averageDate(){
         int gap;
         int days = 0;
@@ -93,15 +99,20 @@ public class Report {
             String[] detail = line.split(";");
             LocalDate dateOut = LocalDate.parse(detail[3], dateForm);
             LocalDate dateReturn = LocalDate.parse(detail[4], dateForm);
+            //get the days 
             long daysBetween = ChronoUnit.DAYS.between(dateOut, dateReturn);
+            // change to int data type
             gap = Math.toIntExact(daysBetween);
+            //total days
             days = days + gap;
+            // number of records
             count++;
         }
         average = days/count;
         return Integer.toString(average);
     }
     
+    // calculate number of rejected booking
     public String rejectedBooking(){
         int count = 0;
         ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
@@ -116,21 +127,25 @@ public class Report {
         return Integer.toString(count);
     }
     
+    //calculate booked car ratio
     public Map<String, Long> carRatio(){
         ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
         ArrayList<String> car = new ArrayList<String>();
         
+        // collect car id 
         for(String line:bookRecord){
             String[] detail = line.split(";");
             car.add(detail[1]);
         }
+        
+        //get ratio
         Map<String, Long> ratio = 
         car.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
         
         return ratio;
     }
     
-    //total payment
+    //total number of payment
     public String totalPayment(){
         String count;
         ArrayList<String> payRecord = new ArrayList<String>(pay.readPayment());
@@ -138,7 +153,7 @@ public class Report {
         return count;
     }
     
-    //total customer
+    //total customer that makes payment
     public String totalPayCustomer(){
         int count = 0;
         
@@ -165,6 +180,7 @@ public class Report {
         ArrayList<String> payRecord = new ArrayList<String>(pay.readPayment());
         Set<String> set = new HashSet<String>();
         
+        //get unique customer id that made payment
         for(String line:payRecord){
             String[] detail = line.split(";");
             booking.setBookingID(detail[1]);
@@ -179,35 +195,42 @@ public class Report {
         ArrayList<String> bookRecord = new ArrayList<String>(booking.readBooking());
         ArrayList<Double> payment = new ArrayList<Double>();
         
+        // for each customer, count their total payment
         for (String cus : set){
             double amount = 0;
             for(String line : bookRecord){
                 String[] bookDetail = line.split(";");
+                //from booking.txt, get booking id
                 if (cus.equals(bookDetail[2])){
                     for(String line1:payRecord){
                         String[] payDetail = line1.split(";");
+                        //by the booking id, get payment amount 
                         if(payDetail[1].equals(bookDetail[0])){
+                            //add the amount to get total payment amount
                             amount += Double.parseDouble(payDetail[2]);
                         }
                     }
                 } 
             }
+            //record the total amount of each customer
             payment.add(amount);
         }
         
+        //maximum payment amount
         double maxPay = Collections.max(payment);
         
+        //get index to get the customer id from set by changing the set to array
         int maxCustIndex = payment.indexOf(maxPay); 
         String[] custList = set.toArray(new String[set.size()]);
         String customer = custList[maxCustIndex];
         
+        //store it in array and return
         String[] highestData = {customer,String.valueOf(maxPay)};
-        
         return highestData;
     }
     
     
-    //Average Payment
+    //Average Payment Amount
     public String AveragePayment(){
         int count = 0;
         int amount = 0;

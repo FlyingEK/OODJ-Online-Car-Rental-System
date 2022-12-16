@@ -31,28 +31,34 @@ public class Booking {
         searchBooking();
     }
     
+    //getter
     public String getBookingID() {
         return bookingID;
     }
 
+    //setter
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
     }
     
+    //get new booking id
     public String newBookingID(){
         String newBookingID = fh.incrementID("booking.txt");
         return "B"+newBookingID;
     }
     
+    //read the whole booking record in "booking.txt"
     public ArrayList<String> readBooking(){
         ArrayList<String> bookingArray = fh.readFile("booking.txt");
         return bookingArray;
     }
     
+    //add a new booking to "booking.txt"
     public void addBooking(ArrayList<String> bookingArray){
         fh.writeFile("booking.txt", bookingArray);
     }
     
+    //search a booking from "booking.txt" and if found, set booking detail attributes.
     public Boolean searchBooking(){
         String[] bookingArray = fh.searchRecord("booking.txt", bookingID);
         Boolean found = true;
@@ -93,6 +99,7 @@ public class Booking {
         return status;
     }
     
+    // modify a booking record
      public void modifyBooking(ArrayList<String> bookingArray){
         fh.modifyRecord("booking.txt",bookingArray);
     }
@@ -101,7 +108,9 @@ public class Booking {
         fh.delete("booking.txt", bookingID);
     }
     
+    // Display only history booking record of current customer.
     public ArrayList<String> checkBookingHistory(){
+        //get current customer id
         String custID = fh.getCurrentCustomer();
         
         ArrayList<String> booking = new ArrayList<String>();
@@ -113,11 +122,14 @@ public class Booking {
         for (String line : booking){
             String[] detail = line.split(";");
             
+            // if the booking belongs to current customer
             if (detail[2].equals(custID))
             {
                 try {
+                    
                     Date today = dateFormat.parse(dateFormat.format(new Date()));
                     Date dateOut = dateFormat.parse(detail[4]);
+                    //only bookings for date return before today's date taken.
                     if (dateOut.compareTo(today) < 0){
                         customerBooking.add(line);
                     }
@@ -129,6 +141,7 @@ public class Booking {
         return customerBooking;
     }
     
+    // get all the current booking of current customer
     public ArrayList<String> checkCurrentBooking(){
         String custID = fh.getCurrentCustomer();
         
@@ -145,8 +158,9 @@ public class Booking {
             {
                 try {
                     Date today = dateFormat.parse(dateFormat.format(new Date()));
-                    Date dateOut = dateFormat.parse(detail[4]);
-                    if (dateOut.compareTo(today) > 0){
+                    Date dateReturn = dateFormat.parse(detail[5]);
+                    //only date return after or equals today is taken
+                    if (dateReturn.compareTo(today) >= 0){
                         customerBooking.add(line);
                     }
                 } catch (ParseException ex) {
@@ -157,6 +171,7 @@ public class Booking {
         return customerBooking;
     }
     
+    // check car availability when adding new booking
     public boolean checkCarAvailability(String carID,Date dateOut, Date dateReturn){
         boolean available = false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -166,11 +181,13 @@ public class Booking {
         try {
             today = dateFormat.parse(dateFormat.format(new Date()));
             
+            // only accept today or after booking dates
             if(dateOut.equals(today) || dateOut.after(today)){
                 ArrayList<String> booking = new ArrayList<String>(readBooking());
                 for (String line:booking){
                     String[] bookingDetail = line.split(";");
 
+                    //for the car, compare date
                     if (carID.equals(bookingDetail[1])){
                         if(!bookingDetail[5].equals("rejected")){
                             try {
@@ -223,6 +240,7 @@ public class Booking {
         return available;
     }
     
+    //check car availability for date out field when adding booking
     public boolean checkCarAvailability(String carID,Date dateOut){
         boolean available = false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -270,6 +288,7 @@ public class Booking {
         return available;
     }
     
+    // check car availability when editing booking
     public boolean checkCarAvailability(String bookID, String carID,Date dateOut, Date dateReturn){
         boolean available = false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -285,6 +304,7 @@ public class Booking {
                     String[] bookingDetail = line.split(";");
 
                     if (carID.equals(bookingDetail[1])){
+                        // exclude the editing booking
                         if(!bookID.equals(bookingDetail[0])){
                             if(!bookingDetail[5].equals("rejected")){
                                 try {
@@ -312,6 +332,7 @@ public class Booking {
         return available;
     }
     
+    // check car availability for date out field when editing booking
     public boolean checkCarAvailability(String bookID, String carID,Date dateOut){
         boolean available = false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -328,6 +349,7 @@ public class Booking {
                     String[] bookingDetail = line.split(";");
 
                     if (carID.equals(bookingDetail[1])){
+                        // exclude editing booking
                         if(!bookID.equals(bookingDetail[0])){
                             if(!bookingDetail[5].equals("rejected")){
                                 try {

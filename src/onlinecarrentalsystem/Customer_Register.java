@@ -264,6 +264,7 @@ private Customer cust;
 
     private void cusRegistButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cusRegistButActionPerformed
         // TODO add your handling code here:
+        // make sure no empty field
         if (!cusRegistUN.getText().equals("")&& 
                 !cusRegistPassword.getText().equals("") &&
                 !cusRegistName.getText().equals("") &&
@@ -281,7 +282,8 @@ private Customer cust;
                 cusRegistIC.getText(),
                 Address.getText(),
             };
-
+            
+            // record data
             if(cust.Register(data)){
                 Customer_Login login = new Customer_Login();
                 login.setVisible(true);
@@ -294,6 +296,7 @@ private Customer cust;
 
     private void toLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toLoginActionPerformed
         // TODO add your handling code here:
+        // send customer to login page
         Customer_Login login = new Customer_Login();
         login.setVisible(true);
         this.dispose();

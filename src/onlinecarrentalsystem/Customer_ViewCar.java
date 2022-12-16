@@ -39,6 +39,7 @@ private FileHandling fh;
         pupolateTable();
     }
     
+    // set table
     private void pupolateTable(){
         String columns[] = {"Car ID","Model","Plate No","Seat","Color","Year","Price"};
         
@@ -58,6 +59,7 @@ private FileHandling fh;
         carTable.setModel(model);
     }
     
+    //set text field
     private void setTextField(String[] data){
         carID.setText((String) data[0]);
         model.setText((String) data[1]);
@@ -68,6 +70,7 @@ private FileHandling fh;
         price.setText((String) data[6]);
     }
     
+    // clear text field
     private void clearField(){
         carID.setText("");
         model.setText("");
@@ -515,6 +518,7 @@ private FileHandling fh;
         ArrayList<String> carData = new ArrayList<String>(car.readCar());
         String car_id = SearchTxt.getText();
         
+        //search in car.txt
         for (String line:carData){
             String[] carDetail = line.split(";");
             
@@ -554,6 +558,7 @@ private FileHandling fh;
         Date date_return = dateReturn.getDate();
         String car_id = carID.getText();
 
+        // no empty field
         if (date_out == null || date_return == null || car_id.equals("")){
             dateRequired.setVisible(true);
         }else{
@@ -561,11 +566,13 @@ private FileHandling fh;
 
             String custID = fh.getCurrentCustomer();
 
+            //no date return before date out
             if(date_out.before(date_return) && !date_out.equals(date_return)){
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
                 String strDateOut = dateFormat.format(date_out);  
                 String strDateReturn = dateFormat.format(date_return);  
 
+                // make sure car available
                 if(booking.checkCarAvailability(car_id,date_out,date_return)){
                     System.out.println("Enter");
                     ArrayList<String> newBooking = new ArrayList<String>();
@@ -617,6 +624,7 @@ private FileHandling fh;
 
     private void dateOutPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateOutPropertyChange
         // TODO add your handling code here:
+        // display car availability when date out selected
         Date date_out = dateOut.getDate();
         String car_id = carID.getText();
 

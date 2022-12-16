@@ -44,6 +44,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         
         //booking report
         pupolateTable();
+        //calculate booking report data
         totalBook.setText(rp.totalBooking());
         totalBookCust.setText(rp.totalBookingCustomer());
         highestBook.setText(rp.highestBooking());
@@ -52,6 +53,7 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         
         //payment report
         pupolatePaymentTable();
+        //calculate payment report data
         totalPayment.setText(rp.totalPayment());
         totalPayCust.setText(rp.totalPayCustomer());
         
@@ -612,11 +614,8 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
     private void pieButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pieButtonActionPerformed
         // TODO add your handling code here:       
         Report rp = new Report();
-
-        //ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList(data);
-        //PieChart pie = new PieChart(pieData);
         
-        
+        // create pie chart
         DefaultPieDataset pie = new DefaultPieDataset();
         for (Map.Entry<String, Long> e : rp.carRatio().entrySet()){
             pie.setValue(e.getKey(),Math.toIntExact(e.getValue()));
@@ -624,10 +623,12 @@ public class Admin_GenerateReport extends javax.swing.JFrame{
         
         JFreeChart chart = ChartFactory.createPieChart("Car Rented Ratio",pie,true,true,false);
         
+        //Edit the lable to show both car and percentage
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator(  
         "{0} : ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));  
         ((PiePlot) chart.getPlot()).setLabelGenerator(labelGenerator);  
         
+        //create frame to show the chart
         ChartFrame frame = new ChartFrame("Pie Chart",chart);
         frame.setVisible(true);
         frame.setSize(600,500);

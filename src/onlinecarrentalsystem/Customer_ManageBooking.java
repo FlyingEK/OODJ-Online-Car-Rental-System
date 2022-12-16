@@ -36,22 +36,27 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         car = new Car();
         fh = new FileHandling();
         
+        // set not visible for the notices
         noResult.setVisible(false);
         noResult1.setVisible(false);
         dateRequired.setVisible(false);
         DateNotAvailable.setVisible(false);
         
+        //display table
         pupolateTable();
         pupolateHistory();
     }
     
+    // set current booking table
     private void pupolateTable(){
         int count = 0;
         String columns[] = {"Booking ID","Car ID","Date Out","Date Return","Approval"};
         
+        //get only current booking
         ArrayList<String> bookData = new ArrayList<String>(booking.checkCurrentBooking());
         ArrayList<String> custBook = new ArrayList<String>();
         
+        //get only boookings for current customer
         for (int i = 0; i < bookData.size();i++){
             String line = bookData.get(i);
             String [] carDetail = line.split(";");
@@ -62,17 +67,19 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             }
         }
         
+        //array to store table data
         String[][] rows = new String[count][5];
         
+        //set array value
         for (int i = 0; i < custBook.size();i++){
             String line = custBook.get(i);
-            String [] carDetail = line.split(";");
+            String [] bookingDetail = line.split(";");
             
-            if(carDetail[2].equals(fh.getCurrentCustomer())){
+            if(bookingDetail[2].equals(fh.getCurrentCustomer())){
                 int index = 0;
                 for(int j = 0;j<6;j++){
                     if (j!=2){
-                        rows[i][index] = carDetail[j];
+                        rows[i][index] = bookingDetail[j];
                         index++;
                     }
                 }
@@ -83,13 +90,16 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         cBookTable.setModel(model);
     }
     
+    //set booking history table
     private void pupolateHistory(){
         int count = 0;
         String columns[] = {"Booking ID","Car ID","Date Out","Date Return","Approval"};
         
+        //get only history bookings
         ArrayList<String> bookData = new ArrayList<String>(booking.checkBookingHistory());
         ArrayList<String> custBook = new ArrayList<String>();
         
+        //get only boookings for current customer
         for (int i = 0; i < bookData.size();i++){
             String line = bookData.get(i);
             String [] carDetail = line.split(";");
@@ -100,8 +110,10 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             }
         }
         
+        //array to store table data
         String[][] rows = new String[count][5];
         
+        //set array value
         for (int i = 0; i < custBook.size();i++){
             String line = custBook.get(i);
             String [] carDetail = line.split(";");
@@ -121,6 +133,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         hBookTable.setModel(model);
     }
     
+    // set current booking text field when a booking selected
     private void setTextField(String bookId,String CarId){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         
@@ -152,6 +165,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         }
     }
     
+    // set booking history text field when a booking selected
     private void setHistoryField(String bookId,String CarId){
         car.setCarID(CarId);
         booking.setBookingID(bookId);
@@ -172,6 +186,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         }
     }
     
+    //clear current booking text field
     private void clearTextField(){
         bookID.setText("");
         carID.setText("");
@@ -185,6 +200,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         dateReturn.setDate(null);
     }
     
+    // clear booking history text field
     private void clearHistoryField(){
         bookID1.setText("");
         carID1.setText("");
@@ -583,7 +599,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(jLabel3)
-                .addGap(14, 14, 14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -664,7 +680,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Current Booking", jPanel1);
@@ -1076,6 +1092,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel)cBookTable.getModel();
         boolean current = false;
         
+        //make sure the booking id is current booking
         ArrayList<String> bookData = new ArrayList<String>(booking.checkCurrentBooking());
         for (String line:bookData){
             String[] bookDetail = line.split(";");
@@ -1085,19 +1102,26 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         }
         
         if(!id.equals("")){ 
+            // search by booking id
             if (id.substring(0, 1).toUpperCase().equals("B")){
                 booking.setBookingID(id);
+                // if booking exist
                 if(booking.searchBooking()){
+                    // if the booking belongs to current customer
                     if(booking.getCustomerID().equals(fh.getCurrentCustomer())){
+                        // if the booking is current booking
                         if(current){
                             found = true; 
                         }
                     }
                 }
             }else if(id.substring(0,1).toUpperCase().equals("C")){
+                // current booking is used
                 for (String line:bookData){
                     String[] bookDetail = line.split(";");
+                    //if booking found
                     if (bookDetail[1].equals(id)){
+                        // if the booking belongs to current customer
                         if(bookDetail[2].equals(fh.getCurrentCustomer())){
                             found = true;
                         dataFound.add(line);
@@ -1110,6 +1134,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         }
         
         if(found){
+            // for search by booking id
             if(id.substring(0, 1).toUpperCase().equals("B")){
                 tableModel.setRowCount(0);
                 tableModel.insertRow(tableModel.getRowCount(),
@@ -1119,12 +1144,14 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
                 DateNotAvailable.setVisible(false);
             }
             
+            // for search by car id 
             if(id.substring(0,1).toUpperCase().equals("C")){
                 tableModel.setRowCount(0);
                 for (String line : dataFound){
                     String detail[] = line.split(";");
                     tableModel.insertRow(tableModel.getRowCount(), new Object[]{detail[0],detail[1],detail[3],detail[4],detail[5]});
                 }
+                // clear data field as there can be more than one result
                 clearTextField();
                 noResult.setVisible(false);
                 DateNotAvailable.setVisible(false);
@@ -1158,13 +1185,16 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
         
         Boolean paid = false;
         Payment pay = new Payment();
+        // determine if the booking paid
         ArrayList<String> payment = pay.readPayment();
         for(String paymentRec : payment){
             if (paymentRec.split(";")[1].equals(bookID.getText())){
                 paid = true;
             }
         }
+        //paid booking can't be edited
         if (!paid){
+            // error if there is any empty field
             if (date_out == null || date_return == null || car_id.equals("")){
                 dateRequired.setVisible(true);
             }else{
@@ -1172,6 +1202,7 @@ public class Customer_ManageBooking extends javax.swing.JFrame {
 
                 String custID = fh.getCurrentCustomer();
 
+                // date return cannot before date out
                 if(date_out.before(date_return) && !date_out.equals(date_return)){
                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
                     String strDateOut = dateFormat.format(date_out);  

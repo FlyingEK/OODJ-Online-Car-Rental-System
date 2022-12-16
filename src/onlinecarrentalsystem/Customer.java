@@ -99,6 +99,7 @@ public class Customer extends User{
         return found;
     }
     
+    //register function
     public Boolean Register(String[] customerDetail){
 
         boolean registered = false;

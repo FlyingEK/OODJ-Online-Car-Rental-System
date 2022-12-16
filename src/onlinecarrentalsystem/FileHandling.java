@@ -41,6 +41,7 @@ public class FileHandling {
         return file;
     }
     
+    // get new id 
     public String incrementID(String filename)
     {   
         int ID = 0;
@@ -61,6 +62,7 @@ public class FileHandling {
         return ID+"";
     }
     
+    //add content in file
     public void writeFile(String filename,ArrayList array)
     {
         try
@@ -85,7 +87,7 @@ public class FileHandling {
         }
     }
     
-    
+    //search record by id
     public String[] searchRecord(String filename,String id)
     {
         boolean found = false;
@@ -117,6 +119,7 @@ public class FileHandling {
         return result;
     }
     
+    //modify record
     public void modifyRecord(String filename,ArrayList<String> array)
     {
         ArrayList<String> fileData = new ArrayList<String>();
@@ -169,6 +172,7 @@ public class FileHandling {
         }
     }
     
+    //delete record
     public void delete(String filename, String removeID){
         File file = new File(filename);
         File temp = new File("temp.txt");
@@ -209,7 +213,7 @@ public class FileHandling {
         }
      }
     
-    
+    //record login customer id
     public void setCurrentCustomer(String custID){
         try
         {
@@ -227,6 +231,7 @@ public class FileHandling {
         }
     }
     
+    // get current customer id
     public String getCurrentCustomer(){
         String custID = null;
         try
