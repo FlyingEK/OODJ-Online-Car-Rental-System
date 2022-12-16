@@ -578,7 +578,7 @@ private FileHandling fh;
                     JOptionPane.showMessageDialog(null, "Car Not Available.","Error Message",JOptionPane.ERROR_MESSAGE);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day. \n Cannot set Date Return before Date Out ",
+                JOptionPane.showMessageDialog(null, "Cannot book and return a car at the same day. \n Or unusual date input.",
                         "Error Message",JOptionPane.ERROR_MESSAGE);
             }
         }

@@ -4,6 +4,8 @@
  */
 package onlinecarrentalsystem;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -262,19 +264,31 @@ private Customer cust;
 
     private void cusRegistButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cusRegistButActionPerformed
         // TODO add your handling code here:
-        String [] data = {
-            cusRegistUN.getText(),
-            cusRegistPassword.getText(),
-            cusRegistName.getText(),
-            cusRegistContact.getText(),
-            cusRegistEmail.getText(),
-            cusRegistIC.getText(),
-            Address.getText(),
-        };
-        if(cust.Register(data)){
-            Customer_Login login = new Customer_Login();
-            login.setVisible(true);
-            this.dispose();
+        if (!cusRegistUN.getText().equals("")&& 
+                !cusRegistPassword.getText().equals("") &&
+                !cusRegistName.getText().equals("") &&
+                !cusRegistContact.getText().equals("") &&
+                !cusRegistEmail.getText().equals("") &&
+                !cusRegistIC.getText().equals("") &&
+                !Address.getText().equals("")
+            ) {
+            String [] data = {
+                cusRegistUN.getText(),
+                cusRegistPassword.getText(),
+                cusRegistName.getText(),
+                cusRegistContact.getText(),
+                cusRegistEmail.getText(),
+                cusRegistIC.getText(),
+                Address.getText(),
+            };
+
+            if(cust.Register(data)){
+                Customer_Login login = new Customer_Login();
+                login.setVisible(true);
+                this.dispose();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please fill up all the information.");
         }
     }//GEN-LAST:event_cusRegistButActionPerformed
 

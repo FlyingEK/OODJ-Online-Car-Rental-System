@@ -4,6 +4,7 @@
  */
 package onlinecarrentalsystem;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author User
@@ -234,7 +235,19 @@ public class Customer_ManageInfo extends javax.swing.JFrame {
         custArray.add(cusRegistEmail.getText());
         custArray.add(cusRegistIC.getText());
         custArray.add(Address.getText());
-        customer.modifyCustomer(custArray);
+        if (!cusRegistUN.getText().equals("")&& 
+                !cusRegistPassword.getText().equals("") &&
+                !cusRegistName.getText().equals("") &&
+                !cusRegistContact.getText().equals("") &&
+                !cusRegistEmail.getText().equals("") &&
+                !cusRegistIC.getText().equals("") &&
+                !Address.getText().equals("")
+            ){
+            customer.modifyCustomer(custArray);
+        }else{
+            JOptionPane.showMessageDialog(null, "Please fill up all the information.");
+        }
+        
         
     }//GEN-LAST:event_editBtnActionPerformed
 

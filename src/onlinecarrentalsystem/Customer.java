@@ -14,8 +14,7 @@ import javax.swing.JOptionPane;
 public class Customer extends User{
     protected String customerID;
     private String customerUsername,customerName,customerPassword,
-            customerAddress,customerEmail,customerContact,customerIC,
-            currentCustomer;
+            customerAddress,customerEmail,customerContact,customerIC;
     private FileHandling fh;
     private ActivityLog a;
     
@@ -57,7 +56,6 @@ public class Customer extends User{
     
     public String getCustomerIC(){return customerIC;}
     
-    public String getCurrentCustomer(){return currentCustomer;}
     
     //setter
     public void setCustomerID(String customerID) {this.customerID = customerID;}

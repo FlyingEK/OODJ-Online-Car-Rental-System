@@ -137,8 +137,8 @@ private Customer cust;
         // TODO add your handling code here:
         WelcomePage wp= new WelcomePage();
         wp.setVisible(true);
-        cust.logout();
         this.dispose();
+        cust.logout();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

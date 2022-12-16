@@ -17,11 +17,6 @@ public class FileHandling {
     public FileHandling()
     {
     }
-    
-    public void test()
-    {
-        System.out.println("test");
-    }
             
     public ArrayList<String> readFile(String filename)
     {
@@ -218,7 +213,7 @@ public class FileHandling {
     public void setCurrentCustomer(String custID){
         try
         {
-            File f = new File("section.txt");
+            File f = new File("session.txt");
 
             FileWriter fw = new FileWriter(f);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -236,7 +231,7 @@ public class FileHandling {
         String custID = null;
         try
         {
-            FileReader fr = new FileReader("section.txt");
+            FileReader fr = new FileReader("session.txt");
             BufferedReader br = new BufferedReader(fr);
             custID = br.readLine();
             br.close();
