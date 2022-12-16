@@ -22,6 +22,11 @@ public class Booking {
     
     public Booking(){
         this.bookingID = null;
+        carID = null;
+        customerID = null; 
+        outDate=null;
+        returnDate=null;
+        status=null;
         fh = new FileHandling();
     }
     
@@ -199,7 +204,7 @@ public class Booking {
         return available;
     }
     
-    //admin 
+    //used in admin add booking: available car table
     public boolean checkCarAvailability(Date dateOut, String carID){
         boolean available = true;
         ArrayList<String> book = readBooking();
@@ -210,7 +215,9 @@ public class Booking {
             try{
                 d1 = df.parse(bookRec.split(";")[3]);
                 d2 = df.parse(bookRec.split(";")[4]);
+                // if the booking match with the car ID and it is not rejected
                 if((bookRec.split(";")[1].equals(carID))&&(!bookRec.split(";")[5].equals("rejected"))){
+                    //date validation
                     if (dateOut.equals(d1) ||(dateOut.after(d1) && dateOut.before(d2))){
                         available = false;
                     }

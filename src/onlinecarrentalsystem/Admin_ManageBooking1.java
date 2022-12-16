@@ -1466,6 +1466,7 @@ private Booking booking;
         ArrayList<String> bookArray = booking.readBooking();
         for (String bookRecord:bookArray){
             String booking[] = bookRecord.split(";");
+            //read only processing records
             if (booking[5].trim().toLowerCase().equals("processing")){
                     tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[1],booking[2],booking[3],booking[4]});
             }
@@ -1479,6 +1480,7 @@ private Booking booking;
         ArrayList<String> bookArray = booking.readBooking();
         for (String bookRecord:bookArray){
             String booking[] = bookRecord.split(";");
+            //read only approved records
             if (booking[5].trim().toLowerCase().equals("approved")){
                     tableModel.insertRow(tableModel.getRowCount(), new Object[]{booking[0],booking[1],booking[2],booking[3],booking[4]});
             }
@@ -1502,7 +1504,9 @@ private Booking booking;
         }
         //catch paid value number format exception
         try{
+            // run if not yet paid
             if(!paidStatus){
+                // if no empty input
                 if (!PBookID.getText().equals("")){
                     if(!this.paid.getText().equals("")){
                         //display balance 
@@ -1573,6 +1577,7 @@ private Booking booking;
         bookArray.add(custID1.getText());
         bookArray.add(dateOut1.getText());
         bookArray.add(dateReturn1.getText());
+        //booking status change to approved
         bookArray.add("approved");
         booking.modifyBooking(bookArray);
         
@@ -1603,6 +1608,7 @@ private Booking booking;
         bookArray.add(custID1.getText());
         bookArray.add(dateOut1.getText());
         bookArray.add(dateReturn1.getText());
+        //booking status change to rejected
         bookArray.add("rejected");
         booking.modifyBooking(bookArray);
         
@@ -1660,12 +1666,12 @@ private Booking booking;
             } catch (ParseException p){
                 p.printStackTrace();
             }
-            
+            //get car details
             Car car = new Car(booking.getCarID());
             model.setText(car.getModel());
             color1.setText(car.getColor());
             plateNo.setText(car.getPlateNo());
-            
+            //get customer details
             Customer cust = new Customer(booking.getCustomerID());
             custName.setText(cust.getCustomerName());
             IC.setText(cust.getCustomerIC());
@@ -1695,6 +1701,7 @@ private Booking booking;
                         paid = true;
                     }
                 }
+                //if not yet paid
                 if (!paid){
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     ArrayList<String> bookArray = booking.readBooking();
@@ -1738,6 +1745,7 @@ private Booking booking;
                     paid = true;
                 }
             }
+            //if not paid
             if (!paid){
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 Date today = new Date();          
@@ -1752,16 +1760,21 @@ private Booking booking;
                 } catch (ParseException pe){
                     pe.printStackTrace();
                 }
+                //calculate the days of rental
                 long daysOfRent = date2.getTime() -date1.getTime();
                 daysOfRent = TimeUnit.DAYS.convert(daysOfRent, TimeUnit.MILLISECONDS);
-                days.setText(daysOfRent+"");       
+                days.setText(daysOfRent+"");
+                //get car and customer details
                 Car car = new Car(booking.getCarID());
                 Customer cust = new Customer(booking.getCustomerID());
                 PCustName.setText(cust.getCustomerName()+" ("+cust.getCustomerID()+")");
                 this.car.setText(car.getColor()+" "+car.getModel()+" ("+car.getCarID()+")");
+                //calculate subtotal
                 int subtotalVal = Integer.parseInt(car.getPrice())* Integer.parseInt(days.getText());
                 subtotal.setText(""+subtotalVal);
+                //calculate tax 
                 double taxVal = subtotalVal * 0.1;
+                //calculate total 
                 double total = subtotalVal + taxVal + 250;
                 tax.setText(taxVal+"");
                 deposit.setText("250.00");
@@ -1931,6 +1944,8 @@ private Booking booking;
     private void jCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendarMouseClicked
    
     }//GEN-LAST:event_jCalendarMouseClicked
+    
+    //method to read available car into table
     private void readCarTable(){
         Date date = jCalendar.getDate();
         dateOut2.setDate(date);

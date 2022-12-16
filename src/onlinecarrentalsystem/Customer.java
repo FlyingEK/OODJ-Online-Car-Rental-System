@@ -22,6 +22,13 @@ public class Customer extends User{
     
     public Customer(){
         this.customerID = null;
+        customerUsername = null;
+        customerName=null;
+        customerPassword=null;
+        customerAddress=null;
+        customerEmail=null;
+        customerContact=null;
+        customerIC=null;
         fh = new FileHandling();
         a = new ActivityLog();
     }
